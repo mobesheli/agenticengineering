@@ -89,7 +89,17 @@ def _handle_live(claim_id: str, model: str) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Chapter 2 claims pipeline companion project."
+        description=(
+            "Chapter 2 claims pipeline companion project. "
+            "Start with `describe`, then run the `offline` claim examples before using `live`."
+        ),
+        epilog=(
+            "Examples:\n"
+            "  python main.py describe\n"
+            "  python main.py offline --claim CLM-1001\n"
+            "  python main.py live --claim CLM-1001"
+        ),
+        formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument(
         "--model",
@@ -99,14 +109,44 @@ def build_parser() -> argparse.ArgumentParser:
 
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("list-claims", help="Show the sample claim ids.")
-    subparsers.add_parser("describe", help="Show the agent, tool, and handoff setup.")
+    subparsers.add_parser(
+        "list-claims",
+        help="Show the sample claim ids.",
+        description="Print the built-in sample claim ids used throughout the chapter.",
+    )
+    subparsers.add_parser(
+        "describe",
+        help="Show the agent, tool, and handoff setup.",
+        description="Print the app structure: agents, tools, guardrails, and handoffs.",
+    )
 
-    offline = subparsers.add_parser("offline", help="Run the deterministic local demo.")
-    offline.add_argument("--claim", required=True, help="Claim id, for example CLM-1001.")
+    offline = subparsers.add_parser(
+        "offline",
+        help="Run the deterministic local demo.",
+        description=(
+            "Run the local learning path without calling the OpenAI API. "
+            "This is the recommended first run for the chapter."
+        ),
+    )
+    offline.add_argument(
+        "--claim",
+        required=True,
+        help="Sample claim id: CLM-1001, CLM-1002, or CLM-1003.",
+    )
 
-    live = subparsers.add_parser("live", help="Run the live OpenAI Agents SDK pipeline.")
-    live.add_argument("--claim", required=True, help="Claim id, for example CLM-1001.")
+    live = subparsers.add_parser(
+        "live",
+        help="Run the live OpenAI Agents SDK pipeline.",
+        description=(
+            "Run the same claims workflow with real OpenAI model calls. "
+            "Requires OPENAI_API_KEY."
+        ),
+    )
+    live.add_argument(
+        "--claim",
+        required=True,
+        help="Sample claim id: CLM-1001, CLM-1002, or CLM-1003.",
+    )
 
     return parser
 
