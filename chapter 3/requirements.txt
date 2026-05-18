@@ -1,4 +1,5 @@
 pydantic>=2.7
+openai>=2.0
 sqlmodel>=0.0.22
 openai-agents
 mcp

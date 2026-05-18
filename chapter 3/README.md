@@ -59,3 +59,7 @@ Most cells run offline with lightweight local mocks. The MCP cells are written a
 ## Code Reading Guidance
 
 The notebook code is intentionally more commented than production code. Those comments explain why each field, schema, idempotency key, approval gate, and mock object exists. Readers should run the notebook from top to bottom once before copying any individual snippet into a real project.
+
+## Optional Live API Check
+
+The final live smoke-test cell reads `OPENAI_API_KEY` from your environment and uses `gpt-5-mini` by default. It skips itself when no key is configured, so the notebook still works offline.
