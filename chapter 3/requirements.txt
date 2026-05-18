@@ -1,0 +1,5 @@
+pydantic>=2.7
+sqlmodel>=0.0.22
+openai-agents
+mcp
+notebook
