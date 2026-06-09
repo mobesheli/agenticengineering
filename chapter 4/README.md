@@ -54,7 +54,7 @@ The notebook builds the conceptual and code surface of Chapter 4 in this order:
 7. Forgetting controls: eviction, tombstones, redaction, poisoning filters, audit logs, and memory diffs.
 8. A medication reconciliation agent shell that uses all four memory tiers.
 
-The notebook expects `OPENAI_API_KEY` for the live path. It uses `gpt-4.1-mini` by default, or `OPENAI_MODEL` if the reader sets a different model. The clinical records, audit log, and tiny vector store are local teaching systems so readers can inspect the memory plumbing without needing hospital infrastructure.
+The notebook requires `OPENAI_API_KEY`. It uses `gpt-4.1-mini` by default, or `OPENAI_MODEL` if the reader sets a different model. The clinical records, audit log, and vector list are application memory stores so readers can inspect the memory plumbing without needing hospital infrastructure.
 
 ## Code Reading Guidance
 
