@@ -10,11 +10,12 @@ Use this order the first time you open the project:
 
 1. Read the notebook section map.
 2. Run the setup cell.
-3. Work through the working-memory and session examples.
-4. Run the semantic retrieval examples.
-5. Run the episodic and procedural memory examples.
-6. Read the forgetting, poisoning, and audit cells carefully.
-7. Finish with the medication reconciliation workflow model.
+3. Run the live OpenAI endpoint smoke test.
+4. Work through the working-memory and OpenAI Agents SDK session examples.
+5. Run the semantic retrieval examples with live embeddings.
+6. Run the episodic and procedural memory examples.
+7. Read the forgetting, poisoning, and audit cells carefully.
+8. Finish with the medication reconciliation workflow model.
 
 ## One-Time Setup
 
@@ -25,6 +26,7 @@ cd "chapter 4"
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+export OPENAI_API_KEY="your-api-key"
 ```
 
 If you want to open the notebook locally:
@@ -37,21 +39,22 @@ jupyter notebook
 ## Project Map
 
 - `Chapter_4_What_Agents_Remember_Learning_Walkthrough.ipynb`: guided notebook for readers
-- `requirements.txt`: notebook dependencies, including the OpenAI Agents SDK package used by the chapter snippets
+- `requirements.txt`: notebook dependencies, including the OpenAI Python SDK, OpenAI Agents SDK, and SQLAlchemy-backed session packages used by the chapter snippets
 
 ## What Readers Build
 
 The notebook builds the conceptual and code surface of Chapter 4 in this order:
 
-1. A session-backed agent turn that proves continuity comes from external state.
-2. A working-memory budget with anchors, summaries, reserve space, and cache-friendly ordering.
-3. A semantic memory path with chunking, vector search, hybrid retrieval, reranking, and graph lookup.
-4. An episodic memory store with write-on-extract, scope filters, recency, importance, and contradiction handling.
-5. A procedural memory skill for medication reconciliation.
-6. Forgetting controls: eviction, tombstones, redaction, poisoning filters, audit logs, and memory diffs.
-7. A medication reconciliation agent shell that uses all four memory tiers.
+1. A live OpenAI endpoint smoke test using a mini model.
+2. A session-backed OpenAI Agents SDK turn that proves continuity comes from external state.
+3. A working-memory budget with anchors, summaries, reserve space, and cache-friendly ordering.
+4. A semantic memory path with OpenAI embeddings, chunking, vector search, hybrid retrieval, reranking, and graph lookup.
+5. An episodic memory store with write-on-extract, scope filters, recency, importance, and contradiction handling.
+6. A procedural memory skill for medication reconciliation.
+7. Forgetting controls: eviction, tombstones, redaction, poisoning filters, audit logs, and memory diffs.
+8. A medication reconciliation agent shell that uses all four memory tiers.
 
-Most cells run offline with lightweight local teaching doubles. The notebook preserves the real OpenAI Agents SDK import shape so readers can move from the learning examples to SDK-backed code without changing the mental model.
+The notebook expects `OPENAI_API_KEY` for the live path. It uses `gpt-4.1-mini` by default, or `OPENAI_MODEL` if the reader sets a different model. The clinical records, audit log, and tiny vector store are local teaching systems so readers can inspect the memory plumbing without needing hospital infrastructure.
 
 ## Code Reading Guidance
 
