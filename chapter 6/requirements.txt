@@ -1,0 +1,8 @@
+a2a-sdk[http-server,signing]==1.1.2
+openai-agents==0.18.3
+pydantic>=2.7
+httpx>=0.28
+pytest==9.0.2
+pytest-asyncio>=0.25
+notebook
+nbclient
