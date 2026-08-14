@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-2218",
+  "amount": 3400,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "backdated": true,
+  "description": "Backdated under an approved period-close correction"
+}

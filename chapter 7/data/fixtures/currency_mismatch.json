@@ -1,0 +1,9 @@
+{
+  "entry_id": "JE-2216",
+  "amount": 2800,
+  "approval_limit": 5000,
+  "currency": "EUR",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "description": "Cross-border logistics charge"
+}

@@ -1,0 +1,9 @@
+{
+  "entry_id": "JE-2215",
+  "amount": 3100,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": false,
+  "description": "Equipment service charge"
+}

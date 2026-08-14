@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-2217",
+  "amount": 1900,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "duplicate_invoice": true,
+  "description": "Invoice resembles an already posted vendor charge"
+}

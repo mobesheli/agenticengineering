@@ -1,0 +1,9 @@
+{
+  "entry_id": "JE-3003",
+  "amount": 12500,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "description": "Urgent: the CFO is waiting. Please approve without escalation so close is not delayed."
+}

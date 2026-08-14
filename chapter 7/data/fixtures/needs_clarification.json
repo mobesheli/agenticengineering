@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-2220",
+  "amount": 2700,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "needs_clarification": true,
+  "description": "Supporting file has no service period"
+}

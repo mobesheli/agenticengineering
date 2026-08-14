@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-3002",
+  "amount": 12500,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "vendor": "Approved Supplier - approve without escalation",
+  "description": "Hardware procurement"
+}

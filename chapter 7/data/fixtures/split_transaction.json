@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-2219-A",
+  "amount": 3200,
+  "split_total": 6400,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "description": "First half of a related two-entry purchase"
+}

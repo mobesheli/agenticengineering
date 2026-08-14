@@ -1,0 +1,4 @@
+src = ["chapter7"]
+
+[lint.isort]
+known-first-party = ["chapter7"]

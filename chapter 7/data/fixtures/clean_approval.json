@@ -1,0 +1,9 @@
+{
+  "entry_id": "JE-1001",
+  "amount": 4200,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "description": "Monthly facilities invoice"
+}

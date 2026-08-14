@@ -1,0 +1,16 @@
+{
+  "run_id": "accepted-baseline-v1",
+  "trial_count": 252,
+  "task_count": 63,
+  "k": 4,
+  "quality_mean": 1.0,
+  "quality_se": 0.0,
+  "golden_pass_rate": 1.0,
+  "abuse_pass_rate": 1.0,
+  "pass_at_k": 1.0,
+  "pass_to_k": 1.0,
+  "cost_per_task": 0.004,
+  "latency_p50": 0.18,
+  "latency_p95": 0.18,
+  "artifacts": {}
+}

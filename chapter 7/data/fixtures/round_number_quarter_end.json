@@ -1,0 +1,10 @@
+{
+  "entry_id": "JE-2221",
+  "amount": 5000,
+  "approval_limit": 5000,
+  "currency": "GBP",
+  "ledger_currency": "GBP",
+  "supporting_document": true,
+  "quarter_end_round_number": true,
+  "description": "Manual adjustment posted on the final day of the quarter"
+}
