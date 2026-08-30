@@ -1,0 +1,11 @@
+{
+  "version": "reconciliation-policy-8.0.0",
+  "default": "deny",
+  "write_tool": "write_reconciliation",
+  "required_approval_role": "clinician",
+  "approval_ttl_hours": 24,
+  "max_writes_per_hour": 5,
+  "max_changes_per_write": 10,
+  "timeout_behavior": "cancel",
+  "retention_class": "audit-7y"
+}

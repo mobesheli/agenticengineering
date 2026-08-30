@@ -1,0 +1,40 @@
+{
+  "version": "catalog-8.0.0",
+  "enabled_agents": [
+    "medication-reconciliation-agent"
+  ],
+  "tools": {
+    "read_medications": {
+      "scopes": [
+        "patient/MedicationRequest.rs"
+      ],
+      "risk_tier": "read_only",
+      "approval_role": null,
+      "egress_allowlist": []
+    },
+    "read_fills": {
+      "scopes": [
+        "patient/MedicationDispense.rs"
+      ],
+      "risk_tier": "read_only",
+      "approval_role": null,
+      "egress_allowlist": []
+    },
+    "check_interactions": {
+      "scopes": [],
+      "risk_tier": "read_only",
+      "approval_role": null,
+      "egress_allowlist": [
+        "interactions.internal.example"
+      ]
+    },
+    "write_reconciliation": {
+      "scopes": [
+        "patient/MedicationRequest.c"
+      ],
+      "risk_tier": "irreversible_write",
+      "approval_role": "clinician",
+      "egress_allowlist": []
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "patient_id": "synthetic-patient-002",
+  "patient_name": "Taylor Example",
+  "date_of_birth": "1980-02-02",
+  "mrn": "SYNTH-MRN-0002",
+  "medications": [
+    {
+      "code": "RXNORM-860975",
+      "name": "metformin",
+      "dose": "500 mg twice daily",
+      "status": "active"
+    }
+  ],
+  "recent_fills": [
+    {
+      "medication_code": "RXNORM-860975",
+      "medication_name": "metformin",
+      "filled_at": "2026-08-22T11:00:00Z",
+      "days_supply": 30
+    }
+  ],
+  "allergies": [],
+  "notes": [
+    {
+      "note_id": "note-other-001",
+      "authored_at": "2026-08-29T12:00:00Z",
+      "text": "Medication list reviewed with the patient.",
+      "security_labels": []
+    }
+  ]
+}
