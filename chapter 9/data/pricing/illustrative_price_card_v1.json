@@ -1,0 +1,33 @@
+{
+  "version": "illustrative-2026-09-v1",
+  "effective_at": "2026-09-01T00:00:00Z",
+  "currency": "USD",
+  "illustrative": true,
+  "models": {
+    "maintenance-frontier": {
+      "input": 10.0,
+      "cached_input": 1.0,
+      "cache_write": 12.5,
+      "output": 30.0
+    },
+    "maintenance-mid": {
+      "input": 3.0,
+      "cached_input": 0.3,
+      "cache_write": 3.75,
+      "output": 12.0
+    },
+    "maintenance-small": {
+      "input": 0.5,
+      "cached_input": 0.05,
+      "cache_write": 0.625,
+      "output": 2.0
+    }
+  },
+  "tools": {
+    "read_sensor_summary": 0.012,
+    "read_repair_history": 0.008,
+    "check_parts_catalog": 0.020,
+    "write_draft_work_order": 0.000
+  },
+  "trace_span": 0.00025
+}

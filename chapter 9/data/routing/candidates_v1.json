@@ -1,0 +1,10 @@
+[
+  {"name": "small-low", "model": "maintenance-small", "effort": "low", "quality": 0.78, "cost_per_outcome_usd": 2.20},
+  {"name": "small-medium", "model": "maintenance-small", "effort": "medium", "quality": 0.84, "cost_per_outcome_usd": 2.75},
+  {"name": "mid-low", "model": "maintenance-mid", "effort": "low", "quality": 0.88, "cost_per_outcome_usd": 3.35},
+  {"name": "mid-medium", "model": "maintenance-mid", "effort": "medium", "quality": 0.92, "cost_per_outcome_usd": 3.90},
+  {"name": "mid-high", "model": "maintenance-mid", "effort": "high", "quality": 0.91, "cost_per_outcome_usd": 5.10},
+  {"name": "frontier-low", "model": "maintenance-frontier", "effort": "low", "quality": 0.91, "cost_per_outcome_usd": 7.40},
+  {"name": "frontier-medium", "model": "maintenance-frontier", "effort": "medium", "quality": 0.94, "cost_per_outcome_usd": 9.80},
+  {"name": "frontier-high", "model": "maintenance-frontier", "effort": "high", "quality": 0.95, "cost_per_outcome_usd": 14.20}
+]

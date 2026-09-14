@@ -11,3 +11,4 @@ Current contents:
 - `chapter 6/`: a guided notebook and tested A2A project for signed Agent Cards, task lifecycles, defensive remote-agent calls, and a cross-company supply-chain sourcing run.
 - `chapter 7/`: a guided notebook and tested evaluation harness for golden tasks, trajectory grading, calibrated judges, abuse cases, statistical regression gates, and model-risk evidence packs.
 - `chapter 8/`: a guided notebook and tested security harness for threat modeling, tool guardrails, scoped identity, action-bound approvals, data governance, bounded autonomy, tamper-evident audit records, and healthcare reconciliation.
+- `chapter 9/`: a guided notebook and tested observability and FinOps companion for priced traces, run budgets, loop controls, safe replay, per-step model routing, fully loaded cost per outcome, OTLP export, and a shared engineering/finance value-review board.

@@ -1,0 +1,10 @@
+{
+  "version": "human-baseline-v1",
+  "currency": "USD",
+  "source": "illustrative pre-deployment measurement",
+  "by_severity": {
+    "routine": 4.20,
+    "major": 9.80,
+    "critical": 24.00
+  }
+}
