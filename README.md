@@ -12,3 +12,4 @@ Current contents:
 - `chapter 7/`: a guided notebook and tested evaluation harness for golden tasks, trajectory grading, calibrated judges, abuse cases, statistical regression gates, and model-risk evidence packs.
 - `chapter 8/`: a guided notebook and tested security harness for threat modeling, tool guardrails, scoped identity, action-bound approvals, data governance, bounded autonomy, tamper-evident audit records, and healthcare reconciliation.
 - `chapter 9/`: a guided notebook and tested observability and FinOps companion for priced traces, run budgets, loop controls, safe replay, per-step model routing, fully loaded cost per outcome, OTLP export, and a shared engineering/finance value-review board.
+- `chapter 10/`: a guided notebook and tested deployment companion for immutable release bundles, local CI gates, tool contracts, durable approval parking, kill switches, agent intake, evidence-based listing, and a four-route operational board.

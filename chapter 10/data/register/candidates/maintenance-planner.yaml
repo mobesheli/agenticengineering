@@ -1,0 +1,24 @@
+agent: maintenance-planner
+owner: platform-team
+route: build
+tier: high
+status: registered
+bundle: maintenance-planner@41.3
+budget:
+  monthly_usd: 2500
+  source: metered
+evidence:
+  tier_record: governance/tiers/maintenance-planner.md
+  eval_report: results/golden@41/maintenance-planner.json
+  security_review: reviews/q2/maintenance-planner.md
+  oversight_note: reviews/q2/maintenance-planner-oversight.md
+  config_ref: bundle.yaml
+value_line:
+  claim: work orders approved 1.5 days earlier
+  stage: measured
+drift:
+  model: pinned
+  input: watching
+  knowledge: 1h
+  outcome: 0.81
+  cost: 0.28

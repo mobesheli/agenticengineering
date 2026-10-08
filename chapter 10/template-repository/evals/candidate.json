@@ -1,0 +1,11 @@
+{
+  "suite": "golden@41",
+  "bundle": "maintenance-planner@41.3",
+  "passed": 196,
+  "total": 200,
+  "floor": 0.85,
+  "trials_per_case": 5,
+  "required_case_trials_passed": 5,
+  "cache_enabled": false,
+  "tokens": 179500
+}

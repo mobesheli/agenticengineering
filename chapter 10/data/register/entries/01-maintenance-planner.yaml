@@ -1,0 +1,10 @@
+agent: maintenance-planner
+owner: platform-team
+route: build
+tier: high
+status: steady
+bundle: maintenance-planner@41.3
+budget: {monthly_usd: 2500, source: metered}
+evidence: {config_ref: bundle.yaml, eval_report: results/golden@41/maintenance-planner.json}
+value_line: {claim: work orders approved 1.5 days earlier, stage: validated}
+drift: {model: pinned, input: watching, knowledge: 1h, outcome: 0.81, cost: 0.28}

@@ -1,0 +1,12 @@
+tool: parts.catalog.lookup
+server: mcp://tools.internal/parts-catalog
+version: 3.2.0
+allow:
+  - search_parts
+  - get_lead_time
+never:
+  - create_order
+  - update_price
+egress:
+  - parts-db.plant.internal:5432
+credential: agent-identity

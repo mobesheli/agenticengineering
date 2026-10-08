@@ -1,0 +1,12 @@
+builder:
+  identity: spiffe://build.internal/chapter10-release
+  workflow: chapter-10-release-gate
+subject:
+  name: maintenance-planner@41.3
+  digest: sha256:953c18fff9f2ecebc6735b897d9c815ed9c14a5656e78139ec4f25ce778172d6
+materials:
+  - bundle.yaml
+  - Dockerfile
+  - maintenance_agent.py
+  - requirements.lock
+signed: true

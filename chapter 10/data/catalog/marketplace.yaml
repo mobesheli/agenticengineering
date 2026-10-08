@@ -1,0 +1,12 @@
+- agent: maintenance-planner
+  owner: platform-team
+  status: listed
+  keywords: [maintenance, work, orders, plant, sensor, repair, planner]
+- agent: invoice-triage
+  owner: finance-engineering
+  status: listed
+  keywords: [invoice, duplicate, finance, payment, triage]
+- agent: sales-quote-assistant
+  owner: commercial-operations
+  status: live
+  keywords: [sales, quote, proposal, commercial]

@@ -1,0 +1,12 @@
+agent: maintenance-planner
+owner: platform-team
+route: build
+tier: high
+identity: agent-maintenance-planner
+gateway: https://model-gateway.internal
+budget:
+  monthly_usd: 2500
+  source: metered
+data_products:
+  - plant-sensors-certified
+  - repair-history-certified

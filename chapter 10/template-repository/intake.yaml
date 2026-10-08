@@ -1,0 +1,7 @@
+name: maintenance planner
+purpose: draft work orders from plant sensor readings and repair history
+audience: plant planners
+reviewer: named plant planner
+data_tier: high
+workflow_kind: company-specific
+needs_internal_inspection: true

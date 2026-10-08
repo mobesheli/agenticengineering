@@ -1,0 +1,19 @@
+bundle: maintenance-planner@41.3
+image: registry.internal/agents/maintenance-planner@sha256:9f3a0f42b37d6f96aee4d50d1cd3d0c4aeb43ffbcdd819bb838570482008e897
+prompts: prompts/maintenance@f81c2e
+tool_catalog: catalog@3.2.0
+policy_pack: policy@1.9.0
+sandbox: registry.internal/agents/maintenance-sandbox@sha256:8de5358e155c44abf707fdfdfe0cf68c8bdb950d563439205a3521e9874e2fd6
+model:
+  primary:
+    id: frontier-snapshot-0615
+    effort: medium
+    processing: eu-west
+  fallback:
+    id: midtier-snapshot-0501
+    golden_pass: 0.91
+    floor: 0.85
+memory_schema:
+  version: 4
+  reads: [3, 4]
+eval_suite: golden@41

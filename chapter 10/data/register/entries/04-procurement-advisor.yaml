@@ -1,0 +1,10 @@
+agent: procurement-advisor
+owner: procurement
+route: buy
+tier: high
+status: contracted
+bundle: vendor-procurement@2026.09
+budget: {monthly_usd: 4200, source: allocated}
+evidence: {config_ref: vendor-gap-sheet.yaml, eval_report: acceptance/test-tenant.json}
+value_line: {claim: buyer review time falls by 20 percent, stage: declared}
+drift: {model: not observable, input: watching, knowledge: not observable, outcome: 0.72, cost: not reading}

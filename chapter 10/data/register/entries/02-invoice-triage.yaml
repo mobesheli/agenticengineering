@@ -1,0 +1,10 @@
+agent: invoice-triage
+owner: finance-engineering
+route: join
+tier: medium
+status: listed
+bundle: invoice-triage@18.2
+budget: {monthly_usd: 1800, source: metered}
+evidence: {config_ref: service/release.yaml, eval_report: suite-adapter/nightly.json}
+value_line: {claim: duplicate invoices reviewed 2 days earlier, stage: measured}
+drift: {model: pinned, input: watching, knowledge: 4h, outcome: 0.88, cost: 0.16}

@@ -1,0 +1,9 @@
+version: 1.9.0
+required_controls:
+  - scoped-agent-identity
+  - action-bound-human-approval
+  - pre-call-run-budget
+  - append-only-tracing
+  - tenant-specific-kill-switch
+model_changes_are_releases: true
+secrets_in_image: forbidden

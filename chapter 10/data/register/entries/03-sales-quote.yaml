@@ -1,0 +1,10 @@
+agent: sales-quote-assistant
+owner: commercial-operations
+route: assemble
+tier: medium
+status: live
+bundle: sales-quote@3.7
+budget: {monthly_usd: 900, source: metered}
+evidence: {config_ref: bundle.yaml, eval_report: results/golden@13/sales-quote.json}
+value_line: {claim: first quote draft produced in one hour, stage: baselined}
+drift: {model: pinned, input: watching, knowledge: 12h, outcome: 0.76, cost: 0.21}

@@ -1,0 +1,15 @@
+low:
+  - tier_record
+  - eval_report
+  - config_ref
+medium:
+  - tier_record
+  - eval_report
+  - security_review
+  - config_ref
+high:
+  - tier_record
+  - eval_report
+  - security_review
+  - oversight_note
+  - config_ref

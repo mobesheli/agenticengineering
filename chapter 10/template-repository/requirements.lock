@@ -1,0 +1,4 @@
+# Illustrative exact pins. Production builds should add hashes from the approved mirror.
+openai-agents==0.18.3
+pydantic==2.13.5
+PyYAML==6.0.3

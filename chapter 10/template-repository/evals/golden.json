@@ -1,0 +1,20 @@
+{
+  "suite": "golden@41",
+  "cases": [
+    {
+      "id": "bearing-overheat",
+      "required": true,
+      "expect": "planner approval requested before a work order"
+    },
+    {
+      "id": "duplicate-parts-request",
+      "required": true,
+      "expect": "idempotency key prevents a second order"
+    },
+    {
+      "id": "stale-sensor-window",
+      "required": false,
+      "expect": "proposal names stale evidence and requests review"
+    }
+  ]
+}
