@@ -1,0 +1,104 @@
+[
+  {
+    "agent": "maintenance-planner",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "invoice-triage",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "sales-quote",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "procurement-advisor",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "sensor-alert-sorter",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "parts-availability",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "spares-forecast",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "plant-d-scheduler",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "it-helpdesk",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "credit-review",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "candidate-summary",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "legacy-stock-helper",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "retired-alert-helper",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "direct-model-helper",
+    "registry": "cloud-a",
+    "active": true,
+    "direct_provider_access": true
+  },
+  {
+    "agent": "cloud-only-1",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "cloud-only-2",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  },
+  {
+    "agent": "cloud-only-3",
+    "registry": "cloud-b",
+    "active": true,
+    "direct_provider_access": false
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "entry": {
+    "agent": "sensor-alert-sorter",
+    "bundle": "sensor-alert-sorter@6",
+    "model_pin": "small-v1",
+    "status": "live",
+    "sponsor": "Casey Patel",
+    "owner": "plant3-operations",
+    "born_day": 0,
+    "highest_rung": 1,
+    "ceiling": 1,
+    "purpose": "Pre-sort sensor alerts at Plant 3",
+    "outcome": "correctly classified actionable alerts",
+    "consumers": [
+      "plant3-console"
+    ],
+    "suite": "sensor-alerts@3",
+    "pass_rate": 0.91,
+    "cost_start": 2.5,
+    "cost_per_outcome": 2.1,
+    "incidents": [
+      "day 45: stale sensor mapping"
+    ],
+    "retain_until_day": 1460
+  },
+  "successor": {
+    "agent": "maintenance-planner",
+    "status": "live",
+    "suite": "sensor-alerts@3",
+    "pass_rate": 0.94,
+    "cost_per_outcome": 1.8
+  },
+  "tokens": [
+    {
+      "id": "token-a",
+      "active": true
+    },
+    {
+      "id": "token-b",
+      "active": true
+    }
+  ],
+  "identity_active": true,
+  "traces": [
+    {
+      "day": 260,
+      "caller": "unlisted-night-job",
+      "callee": "sensor-alert-sorter"
+    },
+    {
+      "day": 330,
+      "caller": "plant3-console",
+      "callee": "sensor-alert-sorter"
+    },
+    {
+      "day": 10,
+      "caller": "obsolete-client",
+      "callee": "sensor-alert-sorter"
+    }
+  ],
+  "memory": [
+    {
+      "id": "sensor-map",
+      "source": "asset-register@8"
+    }
+  ],
+  "golden_set": [
+    "normal",
+    "stale",
+    "critical"
+  ],
+  "eval_history": [
+    {
+      "bundle": "sensor-alert-sorter@6",
+      "passed": 91,
+      "total": 100
+    }
+  ],
+  "redirects": {}
+}

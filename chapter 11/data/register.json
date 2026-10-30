@@ -1,0 +1,454 @@
+[
+  {
+    "agent": "maintenance-planner",
+    "owner": "plant-operations",
+    "sponsor": "Alex Morgan",
+    "attested_day": 180,
+    "tier": "high",
+    "rung": 1,
+    "ceiling": 3,
+    "bundle": "maintenance@41.3",
+    "status": "live",
+    "purpose": "Draft maintenance work orders across four plants",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "routine_work_order"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 12.5,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "invoice-triage",
+    "owner": "invoice-triage-team",
+    "sponsor": "Sponsor 2",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "invoice-triage@1",
+    "status": "live",
+    "purpose": "Operate the invoice-triage workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "sales-quote",
+    "owner": "sales-quote-team",
+    "sponsor": "Sponsor 3",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "sales-quote@1",
+    "status": "live",
+    "purpose": "Operate the sales-quote workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "procurement-advisor",
+    "owner": "procurement-advisor-team",
+    "sponsor": "Sponsor 4",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 4,
+    "bundle": "procurement-advisor@1",
+    "status": "live",
+    "purpose": "Operate the procurement-advisor workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "sensor-alert-sorter",
+    "owner": "sensor-alert-sorter-team",
+    "sponsor": "Sponsor 5",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "sensor-alert-sorter@1",
+    "status": "live",
+    "purpose": "Operate the sensor-alert-sorter workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "parts-availability",
+    "owner": "parts-availability-team",
+    "sponsor": "Sponsor 6",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "parts-availability@1",
+    "status": "live",
+    "purpose": "Operate the parts-availability workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [
+      "maintenance-planner"
+    ],
+    "contract_version": 3,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "spares-forecast",
+    "owner": "spares-forecast-team",
+    "sponsor": "Sponsor 7",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "spares-forecast@1",
+    "status": "live",
+    "purpose": "Operate the spares-forecast workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "plant-d-scheduler",
+    "owner": "plant-d-scheduler-team",
+    "sponsor": "Sponsor 8",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 3,
+    "bundle": "plant-d-scheduler@1",
+    "status": "suspended",
+    "purpose": "Operate the plant-d-scheduler workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "it-helpdesk",
+    "owner": "it-helpdesk-team",
+    "sponsor": "Sponsor 9",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 3,
+    "bundle": "it-helpdesk@1",
+    "status": "live",
+    "purpose": "Operate the it-helpdesk workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "credit-review",
+    "owner": "credit-review-team",
+    "sponsor": "Sponsor 10",
+    "attested_day": 180,
+    "tier": "high",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "credit-review@1",
+    "status": "live",
+    "purpose": "Operate the credit-review workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "candidate-summary",
+    "owner": "candidate-summary-team",
+    "sponsor": "Sponsor 11",
+    "attested_day": 180,
+    "tier": "high",
+    "rung": 0,
+    "ceiling": 0,
+    "bundle": "candidate-summary@1",
+    "status": "live",
+    "purpose": "Operate the candidate-summary workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "medication-reconciliation",
+    "owner": "medication-reconciliation-team",
+    "sponsor": "Sponsor 12",
+    "attested_day": 180,
+    "tier": "high",
+    "rung": 0,
+    "ceiling": 0,
+    "bundle": "medication-reconciliation@1",
+    "status": "live",
+    "purpose": "Operate the medication-reconciliation workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "legacy-stock-helper",
+    "owner": "legacy-stock-helper-team",
+    "sponsor": "Sponsor 13",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "legacy-stock-helper@1",
+    "status": "suspended",
+    "purpose": "Operate the legacy-stock-helper workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "retired-alert-helper",
+    "owner": "retired-alert-helper-team",
+    "sponsor": "Sponsor 14",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "retired-alert-helper@1",
+    "status": "suspended",
+    "purpose": "Operate the retired-alert-helper workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  },
+  {
+    "agent": "direct-model-helper",
+    "owner": "direct-model-helper-team",
+    "sponsor": "Sponsor 15",
+    "attested_day": 180,
+    "tier": "medium",
+    "rung": 1,
+    "ceiling": 1,
+    "bundle": "direct-model-helper@1",
+    "status": "suspended",
+    "purpose": "Operate the direct-model-helper workflow",
+    "retirement_trigger": "A successor clears the same suite at lower cost",
+    "always_approve": [
+      "lockout",
+      "safety_critical"
+    ],
+    "allow_actions": [
+      "read"
+    ],
+    "consumers": [],
+    "contract_version": 1,
+    "cost_per_outcome": 5.0,
+    "drift": {
+      "model": "within band",
+      "input": "within band",
+      "knowledge": "within band",
+      "outcome": "within band",
+      "cost_speed": "within band"
+    }
+  }
+]

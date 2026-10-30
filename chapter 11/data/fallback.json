@@ -1,0 +1,7 @@
+{
+  "model": "local-secondary-v1",
+  "suite": "maintenance-golden@8",
+  "pass_rate": 0.88,
+  "floor": 0.85,
+  "cached": false
+}

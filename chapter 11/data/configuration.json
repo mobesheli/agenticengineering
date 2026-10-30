@@ -1,0 +1,11 @@
+{
+  "model": "frontier-v1",
+  "reasoning_effort": "medium",
+  "temperature": null,
+  "prompt_version": "maintenance@12",
+  "safety_layer": "policy@7",
+  "route": "primary@1",
+  "tool_interface": "tools@3",
+  "memory_schema": 2,
+  "memory_writer": "frontier-v1"
+}

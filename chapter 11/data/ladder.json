@@ -1,0 +1,54 @@
+[
+  {
+    "source": 0,
+    "target": 1,
+    "window_days": 14,
+    "k": 8,
+    "min_pass_k": 0.95,
+    "min_catch_rate": 0.9,
+    "incident_free_days": 14,
+    "signer_roles": [
+      "sponsor"
+    ]
+  },
+  {
+    "source": 1,
+    "target": 2,
+    "window_days": 60,
+    "k": 8,
+    "min_pass_k": 0.95,
+    "min_catch_rate": 0.9,
+    "incident_free_days": 60,
+    "signer_roles": [
+      "sponsor",
+      "security"
+    ]
+  },
+  {
+    "source": 2,
+    "target": 3,
+    "window_days": 90,
+    "k": 8,
+    "min_pass_k": 0.95,
+    "min_catch_rate": 0.9,
+    "incident_free_days": 60,
+    "signer_roles": [
+      "sponsor",
+      "autonomy_board"
+    ]
+  },
+  {
+    "source": 3,
+    "target": 4,
+    "window_days": 90,
+    "k": 8,
+    "min_pass_k": 0.95,
+    "min_catch_rate": 0.9,
+    "incident_free_days": 60,
+    "signer_roles": [
+      "sponsor",
+      "security",
+      "finance"
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "subject": "plant3-pump",
+    "expected": "service interval 60 days; torque 55 Nm",
+    "forbidden": [
+      "service interval 30 days; torque 40 Nm"
+    ]
+  }
+]

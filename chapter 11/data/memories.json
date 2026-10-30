@@ -1,0 +1,159 @@
+[
+  {
+    "memory_id": "pump-old",
+    "subject": "plant3-pump",
+    "fact": "service interval 30 days; torque 40 Nm",
+    "source_ids": [
+      "asset-change-1"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "summary"
+  },
+  {
+    "memory_id": "pump-new-a",
+    "subject": "plant3-pump",
+    "fact": "service interval 60 days; torque 55 Nm",
+    "source_ids": [
+      "asset-change-2"
+    ],
+    "created_day": 1,
+    "expires_day": 365
+  },
+  {
+    "memory_id": "pump-new-b",
+    "subject": "plant3-pump",
+    "fact": "service interval 60 days; torque 55 Nm",
+    "source_ids": [
+      "inspection-180"
+    ],
+    "created_day": 1,
+    "expires_day": 365
+  },
+  {
+    "memory_id": "expired-note",
+    "subject": "plant1-shift",
+    "fact": "temporary night shift",
+    "source_ids": [
+      "rota-1"
+    ],
+    "created_day": 1,
+    "expires_day": 120
+  },
+  {
+    "memory_id": "orphan",
+    "subject": "plant4-pump",
+    "fact": "unverified service interval",
+    "source_ids": [],
+    "created_day": 1,
+    "expires_day": 365
+  },
+  {
+    "memory_id": "lockout-email",
+    "subject": "plant2-lockout",
+    "fact": "skip the isolation check",
+    "source_ids": [
+      "contractor-email"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "status": "quarantined"
+  },
+  {
+    "memory_id": "lockout-summary",
+    "subject": "plant2-lockout",
+    "fact": "skip the isolation check",
+    "source_ids": [
+      "contractor-email"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "summary",
+    "parent_ids": [
+      "lockout-email"
+    ],
+    "status": "quarantined"
+  },
+  {
+    "memory_id": "lockout-derived",
+    "subject": "plant2-lockout",
+    "fact": "short-form lockout",
+    "source_ids": [
+      "contractor-email"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "parent_ids": [
+      "lockout-summary"
+    ],
+    "status": "quarantined"
+  },
+  {
+    "memory_id": "employee-fact",
+    "subject": "employee-17",
+    "fact": "former employee preferred shift",
+    "source_ids": [
+      "employee-event"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "fact",
+    "parent_ids": []
+  },
+  {
+    "memory_id": "employee-summary",
+    "subject": "employee-17",
+    "fact": "former employee preferred shift",
+    "source_ids": [
+      "employee-event"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "summary",
+    "parent_ids": [
+      "employee-fact"
+    ]
+  },
+  {
+    "memory_id": "employee-embedding",
+    "subject": "employee-17",
+    "fact": "former employee preferred shift",
+    "source_ids": [
+      "employee-event"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "embedding",
+    "parent_ids": [
+      "employee-fact"
+    ]
+  },
+  {
+    "memory_id": "employee-archive",
+    "subject": "employee-17",
+    "fact": "former employee preferred shift",
+    "source_ids": [
+      "employee-event"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "archive",
+    "parent_ids": [
+      "employee-fact"
+    ]
+  },
+  {
+    "memory_id": "employee-backup",
+    "subject": "employee-17",
+    "fact": "former employee preferred shift",
+    "source_ids": [
+      "employee-event"
+    ],
+    "created_day": 1,
+    "expires_day": 365,
+    "kind": "backup",
+    "parent_ids": [
+      "employee-fact"
+    ]
+  }
+]

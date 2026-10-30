@@ -1,0 +1,1160 @@
+[
+  {
+    "event_id": "event-01",
+    "day": 2,
+    "kind": "drift",
+    "title": "A provider default changes the effective configuration",
+    "payload": {
+      "readings": [
+        {
+          "signal": "model",
+          "value": 1.0,
+          "baseline": 1.0,
+          "band": 0.1,
+          "absolute_band": 0
+        },
+        {
+          "signal": "input",
+          "value": 1.0,
+          "baseline": 1.0,
+          "band": 0.1,
+          "absolute_band": 0
+        },
+        {
+          "signal": "knowledge",
+          "value": 0.02,
+          "baseline": 0.02,
+          "band": 0.1,
+          "absolute_band": 0.01
+        },
+        {
+          "signal": "outcome",
+          "value": 0.92,
+          "baseline": 0.8,
+          "band": 0.1,
+          "absolute_band": 0
+        },
+        {
+          "signal": "cost_speed",
+          "value": 1.2,
+          "baseline": 1.0,
+          "band": 0.1,
+          "absolute_band": 0
+        }
+      ],
+      "effective": {
+        "model": "frontier-v1",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "prompt_version": "maintenance@12",
+        "safety_layer": "policy@7",
+        "route": "primary@1",
+        "tool_interface": "tools@3",
+        "memory_schema": 2,
+        "memory_writer": "frontier-v1"
+      }
+    }
+  },
+  {
+    "event_id": "event-02",
+    "day": 3,
+    "kind": "release",
+    "title": "The configuration change earns a candidate release",
+    "payload": {
+      "bundle": "maintenance@41.4",
+      "configuration": {
+        "model": "frontier-v1",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "prompt_version": "maintenance@12",
+        "safety_layer": "policy@7",
+        "route": "primary@1",
+        "tool_interface": "tools@3",
+        "memory_schema": 2,
+        "memory_writer": "frontier-v1"
+      },
+      "cost": 13.0
+    }
+  },
+  {
+    "event_id": "event-03",
+    "day": 31,
+    "kind": "note",
+    "title": "A successor model enters shadow evaluation",
+    "payload": {
+      "detail": "Quality, cost, memory probes, and escalation rate are evaluated before promotion."
+    }
+  },
+  {
+    "event_id": "event-04",
+    "day": 40,
+    "kind": "release",
+    "title": "The successor and shorter prompt clear the release gate",
+    "payload": {
+      "bundle": "maintenance@42.0",
+      "configuration": {
+        "model": "frontier-v2",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "prompt_version": "maintenance@13",
+        "safety_layer": "policy@7",
+        "route": "primary@1",
+        "tool_interface": "tools@3",
+        "memory_schema": 2,
+        "memory_writer": "frontier-v2"
+      },
+      "cost": 12.2
+    }
+  },
+  {
+    "event_id": "event-05",
+    "day": 58,
+    "kind": "note",
+    "title": "An approved secondary carries the simulated outage drill",
+    "payload": {
+      "detail": "The secondary passes 88% against an 85% floor on the same golden suite."
+    }
+  },
+  {
+    "event_id": "event-06",
+    "day": 90,
+    "kind": "attest",
+    "title": "Quarterly sponsor attestation",
+    "payload": {
+      "sponsor": "Alex Morgan"
+    }
+  },
+  {
+    "event_id": "event-07",
+    "day": 97,
+    "kind": "drop",
+    "title": "Three consecutive denials drop the agent to draft only",
+    "payload": {
+      "consecutive_denials": 3,
+      "denials": 3,
+      "drift_hold_active": false
+    }
+  },
+  {
+    "event_id": "event-08",
+    "day": 99,
+    "kind": "promotion",
+    "title": "Revalidated evidence restores approval on every action",
+    "payload": {
+      "target": 1,
+      "evidence": {
+        "bundle": "maintenance@42.0",
+        "observed_days": 59,
+        "trials": [
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "planted_caught": 19,
+        "planted_total": 20,
+        "cost_in_band": true,
+        "days_since_incident": 59,
+        "exception_rate_stable": true,
+        "reviewer_miss_rate": 0.02,
+        "review_cadence_met": true,
+        "unreviewed_irreversible_actions": 0,
+        "drill_age_days": 10,
+        "finance_controls": false
+      },
+      "signers": {
+        "sponsor": "Alex Morgan"
+      }
+    }
+  },
+  {
+    "event_id": "event-09",
+    "day": 140,
+    "kind": "promotion",
+    "title": "Reviewers miss planted checks; promotion is refused",
+    "payload": {
+      "target": 2,
+      "evidence": {
+        "bundle": "maintenance@42.0",
+        "observed_days": 90,
+        "trials": [
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "planted_caught": 7,
+        "planted_total": 20,
+        "cost_in_band": true,
+        "days_since_incident": 90,
+        "exception_rate_stable": true,
+        "reviewer_miss_rate": 0.02,
+        "review_cadence_met": true,
+        "unreviewed_irreversible_actions": 0,
+        "drill_age_days": 10,
+        "finance_controls": false
+      },
+      "signers": {
+        "sponsor": "Alex Morgan",
+        "security": "Jordan Lee"
+      }
+    }
+  },
+  {
+    "event_id": "event-10",
+    "day": 170,
+    "kind": "promotion",
+    "title": "The repaired review process earns approval by exception",
+    "payload": {
+      "target": 2,
+      "evidence": {
+        "bundle": "maintenance@42.0",
+        "observed_days": 90,
+        "trials": [
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "planted_caught": 19,
+        "planted_total": 20,
+        "cost_in_band": true,
+        "days_since_incident": 90,
+        "exception_rate_stable": true,
+        "reviewer_miss_rate": 0.02,
+        "review_cadence_met": true,
+        "unreviewed_irreversible_actions": 0,
+        "drill_age_days": 10,
+        "finance_controls": false
+      },
+      "signers": {
+        "sponsor": "Alex Morgan",
+        "security": "Jordan Lee"
+      }
+    }
+  },
+  {
+    "event_id": "event-11",
+    "day": 180,
+    "kind": "attest",
+    "title": "Quarterly sponsor attestation",
+    "payload": {
+      "sponsor": "Alex Morgan"
+    }
+  },
+  {
+    "event_id": "event-12",
+    "day": 180,
+    "kind": "note",
+    "title": "Memory hygiene repairs the stale pump summary",
+    "payload": {
+      "detail": "Expire, supersede, consolidate, verify; score recall and forgetting separately."
+    }
+  },
+  {
+    "event_id": "event-13",
+    "day": 240,
+    "kind": "note",
+    "title": "The fleet census finds eleven additional agents",
+    "payload": {
+      "detail": "Fifteen register entries are reconciled with two identity registries; four agents are suspended."
+    }
+  },
+  {
+    "event_id": "event-14",
+    "day": 260,
+    "kind": "note",
+    "title": "The signed supplier agent stays behind approval",
+    "payload": {
+      "detail": "Counterparty identity does not grant authority; external proposals remain at ceiling zero."
+    }
+  },
+  {
+    "event_id": "event-15",
+    "day": 270,
+    "kind": "attest",
+    "title": "Quarterly sponsor attestation",
+    "payload": {
+      "sponsor": "Alex Morgan"
+    }
+  },
+  {
+    "event_id": "event-16",
+    "day": 270,
+    "kind": "promotion",
+    "title": "Sampled review and a timed drill earn audited autonomy",
+    "payload": {
+      "target": 3,
+      "evidence": {
+        "bundle": "maintenance@42.0",
+        "observed_days": 100,
+        "trials": [
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "planted_caught": 19,
+        "planted_total": 20,
+        "cost_in_band": true,
+        "days_since_incident": 100,
+        "exception_rate_stable": true,
+        "reviewer_miss_rate": 0.02,
+        "review_cadence_met": true,
+        "unreviewed_irreversible_actions": 0,
+        "drill_age_days": 10,
+        "finance_controls": false
+      },
+      "signers": {
+        "sponsor": "Alex Morgan",
+        "autonomy_board": "Sam Rivera"
+      }
+    }
+  },
+  {
+    "event_id": "event-17",
+    "day": 300,
+    "kind": "note",
+    "title": "The loop proposes its first independently evaluated fix",
+    "payload": {
+      "detail": "The proposer can open a candidate, but cannot edit criteria or merge it."
+    }
+  },
+  {
+    "event_id": "event-18",
+    "day": 314,
+    "kind": "note",
+    "title": "A judge-only gain is held for independent review",
+    "payload": {
+      "detail": "Longer drafts please the judge without improving held-out outcomes or edit rate."
+    }
+  },
+  {
+    "event_id": "event-19",
+    "day": 320,
+    "kind": "note",
+    "title": "The second drill pages a person in six minutes",
+    "payload": {
+      "detail": "Soft deletion limits fast damage; unresolved severe alerts pause after thirty minutes."
+    }
+  },
+  {
+    "event_id": "event-20",
+    "day": 330,
+    "kind": "sponsor_left",
+    "title": "The sponsor leaves; promotions and renewal are blocked",
+    "payload": {}
+  },
+  {
+    "event_id": "event-21",
+    "day": 340,
+    "kind": "note",
+    "title": "The sensor-alert sibling retires after its tokens are verified dead",
+    "payload": {
+      "detail": "Trace-discovered callers move to the maintenance planner and an obituary records retention."
+    }
+  },
+  {
+    "event_id": "event-22",
+    "day": 365,
+    "kind": "attest",
+    "title": "The new sponsor signs the annual review",
+    "payload": {
+      "sponsor": "Taylor Brooks"
+    }
+  },
+  {
+    "event_id": "event-23",
+    "day": 365,
+    "kind": "note",
+    "title": "The maintenance planner finishes at rung three of ceiling three",
+    "payload": {
+      "cost": 11.35,
+      "detail": "Lockout and safety-critical work still require approval."
+    }
+  }
+]

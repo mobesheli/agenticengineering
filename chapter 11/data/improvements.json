@@ -1,0 +1,58 @@
+[
+  {
+    "proposal": {
+      "proposal_id": "tool-description-1",
+      "proposer": "maintenance-optimizer",
+      "target": "tool_description"
+    },
+    "evaluation": {
+      "proposal_id": "tool-description-1",
+      "evaluator": "independent-eval-runner",
+      "replay": [
+        0.6,
+        1.0
+      ],
+      "golden": [
+        0.94,
+        0.96
+      ],
+      "held_out": [
+        0.92,
+        0.94
+      ],
+      "edit_rate": [
+        0.12,
+        0.09
+      ],
+      "held_out_visible_to_proposer": false
+    }
+  },
+  {
+    "proposal": {
+      "proposal_id": "longer-drafts-2",
+      "proposer": "maintenance-optimizer",
+      "target": "prompt"
+    },
+    "evaluation": {
+      "proposal_id": "longer-drafts-2",
+      "evaluator": "independent-eval-runner",
+      "replay": [
+        0.7,
+        1.0
+      ],
+      "golden": [
+        0.94,
+        0.97
+      ],
+      "held_out": [
+        0.92,
+        0.92
+      ],
+      "edit_rate": [
+        0.12,
+        0.12
+      ],
+      "held_out_visible_to_proposer": false
+    }
+  }
+]

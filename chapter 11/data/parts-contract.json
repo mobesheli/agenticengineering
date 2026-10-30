@@ -1,0 +1,25 @@
+{
+  "producer": "parts-availability",
+  "version": 3,
+  "previous": {
+    "version": 2,
+    "sunset_day": 330,
+    "compatibility_mode": true
+  },
+  "consumers": [
+    {
+      "agent": "maintenance-planner",
+      "requires": {
+        "part_id": "string",
+        "lead_time_days": "nonnegative_integer"
+      }
+    },
+    {
+      "agent": "spares-forecast",
+      "requires": {
+        "part_id": "string",
+        "available_quantity": "nonnegative_integer"
+      }
+    }
+  ]
+}

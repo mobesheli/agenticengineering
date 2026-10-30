@@ -1,0 +1,8 @@
+openai-agents==0.18.3
+pydantic>=2.7,<3
+pytest==9.0.2
+ruff==0.16.7
+notebook
+nbclient
+nbformat
+ipykernel
