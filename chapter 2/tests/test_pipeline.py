@@ -44,11 +44,11 @@ async def test_incomplete_claim_stops_after_intake(monkeypatch, relevant_classif
     wire(
         monkeypatch,
         classifier=relevant_classifier,
-        intake=intake_script(False, ["police_report"]),
+        intake=intake_script(False, ["contractor_estimate"]),
     )
     outcome = await process_claim(SAMPLE_CLAIMS["CLM-4822"])
     assert outcome.status == "incomplete"
-    assert outcome.missing_documents == ["police_report"]
+    assert outcome.missing_documents == ["contractor_estimate"]
 
 
 @pytest.mark.asyncio

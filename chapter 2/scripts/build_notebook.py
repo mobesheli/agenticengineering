@@ -134,7 +134,7 @@ from claims_pipeline.agents import triage_agent
 config = RunConfig(handoff_input_filter=handoff_filters.remove_all_tools)
 result = await Runner.run(
     triage_agent,
-    "Does my HO-2024822 policy cover a stolen bicycle?",
+    "Does my HO-2024822 policy cover wind damage to a detached garage?",
     run_config=config,
 )
 print("answered by:", result.last_agent.name)

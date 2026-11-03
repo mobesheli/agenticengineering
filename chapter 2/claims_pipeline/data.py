@@ -69,10 +69,10 @@ POLICIES: dict[str, Policy] = {
         policyholder_id="PH-10022",
         form="HO-3",
         sections={
-            "Coverage C": "Personal property coverage up to $120,000.",
-            "Theft": (
-                "Theft of personal property is covered when reported to the "
-                "police within 72 hours and supported by an inventory list."
+            "Coverage B": "Other structures on the premises, such as a detached garage, up to $45,000.",
+            "Windstorm": (
+                "Direct physical loss caused by windstorm or hail is a covered peril, "
+                "including damage to roofing on other structures."
             ),
             "Deductible": "A $500 deductible applies to each covered loss.",
         },
@@ -123,8 +123,8 @@ SAMPLE_CLAIMS: dict[str, Claim] = {
         claim_type="property",
         amount_usd=6_800.0,
         date_of_loss="2026-02-02",
-        submitted_documents=["inventory_list"],
-        description="Theft of tools and a bicycle from a detached garage.",
+        submitted_documents=["photos"],
+        description="Wind damage to the roof of a detached garage during an overnight storm.",
     ),
     "CLM-4823": Claim(
         claim_id="CLM-4823",

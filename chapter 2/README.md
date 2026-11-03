@@ -49,6 +49,7 @@ Each section of the chapter has a runnable script under `examples/`:
 | Structuring agent output with Pydantic | `python -m examples.structured_output` |
 | Building function tools | `python -m examples.tool_using_agent` |
 | Streaming agent responses | `python -m examples.streaming` |
+| Guardrails and constraints | `python -m examples.guardrails` |
 | Implementing handoffs | `python -m examples.handoffs` |
 | Enabling tracing | `python -m examples.tracing` |
 
@@ -57,7 +58,7 @@ Each section of the chapter has a runnable script under `examples/`:
 ```bash
 python main.py list-claims
 python main.py run --claim CLM-4821     # complete claim, approved
-python main.py run --claim CLM-4822     # missing document, stops after intake
+python main.py run --claim CLM-4822     # missing contractor estimate, stops after intake
 python main.py run --claim CLM-4823     # large loss, escalated to a human
 python main.py run --off-topic          # input guardrail rejects the request
 ```
@@ -77,9 +78,9 @@ test double, so they run in about a second and cost nothing. Set
 
 ## Cost
 
-A full pipeline run makes four to six model calls: the topic classifier, the
-intake agent (one tool call), the reviewer (two tool calls), and, for escalated
-claims, the coordinator. The registry in `claims_pipeline/settings.py` pins a
+A full pipeline run makes between three and seven model calls: the topic
+classifier, the intake agent (one tool call), the reviewer (two tool calls), and,
+for escalated claims, the coordinator. The registry in `claims_pipeline/settings.py` pins a
 small model for classification and intake and a mid-tier model for review. At
 the list prices current when this chapter was written, one run costs a cent or
 two; running every example and all three sample claims a dozen times stays

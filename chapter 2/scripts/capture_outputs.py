@@ -21,6 +21,7 @@ COMMANDS: dict[str, list[str]] = {
     "structured_output": [sys.executable, "-m", "examples.structured_output"],
     "tool_using_agent": [sys.executable, "-m", "examples.tool_using_agent"],
     "streaming": [sys.executable, "-m", "examples.streaming"],
+    "guardrails": [sys.executable, "-m", "examples.guardrails"],
     "handoffs": [sys.executable, "-m", "examples.handoffs"],
     "tracing": [sys.executable, "-m", "examples.tracing"],
     "pipeline_CLM-4821": [sys.executable, "main.py", "run", "--claim", "CLM-4821"],

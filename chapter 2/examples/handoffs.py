@@ -15,7 +15,7 @@ config = RunConfig(
 async def main() -> None:
     result = await Runner.run(
         triage_agent,
-        "Does my HO-2024822 policy cover a stolen bicycle?",
+        "Does my HO-2024822 policy cover wind damage to a detached garage?",
         run_config=config,
     )
     print(f"answered by: {result.last_agent.name}")

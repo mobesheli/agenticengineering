@@ -30,10 +30,7 @@ def fallback_verdict(data: RunErrorHandlerInput) -> ClaimVerdict:
 
 
 def build_run_config() -> RunConfig:
-    return RunConfig(
-        workflow_name="claims_pipeline",
-        trace_include_sensitive_data=False,
-    )
+    return RunConfig(trace_include_sensitive_data=False)
 
 
 async def process_claim(claim: Claim) -> PipelineOutcome:

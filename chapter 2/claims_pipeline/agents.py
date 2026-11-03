@@ -25,7 +25,7 @@ REVIEW_INSTRUCTIONS = (
     "3. Assess whether the loss is covered\n"
     "4. Flag anything unusual for human review\n\n"
     "Never approve a claim without citing the specific policy section. "
-    "Report your confidence honestly on a 0.0 to 1.0 scale."
+    "Report your confidence as a number between 0.0 and 1.0."
 )
 
 ESCALATION_INSTRUCTIONS = (

@@ -15,7 +15,13 @@ import sys
 
 from openai import APIError, AuthenticationError, RateLimitError
 
-from claims_pipeline.agents import claims_reviewer, escalation_agent, intake_agent, triage_agent
+from claims_pipeline.agents import (
+    claims_reviewer,
+    escalation_agent,
+    intake_agent,
+    policy_advisor,
+    triage_agent,
+)
 from claims_pipeline.data import OFF_TOPIC_REQUEST, SAMPLE_CLAIMS
 from claims_pipeline.models import Claim
 from claims_pipeline.pipeline import process_claim
@@ -23,7 +29,7 @@ from claims_pipeline.settings import MODELS
 
 
 def describe() -> None:
-    for agent in (intake_agent, claims_reviewer, escalation_agent, triage_agent):
+    for agent in (intake_agent, claims_reviewer, escalation_agent, policy_advisor, triage_agent):
         tools = [tool.name for tool in agent.tools] or ["(none)"]
         guards = [g.name for g in agent.input_guardrails] + [
             g.name for g in agent.output_guardrails
