@@ -1,43 +1,73 @@
-from __future__ import annotations
+"""Function tools that give the agents access to the insurer's systems."""
 
 from agents import function_tool
 
-from .data import get_claim, get_claim_history_records, get_policy, required_documents_for
+from .data import REQUIRED_DOCS, db, format_claims_summary
+from .settings import MAX_HISTORY_YEARS, TOOL_TIMEOUT_SECONDS
 
 
-@function_tool
-def check_required_documents(claim_id: str) -> str:
-    """Check whether a claim has the documents required for the incident type."""
-    claim = get_claim(claim_id)
-    required_documents = required_documents_for(claim.incident_type)
-    missing_documents = sorted(set(required_documents) - set(claim.submitted_documents))
-    if missing_documents:
-        missing = ", ".join(missing_documents)
-        return f"Missing documents for {claim_id}: {missing}."
-    return f"Claim {claim_id} includes every required document."
+@function_tool(
+    timeout=TOOL_TIMEOUT_SECONDS,
+    timeout_behavior="error_as_result",
+)
+async def lookup_policy(
+    policy_number: str,
+    section: str | None = None,
+) -> str:
+    """Look up an insurance policy by number.
 
-
-@function_tool
-def lookup_policy(policy_number: str, section: str | None = None) -> str:
-    """Look up a sample insurance policy and optionally return one section."""
-    policy = get_policy(policy_number)
+    Returns the full policy summary or a specific section.
+    Policy numbers use the format XX-XXXXXXX, for example HO-2024821.
+    """
+    policy = await db.get_policy(policy_number)
+    if not policy:
+        return (
+            f"No policy found for {policy_number}. "
+            "Verify the number format: XX-XXXXXXX."
+        )
     if section:
-        section_text = policy.sections.get(section)
-        if not section_text:
-            return f"Section {section} was not found for policy {policy_number}."
-        return f"{section}: {section_text}"
+        return policy.get_section(section)
+    return policy.summary()
 
-    section_names = ", ".join(sorted(policy.sections))
-    return (
-        f"Policy {policy.policy_number} has deductible {policy.deductible}, "
-        f"coverage limit {policy.coverage_limit}, and sections: {section_names}."
-    )
+
+@function_tool(
+    timeout=TOOL_TIMEOUT_SECONDS,
+    timeout_behavior="error_as_result",
+)
+async def get_claim_history(
+    policyholder_id: str,
+    years: int = 3,
+) -> str:
+    """Retrieve claims history for a policyholder.
+
+    Returns prior claims within the requested number of years.
+    Use this to check for patterns or prior similar claims.
+    Do not request more than 5 years of history.
+    """
+    if not 1 <= years <= MAX_HISTORY_YEARS:
+        return (
+            f"Invalid range: years must be between 1 and {MAX_HISTORY_YEARS}. "
+            f"You requested {years}."
+        )
+    claims = await db.get_claims(policyholder_id, years=years)
+    return format_claims_summary(claims)
 
 
 @function_tool
-def get_claim_history(policyholder_id: str, years: int = 3) -> str:
-    """Return the small sample claims history used by the chapter demo."""
-    history = get_claim_history_records(policyholder_id)
-    if not history:
-        return f"No claims found for {policyholder_id} in the last {years} years."
-    return "\n".join(history)
+async def check_required_documents(
+    claim_type: str,
+    submitted_docs: list[str],
+) -> str:
+    """Check whether all required documents for a claim are present.
+
+    Returns the list of missing documents, or confirms the claim is complete.
+    Claim types: property, auto, liability, workers_comp.
+    """
+    required = REQUIRED_DOCS.get(claim_type)
+    if required is None:
+        known = ", ".join(REQUIRED_DOCS)
+        return f"Unknown claim type '{claim_type}'. Known types: {known}."
+    missing = [doc for doc in required if doc not in submitted_docs]
+    if not missing:
+        return "All required documents are present."
+    return f"Missing documents: {', '.join(missing)}"

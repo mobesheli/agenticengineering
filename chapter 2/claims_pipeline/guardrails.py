@@ -1,66 +1,49 @@
-from __future__ import annotations
+"""Input and output guardrails for the claims pipeline."""
 
-import json
-import re
 from typing import Any
 
-from agents import Agent, GuardrailFunctionOutput, RunContextWrapper
+from agents import Agent, GuardrailFunctionOutput, RunContextWrapper, Runner
 
 from .models import ClaimVerdict, TopicCheck
+from .settings import MODELS
 
-CLAIM_ID_PATTERN = re.compile(r"CLM-\d{4}")
+topic_classifier = Agent(
+    name="topic_classifier",
+    model=MODELS.fast,
+    instructions=(
+        "Decide whether the text is an insurance claim or a question "
+        "about an insurance policy. Set is_relevant to true only for "
+        "insurance claims and policy matters. Give a one-sentence reason."
+    ),
+    output_type=TopicCheck,
+)
 
 
-def _coerce_input_text(raw_input: str | list[dict[str, Any]]) -> str:
-    if isinstance(raw_input, str):
-        return raw_input
-    return json.dumps(raw_input)
-
-
-def is_claim_related(text: str) -> bool:
-    lowered = text.lower()
-    return "claim" in lowered and (
-        "policy" in lowered or CLAIM_ID_PATTERN.search(text) is not None
+async def reject_non_insurance(
+    ctx: RunContextWrapper[Any],
+    agent: Agent[Any],
+    input_text: Any,
+) -> GuardrailFunctionOutput:
+    result = await Runner.run(
+        topic_classifier,
+        input_text,
+        context=ctx.context,
+    )
+    check: TopicCheck = result.final_output
+    return GuardrailFunctionOutput(
+        output_info=check,
+        tripwire_triggered=not check.is_relevant,
     )
 
 
-def validate_claim_verdict(verdict: ClaimVerdict) -> tuple[bool, str]:
-    if not verdict.cited_sections:
-        return False, "The verdict must cite at least one policy section."
-    if verdict.confidence < 0.0 or verdict.confidence > 1.0:
-        return False, "The confidence score must be between 0.0 and 1.0."
-    return True, "The verdict passed output validation."
-
-
-def check_topic_relevance(
-    run_context: RunContextWrapper[None],
+async def enforce_citations(
+    ctx: RunContextWrapper[Any],
     agent: Agent[Any],
-    input_value: str | list[dict[str, Any]],
+    output: ClaimVerdict,
 ) -> GuardrailFunctionOutput:
-    del run_context
-    del agent
-    text = _coerce_input_text(input_value)
-    topic_check = TopicCheck(is_relevant=is_claim_related(text))
+    decided = output.decision in ("approve", "deny")
+    has_citations = len(output.cited_sections) > 0
     return GuardrailFunctionOutput(
-        output_info=topic_check,
-        tripwire_triggered=not topic_check.is_relevant,
-    )
-
-
-def require_citations_and_valid_confidence(
-    run_context: RunContextWrapper[None],
-    agent: Agent[Any],
-    output: Any,
-) -> GuardrailFunctionOutput:
-    del run_context
-    del agent
-    if not isinstance(output, ClaimVerdict):
-        return GuardrailFunctionOutput(
-            output_info="Unexpected output type.",
-            tripwire_triggered=True,
-        )
-    is_valid, message = validate_claim_verdict(output)
-    return GuardrailFunctionOutput(
-        output_info=message,
-        tripwire_triggered=not is_valid,
+        output_info={"decision": output.decision, "citations": len(output.cited_sections)},
+        tripwire_triggered=decided and not has_citations,
     )

@@ -1,3 +1,5 @@
-from .pipeline import run_live_pipeline, run_offline_pipeline
+"""Chapter 2 companion project: a claims processing pipeline built on the OpenAI Agents SDK."""
 
-__all__ = ["run_live_pipeline", "run_offline_pipeline"]
+from .pipeline import process_claim
+
+__all__ = ["process_claim"]

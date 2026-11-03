@@ -1,89 +1,95 @@
-from __future__ import annotations
+"""Agent definitions for the claims pipeline and the handoff example."""
 
 from agents import Agent, InputGuardrail, OutputGuardrail
 
-from .guardrails import check_topic_relevance, require_citations_and_valid_confidence
+from .guardrails import enforce_citations, reject_non_insurance
 from .models import ClaimVerdict, EscalationReport, IntakeResult
+from .settings import MODELS
 from .tools import check_required_documents, get_claim_history, lookup_policy
 
-DEFAULT_MODEL = "gpt-4.1-mini"
+INTAKE_INSTRUCTIONS = (
+    "You are a claims intake specialist at a property and casualty "
+    "insurer. Use the document check tool to confirm that the claim "
+    "has every required document, then categorize the claim by type "
+    "and priority. Mark a claim urgent only when the description "
+    "indicates ongoing damage or a safety risk."
+)
 
+REVIEW_INSTRUCTIONS = (
+    "You are a senior insurance claims reviewer at a mid-size property "
+    "and casualty insurer. Your role is to evaluate submitted claims "
+    "against policy terms.\n\n"
+    "For each claim, perform these steps:\n"
+    "1. Look up the policy and identify the applicable sections\n"
+    "2. Check the policyholder's claims history for patterns\n"
+    "3. Assess whether the loss is covered\n"
+    "4. Flag anything unusual for human review\n\n"
+    "Never approve a claim without citing the specific policy section. "
+    "Report your confidence honestly on a 0.0 to 1.0 scale."
+)
 
-def build_claims_intake_agent(model: str = DEFAULT_MODEL) -> Agent:
-    return Agent(
-        name="claims_intake",
-        model=model,
-        instructions=(
-            "You are a claims intake specialist. "
-            "Use the document-checking tool, decide whether the claim is complete, "
-            "and return a short structured answer."
+ESCALATION_INSTRUCTIONS = (
+    "You are a claims escalation coordinator. Prepare a concise summary "
+    "for a human reviewer covering the original claim, the automated "
+    "assessment, and the specific reasons the claim was escalated. "
+    "Recommend one concrete next action."
+)
+
+intake_agent = Agent(
+    name="claims_intake",
+    model=MODELS.fast,
+    instructions=INTAKE_INSTRUCTIONS,
+    tools=[check_required_documents],
+    output_type=IntakeResult,
+    input_guardrails=[
+        InputGuardrail(
+            guardrail_function=reject_non_insurance,
+            name="reject_non_insurance",
+            run_in_parallel=False,
         ),
-        tools=[check_required_documents],
-        output_type=IntakeResult,
-        input_guardrails=[
-            InputGuardrail(
-                guardrail_function=check_topic_relevance,
-                name="claim_topic_check",
-                run_in_parallel=False,
-            )
-        ],
-    )
+    ],
+)
 
-
-def build_claims_reviewer_agent(model: str = DEFAULT_MODEL) -> Agent:
-    return Agent(
-        name="claims_reviewer",
-        model=model,
-        instructions=(
-            "You are a senior claims reviewer. "
-            "Use the policy and claims history tools when needed. "
-            "Always cite the policy section that supports your decision."
+claims_reviewer = Agent(
+    name="claims_reviewer",
+    model=MODELS.review,
+    instructions=REVIEW_INSTRUCTIONS,
+    tools=[lookup_policy, get_claim_history],
+    output_type=ClaimVerdict,
+    output_guardrails=[
+        OutputGuardrail(
+            guardrail_function=enforce_citations,
+            name="enforce_citations",
         ),
-        tools=[lookup_policy, get_claim_history],
-        output_type=ClaimVerdict,
-        output_guardrails=[
-            OutputGuardrail(
-                guardrail_function=require_citations_and_valid_confidence,
-                name="claim_verdict_check",
-            )
-        ],
-    )
+    ],
+)
 
+escalation_agent = Agent(
+    name="claims_escalation",
+    model=MODELS.review,
+    instructions=ESCALATION_INSTRUCTIONS,
+    output_type=EscalationReport,
+)
 
-def build_claims_escalation_agent(model: str = DEFAULT_MODEL) -> Agent:
-    return Agent(
-        name="claims_escalation",
-        model=model,
-        instructions=(
-            "You are a claims escalation coordinator. "
-            "Summarize why a claim needs a human reviewer and recommend the next action."
-        ),
-        output_type=EscalationReport,
-    )
+policy_advisor = Agent(
+    name="policy_advisor",
+    model=MODELS.review,
+    instructions=(
+        "You answer questions about policy coverage, exclusions, and "
+        "renewal terms. Use the policy lookup tool and cite the policy "
+        "section for every answer."
+    ),
+    tools=[lookup_policy],
+)
 
-
-def build_policy_advisor_agent(model: str = DEFAULT_MODEL) -> Agent:
-    return Agent(
-        name="policy_advisor",
-        model=model,
-        instructions=(
-            "Answer policy questions using the policy lookup tool. "
-            "Keep your explanation short and reference the policy section when possible."
-        ),
-        tools=[lookup_policy],
-        output_type=str,
-    )
-
-
-def build_router_agent(model: str = DEFAULT_MODEL) -> Agent:
-    reviewer = build_claims_reviewer_agent(model=model)
-    policy_advisor = build_policy_advisor_agent(model=model)
-    return Agent(
-        name="claims_router",
-        model=model,
-        instructions=(
-            "Route insurance claim review work to the claims reviewer. "
-            "Route general policy questions to the policy advisor."
-        ),
-        handoffs=[reviewer, policy_advisor],
-    )
+triage_agent = Agent(
+    name="triage",
+    model=MODELS.fast,
+    instructions=(
+        "You are an insurance triage agent. Classify incoming requests "
+        "and route them to the appropriate specialist. For claims, hand "
+        "off to the claims reviewer. For policy questions, hand off to "
+        "the policy advisor."
+    ),
+    handoffs=[claims_reviewer, policy_advisor],
+)
