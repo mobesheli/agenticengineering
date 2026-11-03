@@ -42,8 +42,11 @@ class Claim(BaseModel):
     date_of_loss: str
     submitted_documents: list[str]
     description: str
+    raw_submission: str | None = None
 
     def as_text(self) -> str:
+        if self.raw_submission:
+            return self.raw_submission
         documents = ", ".join(self.submitted_documents)
         return (
             f"Claim {self.claim_id}: {self.description} "

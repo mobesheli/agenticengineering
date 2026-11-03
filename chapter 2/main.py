@@ -71,7 +71,8 @@ def off_topic_claim() -> Claim:
         amount_usd=1.0,
         date_of_loss="2026-01-01",
         submitted_documents=[],
-        description=OFF_TOPIC_REQUEST,
+        description="A raw submission that is not a claim.",
+        raw_submission=OFF_TOPIC_REQUEST,
     )
 
 

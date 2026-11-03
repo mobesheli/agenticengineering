@@ -1,6 +1,4 @@
-"""The simplest agent in the chapter, run synchronously and asynchronously."""
-
-import asyncio
+"""The simplest agent in the chapter, run synchronously with Runner.run_sync."""
 
 from agents import Agent, Runner
 
@@ -26,17 +24,6 @@ CLAIM_TEXT = (
 )
 
 
-async def review_claim(claim_text: str) -> str:
-    result = await Runner.run(
-        claims_reviewer,
-        claim_text,
-        max_turns=10,
-    )
-    return result.final_output
-
-
 if __name__ == "__main__":
-    sync_result = Runner.run_sync(claims_reviewer, CLAIM_TEXT)
-    print(sync_result.final_output)
-    print("---")
-    print(asyncio.run(review_claim(CLAIM_TEXT)))
+    result = Runner.run_sync(claims_reviewer, CLAIM_TEXT)
+    print(result.final_output)

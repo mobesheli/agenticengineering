@@ -31,7 +31,7 @@ CELLS: list[tuple[str, str | None]] = [
     ),
     (
         "## Wiring the reasoning core\n\nThe simplest agent the SDK accepts: a name, a model from the "
-        "registry, and instructions. Nothing runs until the `Runner` is involved.",
+        "registry, and instructions. Nothing runs until the `Runner` is involved. A notebook already has an event loop running, so every cell here uses `await Runner.run` rather than `Runner.run_sync`, which the SDK documents as unusable inside a running loop.",
         '''from agents import Agent, Runner
 from claims_pipeline.settings import MODELS
 
@@ -54,7 +54,7 @@ CLAIM_TEXT = (
     "Submitted documents: photos, contractor estimate."
 )
 
-result = Runner.run_sync(claims_reviewer, CLAIM_TEXT, max_turns=10)
+result = await Runner.run(claims_reviewer, CLAIM_TEXT, max_turns=10)
 print(result.final_output)''',
     ),
     (
@@ -71,7 +71,7 @@ claims_reviewer = Agent(
     output_type=ClaimVerdict,
 )
 
-result = Runner.run_sync(claims_reviewer, CLAIM_TEXT)
+result = await Runner.run(claims_reviewer, CLAIM_TEXT)
 verdict = result.final_output
 print(type(verdict).__name__)
 print(verdict.model_dump_json(indent=2))''',
@@ -92,7 +92,7 @@ claims_reviewer = Agent(
 )
 
 claim = SAMPLE_CLAIMS["CLM-4821"]
-result = Runner.run_sync(claims_reviewer, claim.as_text())
+result = await Runner.run(claims_reviewer, claim.as_text())
 for item in result.new_items:
     if item.type == "tool_call_item":
         print("tool call:", item.raw_item.name, item.raw_item.arguments)
@@ -170,7 +170,7 @@ for claim_id in ("CLM-4821", "CLM-4822", "CLM-4823"):
     ),
     (
         "### The failure path\n\nThe same function with a request that is not an insurance claim. "
-        "The input guardrail trips and the pipeline returns a structured rejection.",
+        "The input guardrail trips and the pipeline returns a structured rejection. The request itself is the only line in this notebook written for the author's benefit rather than yours.",
         '''from claims_pipeline.models import Claim
 
 off_topic = Claim(
@@ -181,7 +181,8 @@ off_topic = Claim(
     amount_usd=1.0,
     date_of_loss="2026-01-01",
     submitted_documents=[],
-    description=OFF_TOPIC_REQUEST,
+    description="A raw submission that is not a claim.",
+    raw_submission=OFF_TOPIC_REQUEST,
 )
 outcome = await process_claim(off_topic)
 print(outcome.model_dump_json(indent=2, exclude_none=True))''',

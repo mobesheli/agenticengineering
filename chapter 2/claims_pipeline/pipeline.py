@@ -93,7 +93,7 @@ async def process_claim(claim: Claim) -> PipelineOutcome:
                 status="escalated",
                 claim_id=claim.claim_id,
                 trace_id=trace_id,
-                reason="; ".join(reasons),
+                reason=" ".join(reasons),
                 verdict=verdict,
                 report=report,
             )

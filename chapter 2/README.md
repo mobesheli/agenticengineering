@@ -45,7 +45,7 @@ Each section of the chapter has a runnable script under `examples/`:
 
 | Chapter section | Command |
 | --- | --- |
-| Creating an agent and running it | `python -m examples.first_agent` |
+| Creating an agent and running it | `python -m examples.first_agent` and `python -m examples.first_agent_async` |
 | Structuring agent output with Pydantic | `python -m examples.structured_output` |
 | Building function tools | `python -m examples.tool_using_agent` |
 | Streaming agent responses | `python -m examples.streaming` |

@@ -18,6 +18,7 @@ OUT = ROOT / "outputs"
 COMMANDS: dict[str, list[str]] = {
     "describe": [sys.executable, "main.py", "describe"],
     "first_agent": [sys.executable, "-m", "examples.first_agent"],
+    "first_agent_async": [sys.executable, "-m", "examples.first_agent_async"],
     "structured_output": [sys.executable, "-m", "examples.structured_output"],
     "tool_using_agent": [sys.executable, "-m", "examples.tool_using_agent"],
     "streaming": [sys.executable, "-m", "examples.streaming"],
