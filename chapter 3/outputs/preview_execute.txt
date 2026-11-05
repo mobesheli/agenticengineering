@@ -1,0 +1,4 @@
+preview        : amount_cents=4500 content_hash=347bcee3c482b0b4
+execute (match): status=issued refund_id=rf_1c2d3e
+execute (stale): refused error_class=preview_mismatch retryable=False hint=replan
+refunds in store: 1

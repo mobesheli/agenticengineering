@@ -1,0 +1,4 @@
+first call : issued   refund_id=rf_7f3a9c amount_cents=21450
+network    : response lost, orchestration retries with the same key
+second call: replayed refund_id=rf_7f3a9c amount_cents=21450
+refunds in store: 1

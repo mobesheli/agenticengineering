@@ -1,0 +1,136 @@
+preview_po_change
+  description: Show what a purchase order change would do without making it.
+  parameters : proposal
+  schema     :
+    {
+      "$defs": {
+        "POChangeProposal": {
+          "properties": {
+            "po_number": {
+              "description": "Purchase order identifier",
+              "title": "Po Number",
+              "type": "string"
+            },
+            "line_item": {
+              "description": "Line item position",
+              "minimum": 1,
+              "title": "Line Item",
+              "type": "integer"
+            },
+            "new_quantity": {
+              "minimum": 0,
+              "title": "New Quantity",
+              "type": "integer"
+            },
+            "reason_code": {
+              "enum": [
+                "price_correction",
+                "vendor_change",
+                "cancel_line"
+              ],
+              "title": "Reason Code",
+              "type": "string"
+            }
+          },
+          "required": [
+            "po_number",
+            "line_item",
+            "new_quantity",
+            "reason_code"
+          ],
+          "title": "POChangeProposal",
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "properties": {
+        "proposal": {
+          "$ref": "#/$defs/POChangeProposal"
+        }
+      },
+      "required": [
+        "proposal"
+      ],
+      "title": "preview_po_change_args",
+      "type": "object",
+      "additionalProperties": false
+    }
+
+submit_po_change_for_approval
+  description: Submit a previewed change for approval. Nothing changes until an
+  parameters : proposal
+  schema     :
+    {
+      "$defs": {
+        "POChangeProposal": {
+          "properties": {
+            "po_number": {
+              "description": "Purchase order identifier",
+              "title": "Po Number",
+              "type": "string"
+            },
+            "line_item": {
+              "description": "Line item position",
+              "minimum": 1,
+              "title": "Line Item",
+              "type": "integer"
+            },
+            "new_quantity": {
+              "minimum": 0,
+              "title": "New Quantity",
+              "type": "integer"
+            },
+            "reason_code": {
+              "enum": [
+                "price_correction",
+                "vendor_change",
+                "cancel_line"
+              ],
+              "title": "Reason Code",
+              "type": "string"
+            }
+          },
+          "required": [
+            "po_number",
+            "line_item",
+            "new_quantity",
+            "reason_code"
+          ],
+          "title": "POChangeProposal",
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "properties": {
+        "proposal": {
+          "$ref": "#/$defs/POChangeProposal"
+        }
+      },
+      "required": [
+        "proposal"
+      ],
+      "title": "submit_po_change_for_approval_args",
+      "type": "object",
+      "additionalProperties": false
+    }
+
+get_po_change_status
+  description: Check a submitted approval request. Status is one of:
+  parameters : approval_request_id
+  schema     :
+    {
+      "properties": {
+        "approval_request_id": {
+          "title": "Approval Request Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_request_id"
+      ],
+      "title": "get_po_change_status_args",
+      "type": "object",
+      "additionalProperties": false
+    }
+
+idempotency_key present in any model-facing schema: no

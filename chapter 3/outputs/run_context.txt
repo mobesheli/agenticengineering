@@ -1,0 +1,5 @@
+model arguments : {"customer_id": "cus_8841", "original_charge_id": "ch_3f9a21", "amount_cents": 4500, "reason": "Duplicate order shipped"}
+run context     : idempotency_key=fedf5a3747f8bd6e220389195030b5e9 actor_id=agent.m.smith@example.com
+tool result     : status='issued' refund_id='rf_1c2d3e' amount_cents=4500
+context fields in the model's arguments: none
+final output    : Refund rf_1c2d3e for $45.00 has been issued.

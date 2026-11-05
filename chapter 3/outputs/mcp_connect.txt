@@ -1,0 +1,10 @@
+connected  : finance-evidence
+run started: 1 tool(s) listed for the model: get_trial_balance_snapshot
+tool result: { "ok": true, "entity": "UK01", "period": "2026-Q3", "materiality_threshold": 1000000, "source_ref": "tb:UK01:...
+final      : Six accounts sit above the threshold for UK01 in 2026-Q3.
+resource   : schema://accounts
+             accounts:
+               - code: "1000"
+                 name: Cash and cash equivalents
+after block: Server not initialized, model calls made: 0
+OPENAI_API_KEY is not set; the live question was skipped

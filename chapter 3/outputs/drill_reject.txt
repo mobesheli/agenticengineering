@@ -1,0 +1,12 @@
+interruption : execute_refund
+               customer_id="cus_8841"
+               original_charge_id="ch_3f9a21"
+               amount_cents=21450
+               reason="Damaged on arrival"
+reviewer     : rejected
+reason       : Amount exceeds the self-service limit for this customer tier
+tool ran     : no (refunds in store: 0)
+final output : I was not able to issue the $214.50 refund. A reviewer
+               declined it because the amount exceeds the self-service
+               limit for this customer tier. I can raise it with the
+               billing team if you would like.

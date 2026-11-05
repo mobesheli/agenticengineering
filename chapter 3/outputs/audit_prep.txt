@@ -1,0 +1,17 @@
+run        : run_ae_0007 principal=control.owner@example.com tenant=acme-uk
+server     : finance-data (3 tools)
+server     : reporting-policy (1 tool)
+server     : evidence-store (3 tools)
+tool calls : get_trial_balance_snapshot, get_journal_entries, get_reporting_requirements, preview_evidence_bundle, write_evidence_artifact, write_evidence_artifact, write_evidence_artifact, publish_evidence_bundle
+interrupt  : publish_evidence_bundle(bundle_id=eb_d5d9f967, content_hash=20452e8046f3834f)
+reviewer   : approved
+final      : bundle eb_d5d9f967 published, 3 artifacts
+journal    : 8 rows
+  get_trial_balance_snapshot  succeeded principal=control.owner@example.com args=8ab88a0b policy=unknown
+  get_journal_entries         succeeded principal=control.owner@example.com args=2f17e5c8 policy=unknown
+  get_reporting_requirements  succeeded principal=control.owner@example.com args=7402e5f8 policy=rules-2026.07
+  preview_evidence_bundle     succeeded principal=control.owner@example.com args=51002959 policy=rules-2026.07
+  write_evidence_artifact     succeeded principal=control.owner@example.com args=fb53f531 policy=rules-2026.07
+  write_evidence_artifact     succeeded principal=control.owner@example.com args=93561c0c policy=rules-2026.07
+  write_evidence_artifact     succeeded principal=control.owner@example.com args=619782a1 policy=rules-2026.07
+  publish_evidence_bundle     succeeded principal=control.owner@example.com args=aeb3043e policy=rules-2026.07 approval=approved by reviewer

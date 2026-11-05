@@ -1,0 +1,7 @@
+process A : paused on execute_refund, state persisted (10340 bytes)
+process A : key in context 110ffd1855f17c477cad725406e3dd31
+process B : rebuilt state with context_override, approved, resumed
+process B : tool result status='issued' refund_id='rf_7f3a9c' amount_cents=21450
+process B : final output The refund was approved and issued.
+store     : refund rf_7f3a9c written under key 110ffd1855f17c477cad725406e3dd31
+key match : yes
