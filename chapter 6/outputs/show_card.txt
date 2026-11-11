@@ -66,7 +66,7 @@
   "signatures": [
     {
       "protected": "eyJhbGciOiJFUzI1NiIsImtp...",
-      "signature": "IpWS4uWCYcjQPTi9..."
+      "signature": "58JUY4jqQyfC1X8_..."
     }
   ]
 }

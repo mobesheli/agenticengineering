@@ -33,7 +33,7 @@ Run every command from this folder.
 | `python -m drills.supplier_down` | Timeouts and the circuit breaker | The breaker opening on the third failure, and a quote from the fallback |
 | `python -m drills.three_day_silence` | The webhook handler | Six queued notifications, a duplicate ignored, and a wrong token refused |
 | `python -m drills.sourcing_run` | The whole sourcing round | Two quotes, one approved order, and four audit lines |
-| `python -m pytest -q` | The test suite | 38 tests passing |
+| `python -m pytest -q` | The test suite | 44 tests passing |
 
 The `outputs/` folder holds what each command printed when the chapter was written. `python scripts/capture_outputs.py` regenerates it. Dates in the output are computed from the day you run the code, so dates and the hashes derived from them will differ from the saved files. In the sourcing run, the two quote lines of the audit trail can appear in either order, because the requests run in parallel.
 
@@ -47,7 +47,7 @@ python -m chapter6.server            # terminal one: NordBolt on 127.0.0.1:9999
 python -m examples.live_quote        # terminal two: the buyer
 ```
 
-This is the same client path the drills use. The card is fetched over a real socket and the quote is written by a model, so the price and lead time will vary.
+This is the same client path the drills use. The card is fetched over a real socket and the quote is written by a model. Expect a few seconds for the answer. The terms of the quote come from the pricing tool, so the price, lead time, and validity date are the same on every run, and the reference changes with the date.
 
 ## Layout
 

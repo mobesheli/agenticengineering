@@ -5,6 +5,8 @@
 
 This is the same client path the drills use. The only differences are that
 the card is fetched over a real socket and the quote is written by a model.
+A model takes seconds to answer, so the HTTP client is given the same patience
+as the registry entry. A default client timeout would give up first.
 """
 
 from __future__ import annotations
@@ -29,7 +31,7 @@ async def main() -> None:
     registry = CounterpartyRegistry()
     registry.onboard(entry)
 
-    async with httpx.AsyncClient() as http:
+    async with httpx.AsyncClient(timeout=entry.sla_seconds) as http:
         result = await request_supplier_quote(
             Delegation(http, BUYER, CASE, registry), "nordbolt", bracket_bom()
         )

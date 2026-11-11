@@ -18,7 +18,7 @@ MAX_UNITS_PER_REQUEST = 50_000
 INSTRUCTION_PATTERNS = [
     re.compile(pattern, re.IGNORECASE)
     for pattern in (
-        r"ignore (all |any )?(previous|prior|above)",
+        r"(ignore|disregard|forget) ((all|any|your|the|my) )*(previous|prior|above|earlier)",
         r"system (prompt|override|message)",
         r"reveal (your|the) (prompt|instructions)",
         r"you are now",
