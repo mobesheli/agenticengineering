@@ -1,0 +1,5 @@
+previous key, in date   : quote received
+unknown key             : supplier_untrusted_card
+                          No valid signature found
+valid key, changed card : supplier_untrusted_card
+                          card 1.5.0 is not the card that was approved

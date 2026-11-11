@@ -1,44 +1,58 @@
-"""Boundary audit records: the local trace ends where the wire begins."""
+"""The boundary audit log. Our trace ends at the wire, so this is the record."""
 
 from __future__ import annotations
 
-import hashlib
+from dataclasses import dataclass
+from datetime import datetime, timezone
 
-from .contracts import AuditEvent, TaskOutcome
+from .contracts import TaskOutcome
+from .ledger import content_hash
 from .registry import CounterpartyEntry
 
 
-def content_hash(content: str) -> str:
-    return hashlib.sha256(content.encode()).hexdigest()
+@dataclass(frozen=True)
+class AuditEvent:
+    at: str
+    event: str
+    counterparty_id: str
+    card_version: str
+    card_fingerprint: str
+    authorized_by: str
+    idempotency_key: str
+    request_hash: str
+    task_id: str | None = None
+    state: str | None = None
+    response_hash: str | None = None
 
 
 class BoundaryAuditLog:
     def __init__(self) -> None:
         self.events: list[AuditEvent] = []
 
-    async def record_exchange(
+    def record(
         self,
-        *,
-        event_type: str,
+        event: str,
         entry: CounterpartyEntry,
-        request_payload: str,
-        outcome: TaskOutcome,
-        identity: str,
+        authorized_by: str,
+        idempotency_key: str,
+        request: object,
+        outcome: TaskOutcome | None = None,
     ) -> AuditEvent:
-        response_payload = "|".join(map(str, outcome.artifacts)) + (
-            outcome.reason or ""
-        )
-        event = AuditEvent(
-            event_type=event_type,
+        item = AuditEvent(
+            at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            event=event,
             counterparty_id=entry.id,
-            task_id=outcome.task_id,
-            request_hash=content_hash(request_payload),
-            response_hash=content_hash(response_payload),
-            identity=identity,
-            card_version=entry.card_version,
+            card_version=entry.trust.card_version,
+            card_fingerprint=entry.trust.card_fingerprint[:12],
+            authorized_by=authorized_by,
+            idempotency_key=idempotency_key,
+            request_hash=content_hash(request)[:12],
+            task_id=outcome.task_id if outcome else None,
+            state=outcome.state if outcome else None,
+            response_hash=content_hash(outcome.artifacts)[:12] if outcome else None,
         )
-        self.events.append(event)
-        return event
+        self.events.append(item)
+        return item
 
     def clear(self) -> None:
         self.events.clear()

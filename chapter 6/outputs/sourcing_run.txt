@@ -1,0 +1,13 @@
+quotes
+  nordbolt    3.13 GBP  28 days  NB-9A3D2B
+  rivetridge  3.29 GBP  24 days  RR-9A3D2B
+
+proposal   PO-88231 to nordbolt: 2000 x 3.13 = 6,260.00 GBP
+approval   APR-5521 by a.okafor, up to 6,260.00, until 2026-11-25
+commit     committed=True confirmation=CONF-PO-88231
+
+boundary audit trail
+  quote          nordbolt    completed  procurement-spine
+  quote          rivetridge  completed  procurement-spine
+  commit_intent  nordbolt    -          buyer/a.okafor
+  commit_outcome nordbolt    completed  buyer/a.okafor

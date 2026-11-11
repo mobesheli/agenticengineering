@@ -1,8 +1,7 @@
-"""Central model registry for the Chapter 6 examples.
+"""Every model name used in this chapter lives here.
 
-The values intentionally continue the model tiers introduced in Chapter 5.
-Keeping them here makes an upgrade or rollback a registry change rather than a
-search-and-replace through orchestration code.
+Nothing in the agent code names a model directly. When the lineup changes,
+this is the only file that changes.
 """
 
 from dataclasses import dataclass
@@ -10,9 +9,8 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class ModelRegistry:
-    small: str = "gpt-5-nano"
-    mid: str = "gpt-5-mini"
-    frontier: str = "gpt-5"
+    fast: str = "gpt-6-luna"
+    mid: str = "gpt-6.1-terra"
 
 
 MODELS = ModelRegistry()

@@ -1,0 +1,7 @@
+call 1: supplier_unreachable   retryable=True  breaker=closed
+call 2: supplier_unreachable   retryable=True  breaker=closed
+call 3: supplier_unreachable   retryable=True  breaker=open
+call 4: supplier_circuit_open  retryable=False breaker=open
+
+fan-out nordbolt   : supplier_circuit_open
+fan-out rivetridge : 3.29 GBP

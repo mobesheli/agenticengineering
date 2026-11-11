@@ -1,0 +1,6 @@
+ok          : False
+error class : supplier_rejected
+retryable   : False
+detail      : Rejected at the border: free text looks like an instruction
+model calls : 0
+quotes sent : 0

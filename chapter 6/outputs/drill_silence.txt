@@ -1,0 +1,12 @@
+task parked     : supplier_input_required
+held, then freed: 3 notifications
+work queue      :
+  nordbolt  TASK_STATE_SUBMITTED
+  nordbolt  TASK_STATE_WORKING
+  nordbolt  TASK_STATE_INPUT_REQUIRED
+  nordbolt  TASK_STATE_WORKING
+  nordbolt  artifact
+  nordbolt  TASK_STATE_COMPLETED
+
+duplicate       : HTTP 204, queue length 6
+wrong token     : HTTP 401, queue length 6

@@ -1,0 +1,9 @@
+ok          : True
+quote       : NB-9A3D2B
+unit price  : 3.13 GBP
+lead time   : 28 days
+valid until : 2026-11-25
+
+audit       : quote with nordbolt, card 1.4.0
+              task state completed, authorized by buyer/a.okafor
+              request 7418429c0ea7, response ee48dc1cd00e

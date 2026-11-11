@@ -1,0 +1,7 @@
+first answer : supplier_input_required
+question     : Which drawing revision applies to CB-42?
+model calls  : 0
+
+same task    : True
+second answer: quote NB-9A3D2B, 3.13 GBP
+model calls  : 2

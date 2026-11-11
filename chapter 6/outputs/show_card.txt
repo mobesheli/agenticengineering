@@ -1,0 +1,76 @@
+{
+  "name": "nordbolt-quoting-agent",
+  "description": "Quotes industrial fasteners and takes orders against its quotes.",
+  "supportedInterfaces": [
+    {
+      "url": "https://agents.nordbolt.example/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "url": "https://agents.nordbolt.example",
+    "organization": "NordBolt Industrial Fasteners"
+  },
+  "version": "1.4.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true
+  },
+  "securitySchemes": {
+    "oauth": {
+      "oauth2SecurityScheme": {
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://agents.nordbolt.example/oauth/token",
+            "scopes": {
+              "quotes:request": "Request quotes and place orders"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "schemes": {
+        "oauth": {
+          "list": [
+            "quotes:request"
+          ]
+        }
+      }
+    }
+  ],
+  "defaultInputModes": [
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "quote-fasteners",
+      "name": "Quote fastener order",
+      "description": "Prices a bill of materials and returns a dated quote.",
+      "tags": [
+        "procurement",
+        "fasteners",
+        "quote"
+      ],
+      "examples": [
+        "Quote 2,000 custom brackets for delivery in six weeks."
+      ]
+    }
+  ],
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFUzI1NiIsImtp...",
+      "signature": "IpWS4uWCYcjQPTi9..."
+    }
+  ]
+}
+
+signature : valid under key nordbolt-2026-01
+fingerprint: ae1123d475e0
+tampered  : refused (InvalidSignaturesError)

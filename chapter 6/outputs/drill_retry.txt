@@ -1,0 +1,5 @@
+first commit   : CONF-PO-88231
+second commit  : CONF-PO-88231
+changed commit : committed=False
+  Rejected at the border: message ID reused with different content
+orders on the supplier's ledger: 1

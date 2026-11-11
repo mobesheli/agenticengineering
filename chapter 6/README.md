@@ -1,85 +1,79 @@
-# Chapter 6 Companion Repo
+# Chapter 6: Agents That Collaborate
 
-This folder contains the runnable companion for Chapter 6, *Agents That Collaborate: Multi-Agent Systems and A2A*.
+Companion code for Chapter 6 of *Agentic AI Engineering*, *Agents That Collaborate: Multi-Agent Systems and A2A*.
 
-Start with `Chapter_6_Agents_That_Collaborate_Learning_Walkthrough.ipynb`. It follows the draft section by section: the three rings of distance, the tool-or-agent decision, signed Agent Cards, A2A task states, the NordBolt embassy, defensive remote-agent consumption, identity and accountability, and the supply-chain sourcing run.
+The chapter is about working with agents you do not own. The code shows both sides of that boundary: a supplier that exposes a quoting agent over A2A, and a manufacturer that finds, calls, and survives that agent.
 
-## Start Here
+Nothing here needs an API key. Two supplier agents run as real A2A servers inside one process, with signed Agent Cards and task endpoints, and the buyer calls them through the official A2A client. Only the model is replaced, by the OpenAI Agents SDK's scripted test model, so every run behaves the same way.
 
-Use this order on a first pass:
+## Setup
 
-1. Run the setup and boundary-decision cells.
-2. Build and verify NordBolt's signed Agent Card.
-3. Inspect the task lifecycle and run-loop-to-task-state mapping.
-4. Start the in-process A2A server and call it through the official A2A client.
-5. Send a hostile request and watch border control reject it before the model boundary.
-6. Register two approved suppliers and fan quote tasks out in parallel.
-7. Compare quotes in plain code, approve one scoped purchase order, and commit it idempotently.
-8. Open a supplier circuit breaker and watch the sourcing run preserve the fallback.
-9. Finish with the notebook self-check and the chapter-to-notebook map.
-
-## One-Time Setup
-
-Python 3.10 or later is required. Python 3.12 is recommended.
+Python 3.11 or later.
 
 ```bash
-cd "chapter 6"
-python3.12 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Open the walkthrough:
+The two libraries the chapter depends on are pinned: `a2a-sdk` 1.3.0, with its `http-server` and `signing` extras, and `openai-agents` 0.24.0.
+
+## Run and verify
+
+Run every command from this folder.
+
+| Command | What it exercises | What you should see |
+| --- | --- | --- |
+| `python -m examples.show_card` | Building, signing, and verifying an Agent Card | A valid signature, a fingerprint, and a tampered card refused |
+| `python -m examples.quote_roundtrip` | A verified quote task and its audit record | A quote of 3.13 GBP and a `completed` task in the audit lines |
+| `python -m drills.hostile_request` | Border control | `supplier_rejected` with zero model calls |
+| `python -m drills.untrusted_card` | Key rotation, an unknown key, and a changed card | One quote and two `supplier_untrusted_card` results |
+| `python -m drills.parked_task` | The `input-required` state | A question, then a quote on the same task |
+| `python -m drills.retry_same_message` | Idempotent commitment | One confirmation twice, one refusal, one order |
+| `python -m drills.supplier_down` | Timeouts and the circuit breaker | The breaker opening on the third failure, and a quote from the fallback |
+| `python -m drills.three_day_silence` | The webhook handler | Six queued notifications, a duplicate ignored, and a wrong token refused |
+| `python -m drills.sourcing_run` | The whole sourcing round | Two quotes, one approved order, and four audit lines |
+| `python -m pytest -q` | The test suite | 38 tests passing |
+
+The `outputs/` folder holds what each command printed when the chapter was written. `python scripts/capture_outputs.py` regenerates it. Dates in the output are computed from the day you run the code, so dates and the hashes derived from them will differ from the saved files. In the sourcing run, the two quote lines of the audit trail can appear in either order, because the requests run in parallel.
+
+`Chapter_6_Learning_Walkthrough.ipynb` runs the same examples and drills in chapter order. `python scripts/build_notebook.py` rebuilds and executes it.
+
+## Running against a real model
 
 ```bash
-jupyter notebook Chapter_6_Agents_That_Collaborate_Learning_Walkthrough.ipynb
+export OPENAI_API_KEY=...            # your own key
+python -m chapter6.server            # terminal one: NordBolt on 127.0.0.1:9999
+python -m examples.live_quote        # terminal two: the buyer
 ```
 
-The notebook's default path is deterministic and offline. Set `OPENAI_API_KEY` only when you reach the clearly marked live Agents SDK cell.
+This is the same client path the drills use. The card is fetched over a real socket and the quote is written by a model, so the price and lead time will vary.
 
-## Project Map
+## Layout
 
-- `Chapter_6_Agents_That_Collaborate_Learning_Walkthrough.ipynb`: guided reader experience
-- `chapter6/agent.py`: unchanged NordBolt Agents SDK reasoning core
-- `chapter6/card.py`: A2A 1.0 Agent Card, JWS signing, and registry verifier
-- `chapter6/executor.py`: run-loop endings mapped to A2A task states
-- `chapter6/server.py`: official A2A SDK request handler and Starlette routes
-- `chapter6/remote.py`: official client adapter plus timeout, idempotency, and error contracts
-- `chapter6/registry.py`: approved counterparties, SLAs, contracts, and circuit breakers
-- `chapter6/procurement.py`: quote fan-out, plain-code comparison, approval, and commitment
-- `chapter6/audit.py`: request/response hashes and identity at the boundary
-- `tests/`: offline unit and protocol integration tests
-- `assets/`: the seven figures from the Chapter 6 draft
+| Path | What it holds |
+| --- | --- |
+| `chapter6/models.py` | The model registry. Model names appear nowhere else |
+| `chapter6/contracts.py` | The typed contracts both sides share: bill of materials, quote, purchase order, approval, and the result types |
+| `chapter6/agent.py` | NordBolt's quoting agent and its two private tools |
+| `chapter6/card.py`, `keys.py` | Building, signing, and fingerprinting the Agent Card |
+| `chapter6/border.py` | Border control: the checks that run before any model sees a request |
+| `chapter6/ledger.py` | The supplier's ledger, including idempotent replay |
+| `chapter6/executor.py` | The bridge from the Agents SDK run loop to the A2A task lifecycle |
+| `chapter6/server.py` | The A2A server |
+| `chapter6/registry.py` | The counterparty registry: trust records, signing keys, circuit breakers |
+| `chapter6/remote.py` | Calling a remote agent defensively |
+| `chapter6/tools.py` | The same call exposed to a model as a function tool |
+| `chapter6/procurement.py` | The sourcing workflow: fan out, compare, propose, commit |
+| `chapter6/webhook.py` | The push notification handler |
+| `chapter6/audit.py` | The boundary audit log |
+| `chapter6/neighborhood.py`, `sample.py` | The two fictional suppliers and the sample order used by the examples |
+| `examples/`, `drills/` | The runnable scripts from the chapter |
+| `tests/` | The test suite |
+| `demo_keys/` | Signing keys for the examples |
 
-## Run the Server and Tests
+## A warning about the demo keys
 
-Start the deterministic NordBolt A2A server:
+The key pairs in `demo_keys/` are published so that the examples run. Never use them, or any key stored in a repository, for a real agent. A production signing key belongs in a key management system.
 
-```bash
-python -m chapter6.server
-```
-
-Its signed card is published at `http://127.0.0.1:9999/.well-known/agent-card.json`, and its JSON-RPC endpoint is `/`.
-
-Run every offline check:
-
-```bash
-python -m pytest -q
-```
-
-Execute the notebook non-interactively:
-
-```bash
-jupyter nbconvert --to notebook --execute \
-  Chapter_6_Agents_That_Collaborate_Learning_Walkthrough.ipynb \
-  --output /tmp/chapter6-executed.ipynb \
-  --ExecutePreprocessor.timeout=180
-```
-
-## Deliberate Teaching Boundaries
-
-The signing key in `chapter6/card.py` is intentionally public and uses HS256 so readers can reproduce verification without secret material. It is not a production credential. The chapter's production rule still applies: use an asymmetric organization key in a managed key service, rotate it, and keep accepted verification keys in the reviewed counterparty registry.
-
-The server uses `InMemoryTaskStore` because the notebook needs a zero-configuration loopback. Replace it with durable storage before any caller can depend on a task surviving a deploy.
-
-Most importantly, the remote agent never receives the manufacturer's budget ceiling, target price, fallback list, or working memory. The wire contract carries the bill of materials and delivery constraint only.
+The companion server also leaves out two things a production deployment needs: a gateway that validates the caller's OAuth token and limits request rates, and database-backed task and notification stores. The chapter explains both.

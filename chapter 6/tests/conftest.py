@@ -1,8 +1,14 @@
 from __future__ import annotations
 
-import sys
-from pathlib import Path
+import pytest
 
-CHAPTER_ROOT = Path(__file__).resolve().parents[1]
-if str(CHAPTER_ROOT) not in sys.path:
-    sys.path.insert(0, str(CHAPTER_ROOT))
+from chapter6.audit import audit_log
+from chapter6.neighborhood import build_neighborhood
+
+
+@pytest.fixture
+async def hood():
+    audit_log.clear()
+    neighborhood = build_neighborhood()
+    yield neighborhood
+    await neighborhood.aclose()
