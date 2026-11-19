@@ -1,0 +1,6 @@
+DRAFT for patient-alvarez
+ - Atorvastatin 40 mg once daily: active order matches a 90-day fill 21 days ago.
+ - Apixaban 5 mg twice daily: cardiology order and 30-day fill both dated 6 days ago. Confirm with the patient or cardiologist whether this is the reported change and whether another medication was stopped.
+ - Ibuprofen 400 mg up to three times daily: active order matches a 30-day fill 12 days ago.
+ - Apixaban and ibuprofen together increase bleeding risk. Clinician should review ibuprofen use and consider an alternative or monitoring.
+ - No current duplicate or dispensing gap is evident from the available records. A prior duplicate statin issue was resolved: simvastatin was stopped and atorvastatin continued; no simvastatin fill appears in the last 180 days.

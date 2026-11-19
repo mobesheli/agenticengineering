@@ -1,8 +1,8 @@
-pydantic>=2.7
-openai>=2.36.0
-openai-agents
-sqlalchemy>=2.0
+openai-agents[sqlalchemy]==0.24.0
+pydantic
 aiosqlite
 asyncpg
-greenlet
+pytest==9.0.3
+pytest-asyncio
 notebook
+nbclient

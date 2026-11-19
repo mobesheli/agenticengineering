@@ -1,0 +1,18 @@
+{
+  "patient-alvarez": {
+    "active_medications": [
+      {"drug": "atorvastatin", "dose": "40 mg", "directions": "one tablet daily",
+       "prescriber": "Dr. Reed", "ordered_days_ago": 410},
+      {"drug": "apixaban", "dose": "5 mg", "directions": "one tablet twice daily",
+       "prescriber": "Dr. Osei (cardiology)", "ordered_days_ago": 6},
+      {"drug": "ibuprofen", "dose": "400 mg", "directions": "one tablet up to three times daily",
+       "prescriber": "Dr. Reed", "ordered_days_ago": 200}
+    ],
+    "fills": [
+      {"drug": "atorvastatin", "dose": "40 mg", "days_ago": 21, "days_supply": 90},
+      {"drug": "apixaban", "dose": "5 mg", "days_ago": 6, "days_supply": 30},
+      {"drug": "ibuprofen", "dose": "400 mg", "days_ago": 12, "days_supply": 30},
+      {"drug": "simvastatin", "dose": "20 mg", "days_ago": 240, "days_supply": 90}
+    ]
+  }
+}
