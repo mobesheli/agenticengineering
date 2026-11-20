@@ -1,0 +1,3 @@
+worker A : awaiting_approval, released so far: {}
+worker B : closed, released: {'pay-118': 750000}
+worker B : Released payment **pay-118** for **€7,500.00**.

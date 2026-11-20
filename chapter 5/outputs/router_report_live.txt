@@ -1,0 +1,13 @@
+24 labeled requests
+
+category           precision  recall
+balance_inquiry         0.83    0.83
+dispute                 1.00    0.83
+fraud_report            0.83    0.83
+other                   0.71    0.83
+
+threshold  to a person  misrouted
+     0.50         29%         8%
+     0.70         29%         8%
+     0.90         29%         8%
+     0.99         58%         0%

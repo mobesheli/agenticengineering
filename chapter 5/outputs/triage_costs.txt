@@ -1,0 +1,6 @@
+Prices as of 2026-11-20. 10,000 alerts a day.
+Triage on the small tier: $0.00045 an alert, $4.50 a day, $1,642 a year
+Triage on the frontier tier: $0.00900 an alert, $90.00 a day, $32,850 a year
+The frontier tier costs 20 times as much for the same step.
+One investigation on the frontier tier: $0.12
+Each extra percentage point of alerts investigated: $4,380 a year

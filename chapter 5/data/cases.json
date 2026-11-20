@@ -1,0 +1,124 @@
+{
+  "customers": {
+    "cust-2207": {
+      "name": "Northgate Tooling Ltd",
+      "customer_since": "2014-03-02",
+      "segment": "manufacturing exporter",
+      "usual_activity": "monthly supplier payments to Germany and Poland, 20,000 to 60,000 EUR each"
+    },
+    "cust-9411": {
+      "name": "R. Okafor",
+      "customer_since": "2026-09-18",
+      "segment": "personal current account",
+      "usual_activity": "salary credits and card spending under 3,000 GBP a month"
+    }
+  },
+  "transactions": {
+    "cust-2207": [
+      {
+        "id": "txn-5002",
+        "date": "2026-11-18",
+        "amount": "12,300 EUR",
+        "counterparty": "Kessler Werkzeug GmbH",
+        "country": "DE"
+      },
+      {
+        "id": "txn-5001",
+        "date": "2026-11-12",
+        "amount": "48,200 EUR",
+        "counterparty": "Kessler Werkzeug GmbH",
+        "country": "DE"
+      },
+      {
+        "id": "txn-4877",
+        "date": "2026-10-13",
+        "amount": "51,900 EUR",
+        "counterparty": "Kessler Werkzeug GmbH",
+        "country": "DE"
+      },
+      {
+        "id": "txn-4701",
+        "date": "2026-09-11",
+        "amount": "44,750 EUR",
+        "counterparty": "Kessler Werkzeug GmbH",
+        "country": "DE"
+      }
+    ],
+    "cust-9411": [
+      {
+        "id": "txn-7310",
+        "date": "2026-11-14",
+        "amount": "9,400 GBP",
+        "counterparty": "cash deposit",
+        "country": "GB"
+      },
+      {
+        "id": "txn-7311",
+        "date": "2026-11-15",
+        "amount": "9,600 GBP",
+        "counterparty": "cash deposit",
+        "country": "GB"
+      },
+      {
+        "id": "txn-7312",
+        "date": "2026-11-16",
+        "amount": "18,700 GBP",
+        "counterparty": "Harbor Lane Trading FZE",
+        "country": "AE"
+      }
+    ]
+  },
+  "watchlist": [
+    "Harbor Lane Trading FZE"
+  ],
+  "case_history": {
+    "cust-2207": [
+      "case-2025-061: alert on a 55,000 EUR payment to the same German supplier in June 2025, cleared as usual trade"
+    ],
+    "cust-9411": []
+  },
+  "alerts": [
+    {
+      "alert_id": "alert-0001",
+      "alert_type": "large_transfer",
+      "customer_id": "cust-2207",
+      "case_text": "Outbound transfer of 48,200 EUR to Kessler Werkzeug GmbH, Germany.",
+      "records": {
+        "txn-5001": "48,200 EUR to Kessler Werkzeug GmbH on 2026-11-12",
+        "profile-2207": "Manufacturing exporter, customer since 2014, monthly supplier payments of 20,000 to 60,000 EUR"
+      }
+    },
+    {
+      "alert_id": "alert-0002",
+      "alert_type": "structuring",
+      "customer_id": "cust-9411",
+      "case_text": "Two cash deposits just under 10,000 GBP on consecutive days, then 18,700 GBP sent abroad.",
+      "records": {
+        "txn-7310": "9,400 GBP cash deposit on 2026-11-14",
+        "txn-7311": "9,600 GBP cash deposit on 2026-11-15",
+        "txn-7312": "18,700 GBP to Harbor Lane Trading FZE, United Arab Emirates, on 2026-11-16"
+      }
+    },
+    {
+      "alert_id": "alert-0003",
+      "alert_type": "sanctions_proximity",
+      "customer_id": "cust-2207",
+      "case_text": "Payment reference contains a name similar to a listed entity.",
+      "records": {
+        "txn-5002": "12,300 EUR to Kessler Werkzeug GmbH, Germany, on 2026-11-18, reference 'Harbour tooling order 114'",
+        "profile-2207": "Manufacturing exporter, customer since 2014, monthly supplier payments of 20,000 to 60,000 EUR",
+        "screen-0114": "Name screening: Kessler Werkzeug GmbH is not on the watchlist. The alert was raised by the word 'Harbour' in the payment reference, which resembles the listed entity Harbor Lane Trading FZE"
+      }
+    },
+    {
+      "alert_id": "alert-0004",
+      "alert_type": "large_transfer",
+      "customer_id": "cust-2207",
+      "case_text": "Outbound transfer of 51,900 EUR to Kessler Werkzeug GmbH, Germany.",
+      "records": {
+        "txn-4877": "51,900 EUR to Kessler Werkzeug GmbH on 2026-10-13",
+        "profile-2207": "Manufacturing exporter, customer since 2014, monthly supplier payments of 20,000 to 60,000 EUR"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+first worker
+  gather_records ran
+  place_hold ran under key run-7:place_hold; holds on file: 1
+  crashed: worker restarted before the checkpoint was saved
+second worker
+  place_hold ran under key run-7:place_hold; holds on file: 1
+  write_summary ran
+finished: summary of 42 transactions with hold on account 9411

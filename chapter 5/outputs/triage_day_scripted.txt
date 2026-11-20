@@ -1,0 +1,7 @@
+alert-0001  large_transfer       -> auto_cleared
+alert-0002  structuring          -> analyst_review
+    investigator recommends: escalate
+    evidence: txn-7310, txn-7311, txn-7312
+alert-0003  sanctions_proximity  -> human_confirm_clear
+alert-0004  large_transfer       -> human_review
+waiting for a person: 3 of 4 alerts

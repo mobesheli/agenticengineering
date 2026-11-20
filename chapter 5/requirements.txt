@@ -1,2 +1,6 @@
-pydantic>=2.7
+openai-agents==0.24.0
+pydantic
+pytest==9.0.3
+pytest-asyncio
 notebook
+nbclient

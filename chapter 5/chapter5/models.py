@@ -1,18 +1,24 @@
-"""Central model registry used by the Chapter 5 examples.
+"""Every model name and reasoning setting used in this chapter lives here.
 
-The model names are illustrative dated snapshots. In a production codebase,
-this is the one file you would review when upgrading or rolling back models.
+Agents refer to a role, such as ``MODELS.small``. This module maps each role to
+the identifier the provider publishes. When the lineup changes, this is the
+only file that changes.
 """
 
 from dataclasses import dataclass
 
+from agents import ModelSettings
+from openai.types.shared import Reasoning
+
 
 @dataclass(frozen=True)
 class ModelRegistry:
-    small: str = "gpt-5.4-nano-2026-03-05"
-    mid: str = "gpt-5.4-mini-2026-03-05"
-    frontier: str = "gpt-5.4-2026-03-05"
-    frontier_canary: str = "gpt-5.5-2026-05-12"
+    small: str = "gpt-6-luna"
+    mid: str = "gpt-6.1-terra"
+    frontier: str = "gpt-6.2-sol"
+    frontier_canary: str = "gpt-6.2-astra"
 
 
 MODELS = ModelRegistry()
+QUICK = ModelSettings(reasoning=Reasoning(effort="low"))
+DEEP = ModelSettings(reasoning=Reasoning(effort="high"))
