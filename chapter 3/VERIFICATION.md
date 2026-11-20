@@ -17,6 +17,9 @@ Interpreter: the `venv-oa24` virtual environment, Python 3.13.18.
 | pytest-asyncio | 1.4.1.post1 |
 | uvicorn / starlette | 0.54.0 / 1.10.0 (pulled in by `mcp`) |
 
+The `pytest` pin in `requirements.txt` was later raised to 9.0.3. The 31 tests were rerun on that
+version on 2026-11-20 and all passed.
+
 `sqlmodel` was the only package installed for this work (`pip install sqlmodel`
 into the venv, which brought SQLAlchemy 2.1.8). Nothing else was changed.
 
