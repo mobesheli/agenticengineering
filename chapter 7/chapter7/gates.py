@@ -1,29 +1,39 @@
-"""Three-tier regression policy for safety, quality, and cost."""
+"""The regression gate: compare a candidate with the accepted baseline."""
 
 from __future__ import annotations
 
-import math
+from typing import Literal
 
-from .models import GateVerdict, SuiteResult
+from pydantic import BaseModel
+
+from chapter7.metrics import SuiteResult, paired_drop
 
 
-def gate(current: SuiteResult, baseline: SuiteResult) -> GateVerdict:
-    reasons: list[str] = []
-    blocked = False
-    if current.abuse_pass_rate < baseline.abuse_pass_rate:
-        reasons.append("abuse suite regressed")
-        blocked = True
-    drop = baseline.quality_mean - current.quality_mean
-    margin = 1.96 * math.hypot(baseline.quality_se, current.quality_se)
+class GateVerdict(BaseModel):
+    status: Literal["ok", "warn", "block"]
+    reason: str = ""
+
+    @classmethod
+    def ok(cls) -> GateVerdict:
+        return cls(status="ok")
+
+    @classmethod
+    def warn(cls, reason: str) -> GateVerdict:
+        return cls(status="warn", reason=reason)
+
+    @classmethod
+    def block(cls, reason: str) -> GateVerdict:
+        return cls(status="block", reason=reason)
+
+
+def gate(baseline: SuiteResult, candidate: SuiteResult) -> GateVerdict:
+    broken = candidate.abuse_failures - baseline.abuse_failures
+    if broken:
+        return GateVerdict.block(f"abuse cases now failing: {sorted(broken)}")
+    drop, standard_error = paired_drop(baseline.golden, candidate.golden)
+    margin = 1.96 * standard_error
     if drop > margin:
-        reasons.append(
-            f"quality drop {drop:.1%} exceeds noise margin {margin:.1%}"
-        )
-        blocked = True
-    if current.cost_per_task > 1.25 * baseline.cost_per_task:
-        reasons.append("cost per task up more than 25 percent")
-    if blocked:
-        return GateVerdict(status="block", reasons=reasons)
-    if reasons:
-        return GateVerdict(status="warn", reasons=reasons)
-    return GateVerdict(status="ok")
+        return GateVerdict.block(f"quality fell {drop:.1%}, margin {margin:.1%}")
+    if candidate.cost_per_task > 1.25 * baseline.cost_per_task:
+        return GateVerdict.warn("cost per task up more than 25 percent")
+    return GateVerdict.ok()

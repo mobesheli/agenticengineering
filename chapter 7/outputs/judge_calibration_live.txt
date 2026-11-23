@@ -1,0 +1,5 @@
+30 rationales, 10 labeled ungrounded
+raw agreement  100%
+precision      100%
+recall         100%
+Cohen's kappa  1.00

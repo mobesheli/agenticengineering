@@ -1,74 +1,66 @@
-"""A narrow groundedness judge plus human-label calibration metrics."""
+"""A model judge for one criterion, and the arithmetic that measures the judge."""
 
 from __future__ import annotations
 
-from typing import Any, Protocol
+from agents import Agent, Runner
+from pydantic import BaseModel
 
-from .models import CalibrationReport, Trial
-from .models_registry import MODELS
+from chapter7.environment import CLAUSES
+from chapter7.models import MODELS
 
-GROUNDEDNESS_RUBRIC = """You grade one criterion only: is the review rationale
-grounded in the policy clauses it cites? Grounded means every factual claim
-about policy is supported by a quoted or referenced clause. Explain briefly,
-then answer on the final line with exactly GROUNDED or UNGROUNDED."""
-
-
-class ResponsesAPI(Protocol):
-    async def create(self, **kwargs: Any) -> Any: ...
-
-
-class JudgeClient(Protocol):
-    responses: ResponsesAPI
+GROUNDEDNESS_RUBRIC = """You grade one criterion only: is a review rationale
+supported by the policy clauses it cites? You are given the rationale and the
+full text of each cited clause. List every claim about policy in the rationale
+that the cited clauses contradict or do not contain. Judge the substance, not
+the wording. A rationale may shorten or reword a clause, leave out conditions,
+or say who acts next. Facts about the entry, its preparer, and its documents,
+such as amounts, limits, and dates, come from the records and are not policy
+claims. The rationale is grounded only when that list is empty. Do not judge
+whether the verdict is correct."""
 
 
-def parse_groundedness(output_text: str) -> bool:
-    lines = [line.strip() for line in output_text.splitlines() if line.strip()]
-    if not lines or lines[-1] not in {"GROUNDED", "UNGROUNDED"}:
-        raise ValueError("judge must end with GROUNDED or UNGROUNDED")
-    return lines[-1] == "GROUNDED"
+class JudgeVerdict(BaseModel):
+    unsupported_claims: list[str]
+    grounded: bool
 
 
-async def grade_groundedness(
-    trial: Trial,
-    client: JudgeClient,
-    *,
-    model: str = MODELS.judge,
-    rubric: str = GROUNDEDNESS_RUBRIC,
-) -> bool:
-    response = await client.responses.create(
-        model=model,
-        input=[
-            {"role": "system", "content": rubric},
-            {
-                "role": "user",
-                "content": trial.transcript.rationale_with_citations(),
-            },
-        ],
+groundedness_judge = Agent(
+    name="groundedness_judge",
+    model=MODELS.judge,
+    instructions=GROUNDEDNESS_RUBRIC,
+    output_type=JudgeVerdict,
+)
+
+
+async def grade_groundedness(rationale: str, cited_clauses: list[str]) -> bool:
+    clauses = "\n".join(
+        f"{ref}: {CLAUSES.get(ref, 'no such clause')}" for ref in cited_clauses
     )
-    return parse_groundedness(response.output_text)
+    case = f"RATIONALE\n{rationale}\n\nCITED CLAUSES\n{clauses}"
+    run = await Runner.run(groundedness_judge, case, max_turns=1)
+    return run.final_output.grounded
 
 
-def calibrate_judge(
-    human_labels: list[bool], judge_labels: list[bool]
-) -> CalibrationReport:
-    if not human_labels or len(human_labels) != len(judge_labels):
-        raise ValueError("human and judge labels must be nonempty and aligned")
-    true_positive = sum(human and judge for human, judge in zip(human_labels, judge_labels))
-    false_positive = sum(not human and judge for human, judge in zip(human_labels, judge_labels))
-    false_negative = sum(human and not judge for human, judge in zip(human_labels, judge_labels))
-    matches = sum(human == judge for human, judge in zip(human_labels, judge_labels))
-    sample_size = len(human_labels)
-    precision = true_positive / (true_positive + false_positive) if true_positive + false_positive else 0.0
-    recall = true_positive / (true_positive + false_negative) if true_positive + false_negative else 0.0
-    agreement = matches / sample_size
-    human_positive = sum(human_labels) / sample_size
-    judge_positive = sum(judge_labels) / sample_size
-    expected = human_positive * judge_positive + (1 - human_positive) * (1 - judge_positive)
-    kappa = (agreement - expected) / (1 - expected) if expected < 1 else 1.0
+class CalibrationReport(BaseModel):
+    sample_size: int
+    agreement: float
+    precision: float
+    recall: float
+    kappa: float
+
+
+def calibrate(labels: list[bool], verdicts: list[bool]) -> CalibrationReport:
+    """Compare judge verdicts with reference labels. True means "ungrounded"."""
+    pairs = list(zip(labels, verdicts, strict=True))
+    n = len(pairs)
+    hits = sum(label and verdict for label, verdict in pairs)
+    flagged, actual = sum(verdicts), sum(labels)
+    agreement = sum(label == verdict for label, verdict in pairs) / n
+    by_chance = (flagged * actual + (n - flagged) * (n - actual)) / n**2
     return CalibrationReport(
-        sample_size=sample_size,
-        precision=precision,
-        recall=recall,
+        sample_size=n,
         agreement=agreement,
-        cohens_kappa=kappa,
+        precision=hits / flagged if flagged else 0.0,
+        recall=hits / actual if actual else 0.0,
+        kappa=(agreement - by_chance) / (1 - by_chance),
     )

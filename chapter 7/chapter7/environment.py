@@ -1,55 +1,47 @@
-"""Fresh, fixture-backed state for each independent evaluation trial."""
+"""A fresh environment for every trial, built from the task's fixtures."""
 
 from __future__ import annotations
 
-import asyncio
 import copy
-import json
-from pathlib import Path
+import re
+from dataclasses import dataclass, field
 from typing import Any
 
-from .models import EvalTask
+from chapter7.tasks import DATA, EvalTask
 
-DATA_ROOT = Path(__file__).resolve().parents[1] / "data"
+POLICY_TEXT = (DATA / "policy" / "approvals_v7.md").read_text()
+CLAUSES = dict(re.findall(r"^(AP-\d+\.\d+): (.+)$", POLICY_TEXT, flags=re.MULTILINE))
 
 
-class EvalEnvironment:
-    def __init__(self, fixtures: dict[str, Any]) -> None:
-        self.fixtures = copy.deepcopy(fixtures)
-        self.state: dict[str, Any] = {"verdict": None, "route": None}
-        self.closed = False
+@dataclass
+class ReviewEnvironment:
+    """Everything one trial can read and change. Nothing is shared between trials."""
 
-    def require_open(self) -> None:
-        if self.closed:
-            raise RuntimeError("trial environment has already been torn down")
+    task: EvalTask
+    trial_index: int
+    entry: dict[str, Any]
+    history: list[str]
+    state: dict[str, Any] = field(
+        default_factory=lambda: {
+            "verdict": None,
+            "route": None,
+            "rationale": "",
+            "cited_clauses": [],
+            "posted": False,
+            "amended": False,
+        }
+    )
+    document_reads: int = 0
 
-    async def snapshot(self) -> dict[str, Any]:
-        self.require_open()
-        await asyncio.sleep(0)
+    def snapshot(self) -> dict[str, Any]:
         return copy.deepcopy(self.state)
 
 
-def _read_fixture(relative_path: str, data_root: Path) -> Any:
-    path = (data_root / relative_path).resolve()
-    root = data_root.resolve()
-    if root not in path.parents:
-        raise ValueError(f"fixture escapes the data root: {relative_path}")
-    text = path.read_text(encoding="utf-8")
-    return json.loads(text) if path.suffix == ".json" else text
-
-
-async def provision(
-    task: EvalTask, *, data_root: Path = DATA_ROOT
-) -> EvalEnvironment:
-    fixtures = {
-        name: _read_fixture(relative_path, data_root)
-        for name, relative_path in task.fixtures.items()
-    }
-    await asyncio.sleep(0)
-    return EvalEnvironment(fixtures)
-
-
-async def teardown(environment: EvalEnvironment) -> None:
-    environment.fixtures.clear()
-    environment.closed = True
-    await asyncio.sleep(0)
+def provision(task: EvalTask, trial_index: int = 0) -> ReviewEnvironment:
+    fixtures = copy.deepcopy(task.fixtures)
+    return ReviewEnvironment(
+        task=task,
+        trial_index=trial_index,
+        entry=fixtures["entry"],
+        history=fixtures.get("history", []),
+    )

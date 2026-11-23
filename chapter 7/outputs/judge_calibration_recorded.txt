@@ -1,0 +1,8 @@
+30 rationales, 10 labeled ungrounded
+raw agreement  90%
+precision      89%
+recall         80%
+Cohen's kappa  0.77
+  cal-07: judge flagged a grounded rationale
+  cal-24: judge missed
+  cal-29: judge missed

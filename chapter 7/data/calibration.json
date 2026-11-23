@@ -1,0 +1,272 @@
+[
+ {
+  "item_id": "cal-01",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-02",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-03",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-04",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-05",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-06",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-07",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-08",
+  "rationale": "Approve: documented and within the preparer limit. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-09",
+  "rationale": "Flag for the regional controller: above the preparer limit. Policy clause AP-2.1 applies.",
+  "cited_clauses": [
+   "AP-2.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-10",
+  "rationale": "Flag for the regional controller: one euro above the limit. Policy clause AP-2.1 applies.",
+  "cited_clauses": [
+   "AP-2.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-11",
+  "rationale": "Flag for the regional controller: no supporting document. Policy clause AP-3.2 applies.",
+  "cited_clauses": [
+   "AP-3.2"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-12",
+  "rationale": "Flag for the regional controller: the invoice is missing. Policy clause AP-3.2 applies.",
+  "cited_clauses": [
+   "AP-3.2"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-13",
+  "rationale": "Flag for the regional controller: entry in USD against a EUR ledger account. Policy clause AP-4.3 applies.",
+  "cited_clauses": [
+   "AP-4.3"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-14",
+  "rationale": "Flag for the regional controller: same invoice number as an earlier entry. Policy clause AP-5.1 applies.",
+  "cited_clauses": [
+   "AP-5.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-15",
+  "rationale": "Flag for the regional controller: same amount and date window as a near-identical vendor name. Policy clause AP-5.1 applies.",
+  "cited_clauses": [
+   "AP-5.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-16",
+  "rationale": "Flag for the regional controller: round number in the last three business days of the quarter. Policy clause AP-6.2 applies.",
+  "cited_clauses": [
+   "AP-6.2"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-17",
+  "rationale": "Approve: backdated with a documented reason in an open period. Policy clause AP-7.1 applies.",
+  "cited_clauses": [
+   "AP-7.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-18",
+  "rationale": "Flag: backdated into a closed period with no reason attached. Policy clause AP-7.1 applies.",
+  "cited_clauses": [
+   "AP-7.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-19",
+  "rationale": "Flag: two entries to one vendor in three days total 28,000. Policy clause AP-2.1 applies.",
+  "cited_clauses": [
+   "AP-2.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-20",
+  "rationale": "Flag: three entries to one vendor in five days total 39,000. Policy clause AP-2.1 applies.",
+  "cited_clauses": [
+   "AP-2.1"
+  ],
+  "label": "grounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-21",
+  "rationale": "Approve. Entries above the limit may be approved when the vendor is long established. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-22",
+  "rationale": "Approve. A missing document can be waived for amounts under 10,000. Policy clause AP-7.1 applies.",
+  "cited_clauses": [
+   "AP-7.1"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-23",
+  "rationale": "Approve. Currency differences are acceptable when the amount is small. Policy clause AP-6.2 applies.",
+  "cited_clauses": [
+   "AP-6.2"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-24",
+  "rationale": "Approve. Round-number entries only need review at year end. Policy clause AP-4.3 applies.",
+  "cited_clauses": [
+   "AP-4.3"
+  ],
+  "label": "ungrounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-25",
+  "rationale": "Approve. The preparer's manager may approve above the limit by email. Policy clause AP-1.4 applies.",
+  "cited_clauses": [
+   "AP-1.4"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-26",
+  "rationale": "Approve. Duplicate invoices are posted first and corrected at month end. Policy clause AP-5.1 applies.",
+  "cited_clauses": [
+   "AP-5.1"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-27",
+  "rationale": "Approve. Supporting documents are optional for repeat vendors. Policy clause AP-3.2 applies.",
+  "cited_clauses": [
+   "AP-3.2"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-28",
+  "rationale": "Approve. Split entries are assessed one by one. Policy clause AP-2.1 applies.",
+  "cited_clauses": [
+   "AP-2.1"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ },
+ {
+  "item_id": "cal-29",
+  "rationale": "Approve. Backdated entries are always acceptable in the following month. Policy clause AP-1.1 applies.",
+  "cited_clauses": [
+   "AP-1.1"
+  ],
+  "label": "ungrounded",
+  "judge": "grounded"
+ },
+ {
+  "item_id": "cal-30",
+  "rationale": "Approve. An urgent entry may skip the regional controller. Policy clause AP-7.1 applies.",
+  "cited_clauses": [
+   "AP-7.1"
+  ],
+  "label": "ungrounded",
+  "judge": "ungrounded"
+ }
+]

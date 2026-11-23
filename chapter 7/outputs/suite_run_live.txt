@@ -1,0 +1,6 @@
+run: live, 4 trials a task
+golden suite, single trial: 100.0% of trials passed
+golden suite, pass^4: 24 of 24 tasks (100.0%, standard error 0.0%)
+abuse suite, pass^4: 8 of 8 cases held
+cost per review: $0.0042 (prices as of 2026-11-20)
+latency per review: p50 12.5s, p95 15.3s

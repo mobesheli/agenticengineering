@@ -1,57 +1,100 @@
-"""Parallel trial execution with one isolated environment per attempt."""
+"""Running trials: one fresh environment, one agent run, one stored record each."""
 
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Callable, Sequence
-from typing import Protocol
+import time
+from collections.abc import Callable
+from typing import Any
 
-from .environment import EvalEnvironment, provision, teardown
-from .models import EvalTask, Transcript, Trial
-from .reviewer import ComplianceReviewer
+from agents import Agent, MaxTurnsExceeded, Runner, set_tracing_disabled
+from agents.usage import Usage
+from pydantic import BaseModel
+
+from chapter7.environment import ReviewEnvironment, provision
+from chapter7.models import cost_of
+from chapter7.tasks import EvalTask
+
+set_tracing_disabled(True)
+
+TURN_CAP = 10
+MakeAgent = Callable[[ReviewEnvironment], Agent]
 
 
-class Reviewer(Protocol):
-    async def run(self, task: EvalTask) -> Transcript: ...
+class ToolCall(BaseModel):
+    name: str
+    arguments: str
+    failed: bool = False
 
 
-ReviewerFactory = Callable[[EvalEnvironment], Reviewer]
+class Transcript(BaseModel):
+    tool_calls: list[ToolCall]
+    final_message: str
+    hit_turn_cap: bool = False
+    input_tokens: int = 0
+    output_tokens: int = 0
 
 
-async def run_trial(
-    reviewer_factory: ReviewerFactory, task: EvalTask, index: int
-) -> Trial:
-    environment = await provision(task)
-    try:
-        reviewer = reviewer_factory(environment)
-        transcript = await reviewer.run(task)
-        return Trial(
-            task_id=task.task_id,
-            task_kind=task.kind,
-            index=index,
-            transcript=transcript,
-            final_state=await environment.snapshot(),
+class Trial(BaseModel):
+    task_id: str
+    index: int
+    transcript: Transcript
+    final_state: dict[str, Any]
+    seconds: float
+    cost: float
+
+
+def to_transcript(
+    items: list, usage: Usage, final: Any, capped: bool = False
+) -> Transcript:
+    """Reduce the SDK's run items to the tool calls and whether each one failed."""
+    outputs = {
+        item.raw_item["call_id"]: str(item.output)
+        for item in items
+        if item.type == "tool_call_output_item"
+    }
+    calls = [
+        ToolCall(
+            name=item.raw_item.name,
+            arguments=item.raw_item.arguments,
+            failed=outputs.get(item.raw_item.call_id, "").startswith("error:"),
         )
-    finally:
-        await teardown(environment)
+        for item in items
+        if item.type == "tool_call_item"
+    ]
+    return Transcript(
+        tool_calls=calls,
+        final_message=str(final or ""),
+        hit_turn_cap=capped,
+        input_tokens=usage.input_tokens,
+        output_tokens=usage.output_tokens,
+    )
+
+
+async def run_trial(make_agent: MakeAgent, task: EvalTask, index: int) -> Trial:
+    env = provision(task, index)
+    agent = make_agent(env)
+    started = time.perf_counter()
+    try:
+        result = await Runner.run(agent, task.instruction, max_turns=TURN_CAP)
+        usage = result.context_wrapper.usage
+        transcript = to_transcript(result.new_items, usage, result.final_output)
+    except MaxTurnsExceeded as stopped:
+        data = stopped.run_data
+        usage = data.context_wrapper.usage
+        transcript = to_transcript(data.new_items, usage, None, capped=True)
+    return Trial(
+        task_id=task.task_id,
+        index=index,
+        transcript=transcript,
+        final_state=env.snapshot(),
+        seconds=time.perf_counter() - started,
+        cost=cost_of("reviewer", usage.input_tokens, usage.output_tokens),
+    )
 
 
 async def run_suite(
-    tasks: Sequence[EvalTask],
-    k: int,
-    reviewer_factory: ReviewerFactory = ComplianceReviewer,
-    *,
-    max_concurrency: int = 20,
+    make_agent: MakeAgent, tasks: list[EvalTask], k: int
 ) -> list[Trial]:
-    if k < 1:
-        raise ValueError("k must be at least one")
-    if max_concurrency < 1:
-        raise ValueError("max_concurrency must be at least one")
-    semaphore = asyncio.Semaphore(max_concurrency)
-
-    async def bounded(task: EvalTask, index: int) -> Trial:
-        async with semaphore:
-            return await run_trial(reviewer_factory, task, index)
-
-    jobs = [bounded(task, index) for task in tasks for index in range(k)]
-    return list(await asyncio.gather(*jobs))
+    jobs = [run_trial(make_agent, task, i) for task in tasks for i in range(k)]
+    return await asyncio.gather(*jobs)

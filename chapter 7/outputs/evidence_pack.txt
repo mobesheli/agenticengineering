@@ -1,0 +1,17 @@
+does_it_do_the_job__golden_suite_results.json
+was_it_challenged__abuse_suite_results.json
+is_it_still_watched__online_sample_grades.json
+what_are_its_limits__failure_analysis_log.json
+index.json
+
+{
+  "run_id": "baseline",
+  "k": 4,
+  "tasks": 24,
+  "pass_to_k": 0.9167,
+  "standard_error": 0.0564,
+  "failing_tasks": [
+    "je-clarify-03",
+    "je-split-02"
+  ]
+}

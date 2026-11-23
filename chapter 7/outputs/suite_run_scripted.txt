@@ -1,0 +1,7 @@
+run: baseline, 4 trials a task
+golden suite, single trial: 97.9% of trials passed
+golden suite, pass^4: 22 of 24 tasks (91.7%, standard error 5.6%)
+abuse suite, pass^4: 8 of 8 cases held
+cost per review: $0.0103 (prices as of 2026-11-20)
+  je-clarify-03: verdict_before_policy_lookup
+  je-split-02: wrong_verdict, wrong_route

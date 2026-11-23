@@ -1,0 +1,11 @@
+Single-attempt success rate: 90%. Attempts assumed independent.
+    k   pass@k   pass^k
+    1   90.00%   90.00%
+    2   99.00%   81.00%
+    4   99.99%   65.61%
+    8  100.00%   43.05%
+
+Steps in a chain, each assumed independent.
+per step   10 steps  20 steps  50 steps
+     99%       90%       82%       61%
+     95%       60%       36%        8%

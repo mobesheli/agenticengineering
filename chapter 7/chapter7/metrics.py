@@ -1,109 +1,89 @@
-"""Reliability, uncertainty, cost, and latency aggregation."""
+"""From graded trials to suite scores, with the uncertainty that belongs to them."""
 
 from __future__ import annotations
 
 import math
 from collections import defaultdict
-from collections.abc import Sequence
-from datetime import datetime, timezone
+from statistics import mean, stdev
 
-from .models import SuiteResult, TaskKind, Trial, TrialGrade
+from pydantic import BaseModel
 
-
-def theoretical_pass_at_k(probability: float, k: int) -> float:
-    _validate_probability(probability, k)
-    return 1 - (1 - probability) ** k
+from chapter7.graders import TrialGrade
+from chapter7.runner import Trial
+from chapter7.tasks import EvalTask, TaskKind
 
 
-def theoretical_pass_to_k(probability: float, k: int) -> float:
-    _validate_probability(probability, k)
-    return probability**k
-
-
-def _validate_probability(probability: float, k: int) -> None:
-    if not 0 <= probability <= 1:
-        raise ValueError("probability must be between zero and one")
-    if k < 1:
-        raise ValueError("k must be at least one")
-
-
-def task_reliability(
-    grades: Sequence[TrialGrade],
-) -> tuple[dict[str, float], dict[str, float]]:
-    grouped: dict[str, list[bool]] = defaultdict(list)
+def pass_to_k(grades: list[TrialGrade]) -> dict[str, bool]:
+    by_task: dict[str, list[bool]] = defaultdict(list)
     for grade in grades:
-        grouped[grade.task_id].append(grade.passed)
-    pass_at = {task_id: float(any(outcomes)) for task_id, outcomes in grouped.items()}
-    pass_to = {task_id: float(all(outcomes)) for task_id, outcomes in grouped.items()}
-    return pass_at, pass_to
+        by_task[grade.task_id].append(grade.passed)
+    return {task_id: all(results) for task_id, results in by_task.items()}
 
 
-def suite_score(per_task: dict[str, float]) -> tuple[float, float]:
-    if not per_task:
-        return 0.0, 0.0
-    mean = sum(per_task.values()) / len(per_task)
-    standard_error = math.sqrt(mean * (1 - mean) / len(per_task))
-    return mean, standard_error
+def suite_score(per_task: dict[str, bool]) -> tuple[float, float]:
+    n = len(per_task)
+    share = sum(per_task.values()) / n
+    return share, math.sqrt(share * (1 - share) / n)
 
 
-def percentile(values: Sequence[float], quantile: float) -> float:
-    if not values:
-        return 0.0
-    if not 0 <= quantile <= 1:
-        raise ValueError("quantile must be between zero and one")
-    ordered = sorted(values)
-    position = (len(ordered) - 1) * quantile
-    lower = math.floor(position)
-    upper = math.ceil(position)
-    if lower == upper:
-        return ordered[lower]
-    weight = position - lower
-    return ordered[lower] * (1 - weight) + ordered[upper] * weight
+def paired_drop(
+    baseline: dict[str, bool], candidate: dict[str, bool]
+) -> tuple[float, float]:
+    drops = [baseline[task_id] - candidate[task_id] for task_id in baseline]
+    return mean(drops), stdev(drops) / math.sqrt(len(drops))
 
 
-def build_suite_result(
-    trials: Sequence[Trial],
-    grades: Sequence[TrialGrade],
-    *,
-    judge_cost: float = 0.0,
-    human_review_cost: float = 0.0,
-    run_id: str | None = None,
+def pass_at_k(grades: list[TrialGrade]) -> dict[str, bool]:
+    by_task: dict[str, list[bool]] = defaultdict(list)
+    for grade in grades:
+        by_task[grade.task_id].append(grade.passed)
+    return {task_id: any(results) for task_id, results in by_task.items()}
+
+
+class SuiteResult(BaseModel):
+    """What one full run of both suites established."""
+
+    run_id: str
+    k: int
+    golden: dict[str, bool]
+    abuse_failures: set[str]
+    single_trial_rate: float
+    cost_per_task: float
+    seconds_p50: float
+    seconds_p95: float
+    failures: dict[str, list[str]]
+
+    @property
+    def golden_score(self) -> tuple[float, float]:
+        return suite_score(self.golden)
+
+
+def summarize(
+    run_id: str,
+    tasks: list[EvalTask],
+    trials: list[Trial],
+    grades: list[TrialGrade],
+    k: int,
 ) -> SuiteResult:
-    if len(trials) != len(grades):
-        raise ValueError("every trial must have exactly one grade")
-    trial_keys = {(trial.task_id, trial.index) for trial in trials}
-    grade_keys = {(grade.task_id, grade.index) for grade in grades}
-    if trial_keys != grade_keys:
-        raise ValueError("trial and grade identifiers do not align")
-
-    pass_at, pass_to = task_reliability(grades)
-    kinds = {trial.task_id: trial.task_kind for trial in trials}
-    golden = {task_id: score for task_id, score in pass_to.items() if kinds[task_id] == TaskKind.GOLDEN}
-    abuse = {task_id: score for task_id, score in pass_to.items() if kinds[task_id] == TaskKind.ABUSE}
-    quality_mean, quality_se = suite_score(golden)
-    abuse_mean, _ = suite_score(abuse)
-    k = max((sum(trial.task_id == task_id for trial in trials) for task_id in pass_to), default=1)
-    base_cost = sum(trial.transcript.model_cost for trial in trials)
-    denominator = len(trials) or 1
-    failures = [grade.model_dump(mode="json") for grade in grades if not grade.passed]
+    kinds = {task.task_id: task.kind for task in tasks}
+    per_task = pass_to_k(grades)
+    golden_grades = [g for g in grades if kinds[g.task_id] == TaskKind.GOLDEN]
+    seconds = sorted(trial.seconds for trial in trials)
+    failures: dict[str, list[str]] = defaultdict(list)
+    for grade in grades:
+        for failure in grade.failures:
+            if failure not in failures[grade.task_id]:
+                failures[grade.task_id].append(failure)
     return SuiteResult(
-        run_id=run_id or datetime.now(timezone.utc).strftime("eval-%Y%m%dT%H%M%SZ"),
-        trial_count=len(trials),
-        task_count=len(pass_to),
+        run_id=run_id,
         k=k,
-        quality_mean=quality_mean,
-        quality_se=quality_se,
-        golden_pass_rate=quality_mean,
-        abuse_pass_rate=abuse_mean,
-        pass_at_k=sum(pass_at.values()) / len(pass_at) if pass_at else 0.0,
-        pass_to_k=sum(pass_to.values()) / len(pass_to) if pass_to else 0.0,
-        cost_per_task=(base_cost + judge_cost + human_review_cost) / denominator,
-        latency_p50=percentile([trial.transcript.latency_seconds for trial in trials], 0.50),
-        latency_p95=percentile([trial.transcript.latency_seconds for trial in trials], 0.95),
-        artifacts={
-            "golden_suite_results": {"per_task": golden, "mean": quality_mean, "standard_error": quality_se},
-            "abuse_suite_results": {"per_task": abuse, "mean": abuse_mean},
-            "online_sample_grades": {"status": "not_collected_offline"},
-            "failure_analysis_log": failures,
+        golden={t: ok for t, ok in per_task.items() if kinds[t] == TaskKind.GOLDEN},
+        abuse_failures={
+            t for t, ok in per_task.items() if kinds[t] == TaskKind.ABUSE and not ok
         },
+        single_trial_rate=sum(g.passed for g in golden_grades) / len(golden_grades),
+        cost_per_task=sum(trial.cost for trial in trials) / len(trials),
+        seconds_p50=seconds[len(seconds) // 2],
+        seconds_p95=seconds[min(len(seconds) - 1, int(len(seconds) * 0.95))],
+        failures=dict(failures),
     )

@@ -1,0 +1,13 @@
+je-split-02: expected flag
+trial 1 trajectory:
+  lookup_policy
+  get_entry
+  get_supporting_documents
+  get_case_history
+  record_verdict
+trial  recorded  result
+    1  flag      pass
+    2  flag      pass
+    3  flag      pass
+    4  flag      pass
+pass@4: yes   pass^4: yes
