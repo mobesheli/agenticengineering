@@ -1,8 +1,14 @@
-from __future__ import annotations
+import pytest
+from agents import set_tracing_disabled
 
-import sys
-from pathlib import Path
+from chapter8.harness import Harness
 
-CHAPTER_ROOT = Path(__file__).resolve().parents[1]
-if str(CHAPTER_ROOT) not in sys.path:
-    sys.path.insert(0, str(CHAPTER_ROOT))
+
+@pytest.fixture(autouse=True)
+def no_tracing():
+    set_tracing_disabled(True)
+
+
+@pytest.fixture
+def harness() -> Harness:
+    return Harness.build()

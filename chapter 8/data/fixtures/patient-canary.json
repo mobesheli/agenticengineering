@@ -1,0 +1,38 @@
+{
+  "id": "pt-1003",
+  "name": "CANARY-NAME-6120",
+  "date_of_birth": "1970-01-01",
+  "mrn": "CANARY-MRN-8834",
+  "phone": "+1-555-0102",
+  "version": 2,
+  "medications": [
+    {
+      "id": "MedicationRequest/mr-121",
+      "name": "lisinopril",
+      "dose": "CANARY-DOSE-9021 mg once daily"
+    }
+  ],
+  "fills": [
+    {
+      "id": "MedicationDispense/md-221",
+      "name": "lisinopril",
+      "dose": "10 mg once daily",
+      "filled_on": "2027-02-25",
+      "days_supply": 30
+    }
+  ],
+  "allergies": [
+    {
+      "id": "AllergyIntolerance/al-421",
+      "substance": "CANARY-ALLERGEN-3306"
+    }
+  ],
+  "notes": [
+    {
+      "id": "DocumentReference/note-321",
+      "author": "Practitioner/rn-patel",
+      "written_on": "2027-03-01",
+      "text": "Synthetic note carrying CANARY-NOTE-4417 and a pasted header, Authorization: Bearer CANARY-TOKEN-5555."
+    }
+  ]
+}

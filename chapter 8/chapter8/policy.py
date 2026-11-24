@@ -1,76 +1,97 @@
-"""Temporal write policy backed by an append-only event history."""
+"""Policy as code: the rules a write must pass, with a budget and a clock."""
 
 from __future__ import annotations
 
+import threading
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Any
 
-from .models import PolicyDecision
+import yaml
+from pydantic import BaseModel
+
+from chapter8.approvals import ApprovalBook, action_hash
+from chapter8.gateway import Gateway
+from chapter8.session import Session
+from chapter8.settings import DATA
+
+
+class Limits(BaseModel):
+    version: str
+    writes_per_hour: int
+    changes_per_write: int
+    approval_ttl_hours: int
+
+
+def load_limits(path: Path | None = None) -> Limits:
+    path = path or DATA / "policies" / "write-policy.yaml"
+    return Limits.model_validate(yaml.safe_load(path.read_text()))
 
 
 @dataclass(frozen=True)
-class SecurityEvent:
-    agent_id: str
-    event_type: str
-    occurred_at: datetime
-    action_hash: str | None = None
-    details: tuple[tuple[str, str], ...] = ()
-
-
-class EventHistory:
-    def __init__(self) -> None:
-        self._events: list[SecurityEvent] = []
-
-    @property
-    def events(self) -> tuple[SecurityEvent, ...]:
-        return tuple(self._events)
-
-    def append(self, event: SecurityEvent) -> None:
-        self._events.append(event)
-
-    def has(self, agent_id: str, event_type: str, action_hash: str) -> bool:
-        return any(
-            event.agent_id == agent_id
-            and event.event_type == event_type
-            and event.action_hash == action_hash
-            for event in self._events
-        )
-
-    def count(self, agent_id: str, event_type: str, *, since: datetime) -> int:
-        return sum(
-            event.agent_id == agent_id
-            and event.event_type == event_type
-            and event.occurred_at >= since
-            for event in self._events
-        )
+class Decision:
+    allow: bool
+    rule: str
 
 
 class WritePolicy:
-    def __init__(self, history: EventHistory, max_writes_per_hour: int = 5) -> None:
-        if max_writes_per_hour < 1:
-            raise ValueError("max_writes_per_hour must be positive")
-        self.history = history
-        self.max_writes = max_writes_per_hour
+    def __init__(
+        self, gateway: Gateway, book: ApprovalBook, limits: Limits
+    ) -> None:
+        self.catalog = gateway.catalog
+        self.registry = gateway.registry
+        self.events = gateway.events
+        self.clock: Callable[[], datetime] = gateway.clock
+        self.book = book
+        self.limits = limits
+        self._lock = threading.Lock()
 
-    def evaluate(
+    def decide(
         self,
-        agent_id: str,
+        session: Session,
         tool: str,
-        args: dict[str, Any],
-        now: datetime,
-    ) -> PolicyDecision:
-        if tool != "write_reconciliation":
-            return PolicyDecision(True, "read-only tool")
-        digest = str(args.get("action_hash", ""))
-        if not digest or not self.history.has(agent_id, "approval_granted", digest):
-            return PolicyDecision(False, "no approval on record for this action")
-        since = now - timedelta(hours=1)
-        if self.history.count(agent_id, "write_executed", since=since) >= self.max_writes:
-            return PolicyDecision(
-                False,
-                f"write budget of {self.max_writes} per hour spent",
-            )
-        if len(args.get("changes", [])) > 10:
-            return PolicyDecision(False, "more than ten changes in a single write")
-        return PolicyDecision(True, "approved write within budget")
+        arguments: dict[str, Any],
+        version: int,
+    ) -> Decision:
+        now = self.clock()
+        entry = self.catalog.entry_for(session.agent_id, tool)
+        if entry is None:
+            return Decision(False, "unknown tool, denied by default")
+        if not self.registry.enabled(session.agent_id):
+            return Decision(False, "agent is stopped")
+        if entry.risk == "read":
+            return Decision(True, "read-only tool in the catalog")
+        digest = action_hash(tool, arguments, session.patient_id)
+        problem = self.book.problem(
+            digest, session.clinician, entry.approval, now
+        )
+        if problem:
+            return Decision(False, problem)
+        if arguments["record_version"] != version:
+            return Decision(False, "record changed after the proposal was made")
+        hour_ago = now - timedelta(hours=1)
+        spent = self.events.count(session.agent_id, "write_authorized", hour_ago)
+        if spent >= self.limits.writes_per_hour:
+            return Decision(False, "hourly write budget is spent")
+        if len(arguments["changes"]) > self.limits.changes_per_write:
+            return Decision(False, "too many changes in one write")
+        return Decision(True, "approved write within budget")
+
+    def authorize(
+        self,
+        session: Session,
+        tool: str,
+        arguments: dict[str, Any],
+        version: int,
+    ) -> Decision:
+        """Decide and record the decision as one step, so two writers cannot both pass."""
+        with self._lock:
+            decision = self.decide(session, tool, arguments, version)
+            entry = self.catalog.entry_for(session.agent_id, tool)
+            is_write = entry is not None and entry.risk != "read"
+            allowed = "write_authorized" if is_write else "read_allowed"
+            kind = allowed if decision.allow else "policy_denied"
+            self.events.append(kind, session.agent_id, tool, decision.rule)
+            return decision

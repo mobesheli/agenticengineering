@@ -1,0 +1,25 @@
+read phase   proposed: 11 records read
+             4 changes proposed, all valid
+write phase  paused for a signature
+Review for Patient/pt-1001, record version 7, requested for Practitioner/dr-osei
+  1. discontinue     metoprolol tartrate 25 mg twice daily
+     reason          duplicate_therapy
+     evidence        MedicationRequest/mr-103, MedicationRequest/mr-104,
+                     MedicationDispense/md-202
+  2. add             aspirin 81 mg once daily
+     reason          filled_not_listed
+     evidence        MedicationDispense/md-203, DocumentReference/note-301,
+                     Interaction/aspirin+warfarin
+  3. flag_for_review warfarin 5 mg once daily
+     reason          interaction
+     evidence        MedicationRequest/mr-101, MedicationDispense/md-203,
+                     Interaction/aspirin+warfarin
+  4. flag_for_review atorvastatin 20 mg at night
+     reason          listed_not_filled
+     evidence        MedicationRequest/mr-102, DocumentReference/note-301
+  note              collapsed, 279 characters, lint: clean
+  action sha256     a26dfe5d895c96c8
+signature    Practitioner/dr-osei, 40 minutes later
+write phase  Medication reconciliation was recorded as Patient/pt-1001/_history/8.
+record       d-0001 authorized approved write within budget
+record       d-0001 executed   Patient/pt-1001/_history/8

@@ -1,0 +1,40 @@
+server: ehr-records
+version: 3.2.1
+owner: clinical-systems
+agents:
+  reconciliation-reader:
+    - read_medications
+    - read_fills
+    - read_allergies
+    - read_notes
+    - check_interactions
+  reconciliation-writer:
+    - write_reconciliation
+tools:
+  write_reconciliation:
+    scope: patient/MedicationRequest.u
+    risk: consequential-write
+    approval: clinician
+    egress: none
+    description_sha256: c89dd7f93d7ba0bc
+  read_notes:
+    scope: patient/DocumentReference.rs
+    risk: read
+    description_sha256: 4d05ded9c7fbb165
+  read_medications:
+    scope: patient/MedicationRequest.rs
+    risk: read
+    description_sha256: f5c32ea5f8036d13
+  read_fills:
+    scope: patient/MedicationDispense.rs
+    risk: read
+    description_sha256: 552f2867a4066821
+  read_allergies:
+    scope: patient/AllergyIntolerance.rs
+    risk: read
+    description_sha256: eee978371768210b
+  check_interactions:
+    scope: null
+    risk: read
+    patient_scoped: false
+    description_sha256: c5edf1d756bffe2e

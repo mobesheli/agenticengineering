@@ -1,0 +1,4 @@
+version: wp-3
+writes_per_hour: 5
+changes_per_write: 10
+approval_ttl_hours: 24

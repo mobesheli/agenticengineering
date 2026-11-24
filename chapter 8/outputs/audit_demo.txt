@@ -1,0 +1,6 @@
+checkpoint          2 records, head 1b3dc2f8d198, signed
+untouched log       intact
+approver edited     chain breaks at record 2
+last record dropped records missing since the checkpoint: 1
+chain recomputed    record 2 does not match the checkpoint
+checkpoint forged   checkpoint signature is not valid

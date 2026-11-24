@@ -1,0 +1,4 @@
+design       untrusted  sensitive  changes  verdict
+one session  yes        yes        yes      3 of 3, split it, or gate the action
+read phase   yes        yes        no       2 of 3, may run unattended
+write phase  no         yes        yes      2 of 3, may run unattended

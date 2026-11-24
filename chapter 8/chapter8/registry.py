@@ -1,64 +1,51 @@
-"""Agent inventory and a gateway-enforced stop control."""
+"""The agent registry: every agent, its owner, its risk tier, and its stop state."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
+
+import yaml
+from pydantic import BaseModel
+
+from chapter8.settings import DATA
 
 
-class AgentStoppedError(RuntimeError):
-    pass
-
-
-@dataclass
-class AgentEntry:
+class AgentEntry(BaseModel):
     agent_id: str
     owner: str
+    purpose: str
     risk_tier: str
+    autonomy: str
     enabled: bool = True
+    stopped_by: str | None = None
     stopped_at: datetime | None = None
     stop_reason: str | None = None
 
 
-class AgentRegistry:
-    def __init__(self, entries: list[AgentEntry] | None = None) -> None:
-        initial = entries or [
-            AgentEntry(
-                agent_id="medication-reconciliation-agent",
-                owner="clinical-safety-lead",
-                risk_tier="acts_with_approval",
-            )
-        ]
-        self._entries = {entry.agent_id: entry for entry in initial}
+class Registry:
+    def __init__(self, entries: list[AgentEntry]) -> None:
+        self._entries = {entry.agent_id: entry for entry in entries}
 
-    def require_enabled(self, agent_id: str) -> AgentEntry:
+    @classmethod
+    def load(cls, path: Path | None = None) -> Registry:
+        path = path or DATA / "registry.yaml"
+        rows = yaml.safe_load(path.read_text())["agents"]
+        return cls([AgentEntry.model_validate(row) for row in rows])
+
+    def entry(self, agent_id: str) -> AgentEntry | None:
+        return self._entries.get(agent_id)
+
+    def enabled(self, agent_id: str) -> bool:
         entry = self._entries.get(agent_id)
-        if entry is None:
-            raise AgentStoppedError("agent is not registered")
-        if not entry.enabled:
-            raise AgentStoppedError(entry.stop_reason or "agent is stopped")
-        return entry
+        return entry is not None and entry.enabled
 
-    def stop(self, agent_id: str, *, reason: str, now: datetime) -> None:
+    def stop(self, agent_id: str, by: str, reason: str, now: datetime) -> None:
         entry = self._entries[agent_id]
         entry.enabled = False
-        entry.stopped_at = now
-        entry.stop_reason = reason
+        entry.stopped_by, entry.stopped_at, entry.stop_reason = by, now, reason
 
     def restore(self, agent_id: str) -> None:
         entry = self._entries[agent_id]
         entry.enabled = True
-        entry.stopped_at = None
-        entry.stop_reason = None
-
-    def snapshot(self) -> dict[str, dict[str, object]]:
-        return {
-            agent_id: {
-                "owner": entry.owner,
-                "risk_tier": entry.risk_tier,
-                "enabled": entry.enabled,
-                "stopped_at": entry.stopped_at.isoformat() if entry.stopped_at else None,
-                "stop_reason": entry.stop_reason,
-            }
-            for agent_id, entry in sorted(self._entries.items())
-        }
+        entry.stopped_by = entry.stopped_at = entry.stop_reason = None

@@ -1,0 +1,16 @@
+# Retention classes for what this agent writes. The periods are examples.
+# Set yours with the people who own the legal obligations.
+classes:
+  session-context:
+    keep: until the session ends
+    erasable: true
+  redacted-trace:
+    keep: 30 days
+    erasable: true
+  decision-record:
+    keep: per the audit schedule, under a retention lock
+    erasable: false
+    pseudonymized: true
+  record-server-audit-event:
+    keep: per the record server's schedule
+    erasable: false

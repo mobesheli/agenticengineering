@@ -1,0 +1,11 @@
+agents:
+  - agent_id: reconciliation-reader
+    owner: Practitioner/dr-osei
+    purpose: Read one patient's medications, fills, allergies, and notes
+    risk_tier: read
+    autonomy: advise
+  - agent_id: reconciliation-writer
+    owner: Practitioner/dr-osei
+    purpose: Write one approved reconciliation to one patient's medication list
+    risk_tier: consequential-write
+    autonomy: act-with-approval

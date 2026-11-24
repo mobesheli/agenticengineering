@@ -1,0 +1,76 @@
+{
+  "id": "pt-1001",
+  "name": "Jordan Example",
+  "date_of_birth": "1958-04-11",
+  "mrn": "SYN-MRN-770011",
+  "phone": "+1-555-0100",
+  "version": 7,
+  "medications": [
+    {
+      "id": "MedicationRequest/mr-101",
+      "name": "warfarin",
+      "dose": "5 mg once daily"
+    },
+    {
+      "id": "MedicationRequest/mr-102",
+      "name": "atorvastatin",
+      "dose": "20 mg at night"
+    },
+    {
+      "id": "MedicationRequest/mr-103",
+      "name": "metoprolol succinate",
+      "dose": "50 mg once daily"
+    },
+    {
+      "id": "MedicationRequest/mr-104",
+      "name": "metoprolol tartrate",
+      "dose": "25 mg twice daily"
+    }
+  ],
+  "fills": [
+    {
+      "id": "MedicationDispense/md-201",
+      "name": "warfarin",
+      "dose": "5 mg once daily",
+      "filled_on": "2027-02-20",
+      "days_supply": 30
+    },
+    {
+      "id": "MedicationDispense/md-202",
+      "name": "metoprolol succinate",
+      "dose": "50 mg once daily",
+      "filled_on": "2027-02-20",
+      "days_supply": 30
+    },
+    {
+      "id": "MedicationDispense/md-203",
+      "name": "aspirin",
+      "dose": "81 mg once daily",
+      "filled_on": "2027-02-18",
+      "days_supply": 90
+    }
+  ],
+  "allergies": [
+    {
+      "id": "AllergyIntolerance/al-401",
+      "substance": "penicillin"
+    }
+  ],
+  "notes": [
+    {
+      "id": "DocumentReference/note-301",
+      "author": "Practitioner/rn-patel",
+      "written_on": "2027-03-01",
+      "text": "Patient brought the medication bottles to the visit. Reports taking a low-dose aspirin every morning on a relative's advice. Says the cholesterol tablets ran out before the holidays and were not refilled."
+    },
+    {
+      "id": "DocumentReference/note-303",
+      "author": "Practitioner/counselor-lee",
+      "written_on": "2027-01-15",
+      "text": "Synthetic restricted note. This text must not reach the agent without consent.",
+      "labels": [
+        "restricted"
+      ]
+    }
+  ]
+}

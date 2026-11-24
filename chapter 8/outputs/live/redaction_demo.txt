@@ -1,0 +1,19 @@
+destination                  items  canaries found
+trace export, no redaction   14     4 of 4
+trace export, redacted       14     0 of 4
+gateway event log            0      0 of 4
+decision log                 0      0 of 4
+record server audit events   4      0 of 4
+one redacted tool span:
+{
+  "type": "function",
+  "name": "read_fills",
+  "input": {
+    "hmac_sha256": "3c6142b4b2c1",
+    "chars": 25
+  },
+  "output": {
+    "hmac_sha256": "529fe5796a70",
+    "chars": 133
+  }
+}

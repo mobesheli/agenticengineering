@@ -1,57 +1,35 @@
-"""Responsible-AI controls for actions that affect people."""
+"""Two small controls from the fairness and disclosure section."""
 
 from __future__ import annotations
 
-from collections import Counter, defaultdict
-from collections.abc import Iterable
-
-from .models import FairnessReport
+from collections import Counter
 
 
-def four_fifths_check(
-    outcomes: Iterable[tuple[str, bool]],
-    *,
-    threshold: float = 0.8,
-) -> FairnessReport:
+def outcome_rates(decisions: list[tuple[str, bool]]) -> dict[str, float]:
+    """Share of favorable outcomes per group, from (group, favorable) pairs."""
     totals: Counter[str] = Counter()
     favorable: Counter[str] = Counter()
-    for group, outcome in outcomes:
+    for group, good in decisions:
         totals[group] += 1
-        favorable[group] += int(outcome)
-    if not totals:
-        raise ValueError("at least one outcome is required")
-    rates = {
-        group: favorable[group] / count
-        for group, count in sorted(totals.items())
-        if count
-    }
-    best = max(rates.values())
-    ratio = min(rates.values()) / best if best else 1.0
-    return FairnessReport(
-        outcome_rates=rates,
-        selection_ratio=ratio,
-        threshold=threshold,
-        passes=ratio >= threshold,
-    )
+        favorable[group] += int(good)
+    return {group: favorable[group] / totals[group] for group in totals}
 
 
-class DisclosureMiddleware:
-    def __init__(self, disclosure: str = "You are interacting with an AI agent.") -> None:
-        self.disclosure = disclosure
-        self._seen_channels: set[str] = set()
-
-    def first_turn(self, channel_id: str, message: str) -> str:
-        if channel_id in self._seen_channels:
-            return message
-        self._seen_channels.add(channel_id)
-        return f"{self.disclosure}\n\n{message}"
+def rate_ratio(rates: dict[str, float]) -> float:
+    """Lowest group rate divided by the highest. A screen, not a verdict."""
+    highest = max(rates.values())
+    return min(rates.values()) / highest if highest else 1.0
 
 
-def outcome_rates_by_group(
-    outcomes: Iterable[tuple[str, bool]],
-) -> dict[str, tuple[int, int]]:
-    counts: defaultdict[str, list[int]] = defaultdict(lambda: [0, 0])
-    for group, outcome in outcomes:
-        counts[group][0] += int(outcome)
-        counts[group][1] += 1
-    return {group: tuple(values) for group, values in sorted(counts.items())}
+class Disclosure:
+    """Adds the disclosure to the first reply on each channel, outside the model."""
+
+    def __init__(self, text: str = "You are talking to an AI agent.") -> None:
+        self.text = text
+        self._seen: set[str] = set()
+
+    def wrap(self, channel: str, reply: str) -> str:
+        if channel in self._seen:
+            return reply
+        self._seen.add(channel)
+        return f"{self.text}\n\n{reply}"

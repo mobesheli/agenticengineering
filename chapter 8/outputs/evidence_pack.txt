@@ -1,0 +1,9 @@
+evidence pack, built 2027-03-02
+  01-agent-registry.json  ba7904c3a2ca
+  02-tool-catalog.yaml  b6391873565b
+  03-write-policy.yaml  636f3072cfdb
+  04-decision-records.json  07758457c15d
+  05-redaction-canary-report.json  fa577f08d1ab
+  06-retention.yaml  da4ad9e1c0b1
+  07-stop-drill.txt  29f6623f4e7e
+  08-bill-of-materials.json  72b76bbc3fd8

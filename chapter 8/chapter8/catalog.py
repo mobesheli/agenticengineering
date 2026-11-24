@@ -1,98 +1,93 @@
-"""Versioned tool permissions and the runtime catalog guardrail."""
+"""The tool catalog as data, and the guardrail that enforces it on every call."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
 
+import yaml
 from agents import (
     ToolGuardrailFunctionOutput,
+    ToolInputGuardrail,
     ToolInputGuardrailData,
-    tool_input_guardrail,
 )
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from .models import CatalogDecision, SessionContext
-
-ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CATALOG_PATH = ROOT / "data" / "catalog" / "reconciliation_tools.json"
-
-
-class ToolDeclaration(BaseModel):
-    scopes: frozenset[str] = Field(default_factory=frozenset)
-    risk_tier: str
-    approval_role: str | None = None
-    egress_allowlist: tuple[str, ...] = ()
+from chapter8.gateway import Gateway
+from chapter8.session import Session
+from chapter8.settings import DATA
 
 
-class ToolCatalog(BaseModel):
+class ToolEntry(BaseModel):
+    scope: str | None
+    risk: str
+    description_sha256: str = ""
+    patient_scoped: bool = True
+    approval: str | None = None
+    egress: str | None = None
+
+
+class Catalog(BaseModel):
+    server: str
     version: str
-    enabled_agents: frozenset[str]
-    tools: dict[str, ToolDeclaration]
+    owner: str
+    agents: dict[str, list[str]]
+    tools: dict[str, ToolEntry]
 
-    @classmethod
-    def load(cls, path: Path = DEFAULT_CATALOG_PATH) -> ToolCatalog:
-        return cls.model_validate_json(path.read_text(encoding="utf-8"))
-
-    def evaluate(
-        self,
-        *,
-        session: SessionContext,
-        tool_name: str,
-        arguments: dict[str, Any],
-    ) -> CatalogDecision:
-        if session.agent_id not in self.enabled_agents:
-            return CatalogDecision(False, "halt", "agent is disabled in the catalog")
-        declaration = self.tools.get(tool_name)
-        if declaration is None:
-            return CatalogDecision(False, "halt", f"{tool_name} is not in the catalog")
-        missing = tuple(sorted(declaration.scopes - session.granted_scopes))
-        if missing:
-            return CatalogDecision(
-                False,
-                "reject",
-                "tool is outside this session's scope",
-                missing,
-            )
-        requested_patient = arguments.get("patient_id")
-        if requested_patient not in (None, session.patient_id):
-            return CatalogDecision(False, "halt", "cross-patient access attempt")
-        return CatalogDecision(True, "allow", "catalog and patient scope allow the call")
+    def entry_for(self, agent_id: str, tool: str) -> ToolEntry | None:
+        if tool not in self.agents.get(agent_id, []):
+            return None
+        return self.tools.get(tool)
 
 
-DEFAULT_CATALOG = ToolCatalog.load()
+def load_catalog(path: Path | None = None) -> Catalog:
+    path = path or DATA / "catalog" / "ehr-records.yaml"
+    return Catalog.model_validate(yaml.safe_load(path.read_text()))
 
 
-async def enforce_catalog(
-    data: ToolInputGuardrailData[SessionContext],
-) -> ToolGuardrailFunctionOutput:
+def description_hash(description: str) -> str:
+    return hashlib.sha256(description.strip().encode()).hexdigest()[:16]
+
+
+def description_problems(catalog: Catalog, tools: list[Any]) -> list[str]:
+    """Tools whose description is not the one that was reviewed and pinned."""
+    problems = []
+    for tool in tools:
+        entry = catalog.tools.get(tool.name)
+        if entry is None:
+            problems.append(f"{tool.name} is not in the catalog")
+        elif entry.description_sha256 != description_hash(tool.description):
+            problems.append(f"{tool.name} description changed after review")
+    return problems
+
+
+def parse_arguments(raw: str) -> dict[str, Any] | None:
     try:
-        arguments = json.loads(data.context.tool_arguments or "{}")
+        arguments = json.loads(raw or "{}")
     except json.JSONDecodeError:
-        return ToolGuardrailFunctionOutput.raise_exception(
-            output_info={"reason": "tool arguments were not valid JSON"}
-        )
-    decision = DEFAULT_CATALOG.evaluate(
-        session=data.context.context,
-        tool_name=data.context.tool_name,
-        arguments=arguments,
-    )
-    if decision.behavior == "halt":
-        return ToolGuardrailFunctionOutput.raise_exception(
-            output_info={"reason": decision.reason}
-        )
-    if decision.behavior == "reject":
-        return ToolGuardrailFunctionOutput.reject_content(
-            message="That tool is outside this session's scope.",
-            output_info={
-                "reason": decision.reason,
-                "missing_scopes": list(decision.missing_scopes),
-            },
-        )
-    return ToolGuardrailFunctionOutput.allow(
-        output_info={"catalog_version": DEFAULT_CATALOG.version}
-    )
+        return None
+    return arguments if isinstance(arguments, dict) else None
 
 
-catalog_guardrail = tool_input_guardrail(name="enforce_catalog")(enforce_catalog)
+def catalog_guardrail(gateway: Gateway) -> ToolInputGuardrail[Session]:
+    def check(data: ToolInputGuardrailData) -> ToolGuardrailFunctionOutput:
+        session: Session = data.context.context
+        tool = data.context.tool_name
+        entry = gateway.catalog.entry_for(session.agent_id, tool)
+        if entry is None or not gateway.registry.enabled(session.agent_id):
+            return gateway.halt(session, tool, "not in catalog, or stopped")
+        if not gateway.tokens.valid(session):
+            return gateway.halt(session, tool, "session expired or revoked")
+        if entry.scope and entry.scope not in session.scopes:
+            return gateway.refuse(session, tool, "outside this session's scope")
+        arguments = parse_arguments(data.context.tool_arguments)
+        if arguments is None:
+            return gateway.refuse(session, tool, "arguments are not an object")
+        patient = arguments.get("patient_id")
+        if entry.patient_scoped and patient != session.patient_id:
+            return gateway.halt(session, tool, "not this session's patient")
+        return ToolGuardrailFunctionOutput.allow()
+
+    return ToolInputGuardrail(guardrail_function=check, name="catalog")

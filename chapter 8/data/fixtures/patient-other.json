@@ -1,0 +1,18 @@
+{
+  "id": "pt-2002",
+  "name": "Casey Placeholder",
+  "date_of_birth": "1981-12-05",
+  "mrn": "SYN-MRN-770099",
+  "phone": "+1-555-0199",
+  "version": 1,
+  "medications": [
+    {
+      "id": "MedicationRequest/mr-901",
+      "name": "metformin",
+      "dose": "500 mg twice daily"
+    }
+  ],
+  "fills": [],
+  "allergies": [],
+  "notes": []
+}

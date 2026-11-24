@@ -1,0 +1,9 @@
+signed, unchanged             allow  approved write within budget
+never signed                  deny   no approval for this exact action
+target edited after signing   deny   no approval for this exact action
+signed 25 hours ago           deny   approval has expired
+signed by another clinician   deny   approval is not from this clinician
+record changed while waiting  deny   record changed after the proposal was made
+sixth write this hour         deny   hourly write budget is spent
+tool nobody registered        deny   unknown tool, denied by default
+20 writers race for 1 slot    1 allowed, 19 denied

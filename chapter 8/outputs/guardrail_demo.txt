@@ -1,0 +1,6 @@
+own patient          allowed                 
+another patient      halted, run ended       not this session's patient
+no patient named     halted, run ended       not this session's patient
+tool not in catalog  halted, run ended       not in catalog, or stopped
+scope not granted    refused, run continues  outside this session's scope
+expired session      halted, run ended       session expired or revoked

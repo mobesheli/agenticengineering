@@ -1,0 +1,10 @@
+before the stop     1 write committed, 1 signed write waiting to run
+stop pressed        by security-on-call, 2 agents
+tokens revoked      3
+approvals voided    1
+waiting write       rejected on resume: no approval for this exact action
+new read run        halted: not in catalog, or stopped
+old token, direct   refused by the record server: token is expired or revoked
+direct commit       refused by policy: agent is stopped
+left behind         Patient/pt-1001/_history/8 was written before the stop
+record pt-1002      still version 4
