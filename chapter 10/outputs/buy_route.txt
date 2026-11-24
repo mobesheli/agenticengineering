@@ -1,0 +1,11 @@
+purchasing-advisor, tier medium
+  identification    met
+  security_review   met
+  action_limits     met
+  audit_records     compensating_control
+  lifecycle_notice  contract
+  usage_evidence    risk_acceptance
+  blocking gaps: none
+the same product, if it placed orders itself and offered only promises
+  audit_records: a contract line is not a control at this tier
+  usage_evidence: nobody has accepted this risk by name

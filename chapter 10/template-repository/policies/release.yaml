@@ -1,9 +1,11 @@
-version: 1.9.0
-required_controls:
-  - scoped-agent-identity
-  - action-bound-human-approval
-  - pre-call-run-budget
-  - append-only-tracing
-  - tenant-specific-kill-switch
-model_changes_are_releases: true
-secrets_in_image: forbidden
+always_enforced:
+  - no secrets in the repository
+  - every tool has a contract
+  - every contract uses the agent identity
+gate:
+  floor: 0.80
+  trials: 4
+required_evidence:
+  low: [tier_record, eval_report, config_ref]
+  medium: [tier_record, eval_report, security_review, config_ref]
+  high: [tier_record, eval_report, security_review, oversight_note, config_ref]

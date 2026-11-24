@@ -1,0 +1,7 @@
+tool: work-orders
+server: https://tools.internal/work-orders
+version: 1.4.0
+allow: [create_work_order]
+never: [close_work_order, delete_work_order]
+egress: [cmms.plant.internal:443]
+credential: agent-identity

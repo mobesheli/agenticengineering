@@ -1,0 +1,19 @@
+{
+ "signals": {
+  "model": {
+   "status": "ok"
+  },
+  "input": {
+   "status": "not_configured"
+  },
+  "knowledge": {
+   "status": "ok"
+  },
+  "outcome": {
+   "status": "ok"
+  },
+  "cost": {
+   "status": "ok"
+  }
+ }
+}

@@ -1,63 +1,104 @@
-"""Six externally owned kill switches with a drillable interface."""
+"""Six places to stop an agent, and a drill that proves each one works."""
 
 from __future__ import annotations
 
+import copy
 import time
+from collections.abc import Callable
+from dataclasses import dataclass
 
-from .models import DrillResult, KillSwitch
-
-DEFAULT_SWITCHES = (
-    ("gateway", "finops-on-call", "platform-duty", "all model calls"),
-    ("identity", "identity-on-call", "security-duty", "all tool and data actions"),
-    ("contract", "tool-owner", "security-duty", "one operation or scope"),
-    ("runtime", "runtime-on-call", "platform-duty", "new runs and queued work"),
-    ("register", "governance-owner", "risk-duty", "discovery and new adoption"),
-    ("data", "data-product-owner", "data-duty", "unsafe certified inputs"),
-)
+from chapter10.platform import Platform, Refused
 
 
-class KillSwitchMap:
-    def __init__(self, agent: str, target: str = "all") -> None:
-        self.agent = agent
-        self._switches = {
-            name: KillSwitch(
-                name=name,
-                owner=owner,
-                backup=backup,
-                stops=stops,
-                target=target,
-            )
-            for name, owner, backup, stops in DEFAULT_SWITCHES
-        }
+@dataclass(frozen=True)
+class Switch:
+    name: str
+    owner: str
+    pull: Callable[[Platform], None]
+    probe: Callable[[Platform], None]
+    stops: str
 
-    def press(self, name: str, *, target: str | None = None) -> KillSwitch:
-        switch = self._switches[name]
-        replacement = switch.model_copy(
-            update={"active": True, "target": target or switch.target}
-        )
-        self._switches[name] = replacement
-        return replacement
 
-    def reset(self, name: str) -> KillSwitch:
-        switch = self._switches[name].model_copy(update={"active": False})
-        self._switches[name] = switch
-        return switch
+def _gateway(p: Platform) -> None:
+    p.budget_usd = 0.0
 
-    def status(self) -> tuple[KillSwitch, ...]:
-        return tuple(self._switches.values())
 
-    def drill(self, name: str, *, target: str = "staging") -> DrillResult:
-        started = time.perf_counter_ns()
-        switch = self.press(name, target=target)
-        elapsed_ms = max(0, (time.perf_counter_ns() - started) // 1_000_000)
-        result = DrillResult(
-            switch=name,
-            target=switch.target,
-            active=switch.active,
-            elapsed_ms=elapsed_ms,
-        )
-        self.reset(name)
-        return result
+def _identity(p: Platform) -> None:
+    p.identity_enabled = False
 
-    def drill_all(self) -> tuple[DrillResult, ...]:
-        return tuple(self.drill(name) for name in self._switches)
+
+def _contract(p: Platform) -> None:
+    contract = p.contracts["work-orders"]
+    p.contracts["work-orders"] = contract.model_copy(update={"allow": []})
+
+
+def _runtime(p: Platform) -> None:
+    p.endpoints = dict.fromkeys(p.endpoints)
+
+
+def _register(p: Platform) -> None:
+    p.register_status = "suspended"
+
+
+def _data(p: Platform) -> None:
+    p.certified["sensor-history"] = False
+
+
+def _probe_contract(p: Platform) -> None:
+    if "create_work_order" not in p.contracts["work-orders"].allow:
+        raise Refused("work-orders.create_work_order: outside contract")
+
+
+def _probe_runtime(p: Platform) -> None:
+    if not any(p.accepts_runs(plant) for plant in p.endpoints):
+        raise Refused("runtime: no endpoint accepts new runs")
+
+
+def _probe_register(p: Platform) -> None:
+    if not p.on_marketplace():
+        raise Refused("register: not offered to new teams")
+
+
+SWITCHES = [
+    Switch(
+        "gateway",
+        "platform on-call",
+        _gateway,
+        Platform.admit_model_call,
+        "model calls",
+    ),
+    Switch(
+        "identity",
+        "security on-call",
+        _identity,
+        lambda p: p.check_identity("work-orders"),
+        "every tool and data call",
+    ),
+    Switch("tool contract", "tool owner", _contract, _probe_contract, "one operation"),
+    Switch("runtime", "platform on-call", _runtime, _probe_runtime, "new runs"),
+    Switch("register", "agent owner", _register, _probe_register, "new adoption"),
+    Switch(
+        "data supply",
+        "data owner",
+        _data,
+        lambda p: p.check_data("sensor-history"),
+        "one data product",
+    ),
+]
+
+
+def drill(staging: Platform) -> list[tuple[Switch, bool, float]]:
+    """Pull each switch on its own copy of staging and check that it bit."""
+    results = []
+    for switch in SWITCHES:
+        copy_of_staging = copy.deepcopy(staging)
+        switch.probe(copy_of_staging)
+        started = time.perf_counter()
+        switch.pull(copy_of_staging)
+        try:
+            switch.probe(copy_of_staging)
+            stopped = False
+        except Refused:
+            stopped = True
+        results.append((switch, stopped, time.perf_counter() - started))
+    return results

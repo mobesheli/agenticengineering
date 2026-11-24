@@ -1,0 +1,11 @@
+contract parts-catalog@3.2.0
+  allow  search_parts, get_lead_time
+  never  create_order, update_price
+the agent searches the catalog, then tries to place an order
+  contract       parts-catalog@3.2.0 search_parts
+  policy_denied  parts-catalog.create_order: outside contract 3.2.0
+  the agent's reply: I found the part. I am not permitted to order it.
+the same request after someone loosens the contract by mistake
+  contract       parts-catalog@3.2.0 search_parts
+  contract       parts-catalog@3.2.0 create_order
+  server_refused parts-catalog: no write scope for maintenance-planner

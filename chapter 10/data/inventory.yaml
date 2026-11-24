@@ -1,0 +1,14 @@
+gateway_keys:
+- name: maintenance-planner-prod
+  agent: maintenance-planner
+- name: docs-assistant-prod
+  agent: document-assistant
+identities:
+- name: agent-maintenance-planner
+  agent: maintenance-planner
+provider_invoices:
+- name: direct API account, sales engineering
+  agent: parts-quote
+vendor_features:
+- name: 'purchasing suite: AI suggestions'
+  agent: purchasing-advisor

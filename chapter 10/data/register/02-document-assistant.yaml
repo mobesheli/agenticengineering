@@ -1,0 +1,22 @@
+agent: document-assistant
+owner: engineering-systems
+route: join
+tier: medium
+status: listed
+bundle: document-assistant@7.0
+budget:
+  monthly_usd: 1500
+  source: metered
+  last_month_usd: 1135
+evidence:
+  tier_record: governance/tiers/document-assistant.md
+  eval_report: results/document-assistant/eval-report.json
+  release_record: results/document-assistant/release-record.json
+  security_review: reviews/document-assistant.md
+  config_ref: bundles/document-assistant.yaml
+data_sources:
+- engineering-procedures
+value_line:
+  claim: procedure found in 2 minutes, not 15
+  stage: baselined
+monitoring: monitoring/document-assistant.json

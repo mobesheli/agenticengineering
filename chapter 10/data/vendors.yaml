@@ -1,0 +1,11 @@
+- product: finance suite assistant
+  capabilities:
+  - expense-coding
+  - receipts
+  - ledger
+  - approvals
+- product: purchasing suite suggestions
+  capabilities:
+  - supplier-search
+  - purchase-orders
+  - price-compare

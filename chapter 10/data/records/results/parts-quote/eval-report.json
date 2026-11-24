@@ -1,0 +1,87 @@
+{
+ "bundle": "parts-quote@0.9",
+ "suite": "quotes@13",
+ "trials": 4,
+ "cached": false,
+ "outcomes": {
+  "quote-01": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-02": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-03": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-04": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-05": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-06": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-07": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-08": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-09": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-10": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-11": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-12": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "quote-13": [
+   true,
+   true,
+   false,
+   true
+  ]
+ },
+ "tokens": 124800
+}

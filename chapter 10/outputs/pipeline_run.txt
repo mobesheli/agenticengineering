@@ -1,0 +1,14 @@
+first attempt at 41.3: a prompt change
+  monitor  exit 0  block: quality fell 13.3%, margin 12.4% (recorded only)
+  comment  exit 0  block: quality fell 13.3%, margin 12.4% (posted as a comment)
+  block    exit 1  block: quality fell 13.3%, margin 12.4% (enforced)
+a key committed by mistake, with the gate still in monitor mode
+  monitor  exit 1  floor: config.env: provider key
+second attempt at 41.3, in block mode
+bundle maintenance-planner@41.3  digest 8bd6abe5e53f
+  floor      ok    no secrets
+  bundle     ok    every pointer matches its file
+  contracts  ok    agent identity, egress declared
+  gate       ok    pass: no fall against the baseline (enforced)
+  exit code 0
+  record     verdict pass, report sha256 7118d82bc8b4

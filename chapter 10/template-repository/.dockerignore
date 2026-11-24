@@ -1,7 +1,8 @@
-.git
-.venv
-artifacts
-evidence
-__pycache__
-*.pyc
 .env
+*.key
+*.pem
+bundle.yaml
+prompts/
+results/
+evals/
+.git/

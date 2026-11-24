@@ -1,0 +1,12 @@
+worker A, release maintenance-planner@41.3
+  status       waiting
+  asks for     create_work_order: P-207, Replace pump bearings, BK-6207
+  work orders  0
+worker B, a new process, after the planner approves
+  status       done
+  output       The work order is created. P-207 is past its alarm limit.
+  work orders  1 (WO-4100)
+  same approval sent twice: gone, unknown run, or already decided
+a second run waits while the release moves to 41.4
+  status       stale, release moved while waiting
+  work orders  1

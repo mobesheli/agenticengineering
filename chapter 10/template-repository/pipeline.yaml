@@ -1,23 +1,21 @@
-stages:
-  - deterministic-floor
-  - gate
-  - package
-  - release
+stages: [floor, gate, package, release]
 
 evaluation-gate:
   stage: gate
   script:
-    - python -m chapter10 --pipeline-only --gate-mode "${GATE_MODE}" --output-dir artifacts
+    - python -m chapter10.pipeline --repo . --mode "$GATE_MODE"
   variables:
     GATE_MODE: block
-  artifacts:
-    - artifacts/pipeline-report.json
+  artifacts: [results/release-record.json]
+
+package:
+  stage: package
+  script:
+    - build --sbom --provenance --sign
+  requires: [evaluation-gate]
 
 release:
-  requires:
-    - signed-image
-    - software-bill-of-materials
-    - provenance
-    - immutable-bundle
-  canary: one-plant
-  rollback: move-release-pointer
+  stage: release
+  script:
+    - release canary --plant plant-2 --bundle bundle.yaml
+  requires: [package]

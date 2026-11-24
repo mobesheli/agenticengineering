@@ -1,0 +1,189 @@
+{
+ "bundle": "maintenance-planner@41.3-fallback",
+ "suite": "golden@41",
+ "trials": 4,
+ "cached": false,
+ "outcomes": {
+  "wear-01": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-02": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-03": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "wear-04": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-05": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-06": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-07": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-08": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "wear-09": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "wear-10": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-01": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-02": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-03": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-04": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-05": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-06": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-07": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "healthy-08": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "missing-data-01": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "missing-data-02": [
+   true,
+   true,
+   true,
+   false
+  ],
+  "missing-data-03": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "missing-data-04": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "missing-data-05": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "missing-data-06": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-01": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-02": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-03": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-04": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-05": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "parts-06": [
+   true,
+   true,
+   true,
+   false
+  ]
+ },
+ "tokens": 624000
+}

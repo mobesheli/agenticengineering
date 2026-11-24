@@ -1,0 +1,22 @@
+agent: purchasing-advisor
+owner: procurement
+route: buy
+tier: medium
+status: contracted
+bundle: purchasing-advisor@2026.11
+budget:
+  monthly_usd: 1200
+  source: allocated
+  last_month_usd: 1050
+evidence:
+  tier_record: governance/tiers/purchasing-advisor.md
+  eval_report: results/purchasing-advisor/eval-report.json
+  release_record: results/purchasing-advisor/release-record.json
+  security_review: reviews/purchasing-advisor.md
+  config_ref: gap-sheets/purchasing-advisor.yaml
+data_sources:
+- supplier-master
+value_line:
+  claim: buyer review time down 20 percent
+  stage: declared
+monitoring: monitoring/purchasing-advisor.json

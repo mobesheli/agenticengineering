@@ -1,0 +1,7 @@
+{
+ "bundle": "document-assistant@7.0",
+ "suite": "docqa@112",
+ "verdict": "warn",
+ "eval_report_sha256": "4b090b67b40c3bb1c96ee9525fc2de034f999577b551976bbf63ff61651a0b56",
+ "produced_by": "release-pipeline"
+}

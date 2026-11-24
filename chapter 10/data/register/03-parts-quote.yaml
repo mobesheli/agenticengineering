@@ -1,0 +1,22 @@
+agent: parts-quote
+owner: sales-engineering
+route: assemble
+tier: medium
+status: live
+bundle: parts-quote@0.9
+budget:
+  monthly_usd: 100
+  source: metered
+  last_month_usd: 53
+evidence:
+  tier_record: governance/tiers/parts-quote.md
+  eval_report: results/parts-quote/eval-report.json
+  release_record: results/parts-quote/release-record.json
+  security_review: reviews/parts-quote.md
+  config_ref: bundles/parts-quote.yaml
+data_sources:
+- price-list
+value_line:
+  claim: quotes sent the same day
+  stage: measured
+monitoring: monitoring/parts-quote.json

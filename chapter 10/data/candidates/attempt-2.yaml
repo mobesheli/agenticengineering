@@ -1,0 +1,24 @@
+agent: maintenance-planner
+owner: platform-team
+route: build
+tier: high
+status: live
+bundle: maintenance-planner@41.3
+budget:
+  monthly_usd: 2500
+  source: metered
+  last_month_usd: 2120
+evidence:
+  tier_record: governance/tiers/maintenance-planner.md
+  eval_report: results/maintenance-planner-41.1/eval-report.json
+  release_record: results/maintenance-planner-41.1/release-record.json
+  security_review: reviews/maintenance-planner.md
+  oversight_note: governance/oversight/maintenance-planner.md
+  config_ref: bundles/maintenance-planner.yaml
+data_sources:
+- sensor-history
+- repair-history
+value_line:
+  claim: work orders approved 1.5 days earlier
+  stage: measured
+monitoring: monitoring/maintenance-planner.json

@@ -1,0 +1,12 @@
+worker A, release maintenance-planner@41.3
+  status       waiting
+  asks for     create_work_order: P-207, Replace bearings; vibration 6.3 mm/s exceeds 4.5 mm/s alarm limit, and bearings are past the recommended replacement interval., BK-6207
+  work orders  0
+worker B, a new process, after the planner approves
+  status       done
+  output       Work order WO-4100 was created to replace P-207’s bearings; vibration is above the alarm limit. Bearing kit BK-6207 has a three-day lead time.
+  work orders  1 (WO-4100)
+  same approval sent twice: gone, unknown run, or already decided
+a second run waits while the release moves to 41.4
+  status       stale, release moved while waiting
+  work orders  1

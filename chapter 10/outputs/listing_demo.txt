@@ -1,0 +1,8 @@
+register holds 1 agent: maintenance-planner
+  gateway key 'docs-assistant-prod' has no register entry
+  provider invoice 'direct API account, sales engineering' has no register entry
+  vendor feature 'purchasing suite: AI suggestions' has no register entry
+listing the maintenance planner, tier high
+  attempt 1  refused: missing evidence: oversight_note
+  attempt 2  refused: eval_report was produced under a different bundle
+  attempt 3  listed

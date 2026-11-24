@@ -1,0 +1,8 @@
+{
+  "bundle": "maintenance-planner@41.3",
+  "bundle_digest": "8bd6abe5e53fea3a5a53d7dff3ccd1997c456c75ec39deaff052f24721340b75",
+  "suite": "golden@41",
+  "verdict": "pass",
+  "eval_report_sha256": "7118d82bc8b4211598064be267ba9ec29a36950fc6c2cb99acaf1de6a81671bb",
+  "produced_by": "release-pipeline"
+}

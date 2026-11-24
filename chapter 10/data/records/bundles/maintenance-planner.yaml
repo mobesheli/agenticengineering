@@ -1,0 +1,11 @@
+bundle: maintenance-planner@41.3
+image: registry.internal/maintenance-planner@sha256:9f3a0f42b37d
+sandbox: registry.internal/planner-sandbox@sha256:8de5358e155c
+prompts: prompts/maintenance.txt@feca11568953
+contracts: {parts-catalog: 3.2.0, work-orders: 1.4.0}
+policy_pack: policy@1.9.0
+model:
+  primary: {id: gpt-6.1-terra, effort: low}
+  fallback: {id: gpt-6-luna, effort: low, golden: evals/fallback.json}
+memory_schema: {version: 4, reads: [3, 4]}
+eval_suite: golden@41

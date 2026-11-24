@@ -1,34 +1,30 @@
-"""Adapter for bringing an existing evaluation suite onto the common gate."""
+"""Bring a team's existing evaluation suite to the gate without rewriting it."""
 
 from __future__ import annotations
 
 from typing import Any
 
-from .models import EvaluationReport
+from chapter10.gate import EvalResult
 
 
-def adapt_legacy_report(
-    payload: dict[str, Any],
-    *,
-    bundle: str,
-    floor: float,
-) -> EvaluationReport:
-    """Translate common legacy fields without replacing the team's evaluator."""
+def from_team_suite(report: dict[str, Any], bundle: str) -> EvalResult:
+    """Map one team's report format onto the result every gate reads.
 
-    passed = int(payload.get("successes", payload.get("passed", 0)))
-    total = int(payload.get("cases", payload.get("total", 0)))
-    suite = str(payload.get("suite_version", payload.get("suite", "legacy@unknown")))
-    tokens = int(payload.get("tokens", payload.get("token_count", 0)))
-    trials = int(payload.get("trials_per_case", 1))
-    required_passed = int(payload.get("required_case_trials_passed", trials))
-    return EvaluationReport(
-        suite=suite,
+    The team's suite records each case with a list of attempts. The gate needs the
+    outcome of every attempt, because a pass rate alone cannot be compared by task.
+    """
+    outcomes = {
+        case["name"]: [attempt["status"] == "ok" for attempt in case["attempts"]]
+        for case in report["cases"]
+    }
+    trial_counts = {len(trials) for trials in outcomes.values()}
+    if len(trial_counts) != 1:
+        raise ValueError("every case must have the same number of attempts")
+    return EvalResult(
         bundle=bundle,
-        passed=passed,
-        total=total,
-        floor=floor,
-        trials_per_case=trials,
-        required_case_trials_passed=required_passed,
-        cache_enabled=bool(payload.get("cache_enabled", False)),
-        tokens=tokens,
+        suite=f"{report['suite_name']}@{report['suite_revision']}",
+        trials=trial_counts.pop(),
+        cached=report.get("used_cache", False),
+        outcomes=outcomes,
+        tokens=sum(a["tokens"] for c in report["cases"] for a in c["attempts"]),
     )

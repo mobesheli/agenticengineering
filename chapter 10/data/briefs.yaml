@@ -1,0 +1,30 @@
+- name: shift-handover
+  purpose: summarize open work orders for the next shift
+  audience: shift supervisors
+  reviewer: shift supervisor
+  data_tier: medium
+  capabilities:
+  - summarize
+  - maintenance-history
+  - work-orders
+  company_specific: false
+- name: expense-coding
+  purpose: code expense receipts to the ledger
+  audience: finance clerks
+  reviewer: finance clerk
+  data_tier: medium
+  capabilities:
+  - expense-coding
+  - receipts
+  - ledger
+  company_specific: false
+- name: parts-quote
+  purpose: draft a customer quote from the price list
+  audience: sales engineers
+  reviewer: sales engineer
+  data_tier: medium
+  capabilities:
+  - price-list
+  - quote-draft
+  - discount-rules
+  company_specific: true

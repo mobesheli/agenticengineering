@@ -1,0 +1,10 @@
+before
+  plant-1 41.2  plant-2 41.2  plant-3 41.2  plant-4 41.2
+canary: plant-2 runs maintenance-planner@41.3
+  plant-1 41.2  plant-2 41.3  plant-3 41.2  plant-4 41.2
+rollback: plant-2 returns to maintenance-planner@41.2
+  plant-1 41.2  plant-2 41.2  plant-3 41.2  plant-4 41.2
+what the rollback left behind
+  memory: 1 written in schema version 4
+  side effects: work orders WO-4100 still exist
+  runs in flight: 1 waiting for approval

@@ -1,0 +1,22 @@
+agent: purchasing-advisor
+tier: medium
+requirements:
+  identification:
+    status: met
+    note: acts as the signed-in buyer
+  security_review:
+    status: met
+    note: covered by the vendor review
+  action_limits:
+    status: met
+    note: suggests only; buyers place orders
+  audit_records:
+    status: compensating_control
+    note: no span-level trace; weekly export of activity records
+  lifecycle_notice:
+    status: contract
+    note: 30 days of notice before a model change, added at renewal
+  usage_evidence:
+    status: risk_acceptance
+    note: no per-agent metering; cost allocated by seat
+    accepted_by: head of procurement

@@ -1,0 +1,13 @@
+- agent: maintenance-planner
+  capabilities:
+  - sensor-history
+  - maintenance-history
+  - work-orders
+  - approval-queue
+  - summarize
+- agent: document-assistant
+  capabilities:
+  - engineering-procedures
+  - search
+  - summarize
+  - cite

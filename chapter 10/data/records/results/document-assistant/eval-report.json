@@ -1,0 +1,209 @@
+{
+ "bundle": "document-assistant@7.0",
+ "suite": "docqa@112",
+ "trials": 3,
+ "cached": false,
+ "outcomes": {
+  "doc-01": [
+   true,
+   true,
+   true
+  ],
+  "doc-02": [
+   true,
+   true,
+   true
+  ],
+  "doc-03": [
+   true,
+   true,
+   true
+  ],
+  "doc-04": [
+   true,
+   true,
+   true
+  ],
+  "doc-05": [
+   true,
+   true,
+   true
+  ],
+  "doc-06": [
+   true,
+   true,
+   true
+  ],
+  "doc-07": [
+   true,
+   true,
+   false
+  ],
+  "doc-08": [
+   true,
+   true,
+   true
+  ],
+  "doc-09": [
+   true,
+   true,
+   true
+  ],
+  "doc-10": [
+   true,
+   true,
+   true
+  ],
+  "doc-11": [
+   true,
+   true,
+   true
+  ],
+  "doc-12": [
+   true,
+   true,
+   true
+  ],
+  "doc-13": [
+   true,
+   true,
+   true
+  ],
+  "doc-14": [
+   true,
+   true,
+   true
+  ],
+  "doc-15": [
+   true,
+   true,
+   true
+  ],
+  "doc-16": [
+   true,
+   true,
+   true
+  ],
+  "doc-17": [
+   true,
+   true,
+   true
+  ],
+  "doc-18": [
+   true,
+   true,
+   true
+  ],
+  "doc-19": [
+   true,
+   true,
+   false
+  ],
+  "doc-20": [
+   true,
+   true,
+   true
+  ],
+  "doc-21": [
+   true,
+   true,
+   true
+  ],
+  "doc-22": [
+   true,
+   true,
+   true
+  ],
+  "doc-23": [
+   true,
+   true,
+   false
+  ],
+  "doc-24": [
+   true,
+   true,
+   true
+  ],
+  "doc-25": [
+   true,
+   true,
+   true
+  ],
+  "doc-26": [
+   true,
+   true,
+   true
+  ],
+  "doc-27": [
+   true,
+   true,
+   true
+  ],
+  "doc-28": [
+   true,
+   true,
+   true
+  ],
+  "doc-29": [
+   true,
+   true,
+   true
+  ],
+  "doc-30": [
+   true,
+   true,
+   true
+  ],
+  "doc-31": [
+   true,
+   true,
+   false
+  ],
+  "doc-32": [
+   true,
+   true,
+   true
+  ],
+  "doc-33": [
+   true,
+   true,
+   true
+  ],
+  "doc-34": [
+   true,
+   true,
+   true
+  ],
+  "doc-35": [
+   true,
+   true,
+   true
+  ],
+  "doc-36": [
+   true,
+   true,
+   true
+  ],
+  "doc-37": [
+   true,
+   true,
+   true
+  ],
+  "doc-38": [
+   true,
+   true,
+   true
+  ],
+  "doc-39": [
+   true,
+   true,
+   true
+  ],
+  "doc-40": [
+   true,
+   true,
+   true
+  ]
+ },
+ "tokens": 372000
+}

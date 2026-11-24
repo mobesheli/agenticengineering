@@ -1,78 +1,61 @@
-"""Deterministic tool-contract enforcement and optional Agents SDK hook."""
+"""Tool contracts: what each tool server may be asked to do, checked before the call."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
-from .artifacts import load_model
-from .models import ToolContract
+import yaml
+from agents import (
+    ToolGuardrailFunctionOutput,
+    ToolInputGuardrail,
+    ToolInputGuardrailData,
+)
+from pydantic import BaseModel
 
-try:
-    from agents import RunHooks
-except (
-    ImportError
-):  # pragma: no cover - the deterministic companion works without live SDK use
-
-    class RunHooks:  # type: ignore[no-redef]
-        """Small compatibility base when the optional SDK is not installed."""
+from chapter10.platform import Platform
 
 
-@dataclass(frozen=True)
-class ContractDecision:
-    allowed: bool
-    reason: str
-    trace_note: str
+class Contract(BaseModel):
+    tool: str
+    server: str
+    version: str
+    allow: list[str]
+    never: list[str]
+    egress: list[str]
+    credential: str
 
 
-class ContractEnforcer:
-    def __init__(self, contracts: list[ToolContract]) -> None:
-        self._contracts = {contract.tool: contract for contract in contracts}
+def load_contracts(folder: Path) -> dict[str, Contract]:
+    files = sorted(folder.glob("*.yaml"))
+    contracts = [Contract.model_validate(yaml.safe_load(f.read_text())) for f in files]
+    return {contract.tool: contract for contract in contracts}
 
-    @classmethod
-    def from_directory(cls, directory: Path) -> ContractEnforcer:
-        contracts = [
-            load_model(path, ToolContract) for path in sorted(directory.glob("*.yaml"))
-        ]
-        if not contracts:
-            raise ValueError(f"no tool contracts found in {directory}")
-        return cls(contracts)
 
-    def check(self, tool_name: str, operation: str) -> ContractDecision:
-        contract = self._contracts.get(tool_name)
+def contract_problems(contracts: dict[str, Contract]) -> list[str]:
+    """The rules the pipeline enforces on every contract, in every gate mode."""
+    problems = []
+    for name, contract in contracts.items():
+        if contract.credential != "agent-identity":
+            problems.append(f"{name}: must use the agent's own identity")
+        if not contract.egress:
+            problems.append(f"{name}: declares no egress allowlist")
+        if set(contract.allow) & set(contract.never):
+            problems.append(f"{name}: an operation is both allowed and forbidden")
+    return problems
+
+
+def contract_guardrail(platform: Platform, server: str) -> ToolInputGuardrail:
+    def check(data: ToolInputGuardrailData) -> ToolGuardrailFunctionOutput:
+        operation = data.context.tool_name
+        contract = platform.contracts.get(server)
         if contract is None:
-            return ContractDecision(
-                False, f"{tool_name}: no contract, refused", "contract:none"
-            )
-        note = f"contract:{contract.tool}@{contract.version}"
-        if operation in contract.never or operation not in contract.allow:
-            return ContractDecision(
-                False,
-                f"{tool_name}.{operation}: outside contract",
-                note,
-            )
-        return ContractDecision(True, "allowed", note)
+            reason = f"{server}: no contract, refused"
+        elif operation in contract.never or operation not in contract.allow:
+            reason = f"{server}.{operation}: outside contract {contract.version}"
+        else:
+            platform.note("contract", f"{server}@{contract.version} {operation}")
+            return ToolGuardrailFunctionOutput.allow()
+        platform.note("policy_denied", reason)
+        return ToolGuardrailFunctionOutput.reject_content(reason)
 
-    def enforce(self, tool_name: str, operation: str) -> ContractDecision:
-        decision = self.check(tool_name, operation)
-        if not decision.allowed:
-            raise PermissionError(decision.reason)
-        return decision
-
-
-class ContractHook(RunHooks):
-    """SDK-shaped hook that keeps the permission decision outside the model."""
-
-    def __init__(self, enforcer: ContractEnforcer) -> None:
-        self.enforcer = enforcer
-
-    async def on_tool_start(self, context: Any, agent: Any, tool: Any) -> None:
-        del agent
-        arguments = getattr(context, "tool_arguments", {}) or {}
-        operation = arguments.get("operation", "")
-        decision = self.enforcer.enforce(tool.name, operation)
-        run_context = getattr(context, "context", None)
-        trace_note = getattr(run_context, "trace_note", None)
-        if callable(trace_note):
-            trace_note(decision.trace_note)
+    return ToolInputGuardrail(guardrail_function=check, name=server)

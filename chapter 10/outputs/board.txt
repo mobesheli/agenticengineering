@@ -1,0 +1,14 @@
+agent                route    stage           quality           value      drift
+maintenance-planner  build    steady 7/7      97% of 30 tasks   measured   5 of 5
+document-assistant   join     listed 5/6      90% of 40 tasks   baselined  4 of 5
+parts-quote          assemble live 5/7        92% of 13 tasks   measured   4 of 5
+purchasing-advisor   buy      contracted 3/6  100% of 12 tasks  declared   1 of 5
+
+agent                cost last month     value claim
+maintenance-planner  $2,120 metered      work orders approved 1.5 days earlier
+document-assistant   $1,135 metered      procedure found in 2 minutes, not 15
+parts-quote          $53 metered         quotes sent the same day
+purchasing-advisor   $1,050 allocated    buyer review time down 20 percent
+
+drift signals: 14 of 20 reporting, 4 not configured, 2 not observable
+joined suite docqa@112: 40 cases, 3 attempts each, read through the adapter

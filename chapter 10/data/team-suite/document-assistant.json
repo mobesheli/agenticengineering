@@ -1,0 +1,686 @@
+{
+ "suite_name": "docqa",
+ "suite_revision": 112,
+ "cases": [
+  {
+   "name": "doc-01",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-02",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-03",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-04",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-05",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-06",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-07",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "bad",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-08",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-09",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-10",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-11",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-12",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-13",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-14",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-15",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-16",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-17",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-18",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-19",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "bad",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-20",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-21",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-22",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-23",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "bad",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-24",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-25",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-26",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-27",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-28",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-29",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-30",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-31",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "bad",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-32",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-33",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-34",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-35",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-36",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-37",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-38",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-39",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  },
+  {
+   "name": "doc-40",
+   "attempts": [
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    },
+    {
+     "status": "ok",
+     "tokens": 3100
+    }
+   ]
+  }
+ ]
+}

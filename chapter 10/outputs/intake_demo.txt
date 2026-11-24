@@ -1,0 +1,5 @@
+shift-handover  reuse  maintenance-planner already covers 100% of this
+expense-coding  buy    finance suite assistant is licensed and covers 100%
+parts-quote     build  nothing existing fits
+                       scaffold: agent-parts-quote, tier medium
+                       gate in monitor mode, golden suite of 0 tasks

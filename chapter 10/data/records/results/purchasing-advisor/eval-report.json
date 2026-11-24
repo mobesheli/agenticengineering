@@ -1,0 +1,45 @@
+{
+ "bundle": "purchasing-advisor@2026.11",
+ "suite": "acceptance@3",
+ "trials": 1,
+ "cached": false,
+ "outcomes": {
+  "accept-01": [
+   true
+  ],
+  "accept-02": [
+   true
+  ],
+  "accept-03": [
+   true
+  ],
+  "accept-04": [
+   true
+  ],
+  "accept-05": [
+   true
+  ],
+  "accept-06": [
+   true
+  ],
+  "accept-07": [
+   true
+  ],
+  "accept-08": [
+   true
+  ],
+  "accept-09": [
+   true
+  ],
+  "accept-10": [
+   true
+  ],
+  "accept-11": [
+   true
+  ],
+  "accept-12": [
+   true
+  ]
+ },
+ "tokens": 0
+}

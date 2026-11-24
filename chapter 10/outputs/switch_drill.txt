@@ -1,0 +1,7 @@
+switch         owner              what it stops             drill
+gateway        platform on-call   model calls               stopped
+identity       security on-call   every tool and data call  stopped
+tool contract  tool owner         one operation             stopped
+runtime        platform on-call   new runs                  stopped
+register       agent owner        new adoption              stopped
+data supply    data owner         one data product          stopped

@@ -1,161 +1,81 @@
-# Chapter 10 Companion Repo
+# Chapter 10: Deploying Agents
 
-This folder contains the runnable companion for Chapter 10, *Shipping the Thing: Deployment Patterns and Infrastructure*.
+Companion code for Chapter 10 of *Agentic AI Engineering*, *Deploying Agents: Patterns and Infrastructure*.
 
-Start with `Chapter_10_Shipping_the_Thing_Learning_Walkthrough.ipynb`. It follows the draft section by section: choosing a runtime home, parking approval waits safely, separating the image from runtime state, enforcing tool contracts, naming a release in one bundle, introducing an evaluation gate through monitor, comment, and block modes, rolling back honestly, drilling six kill switches, refusing an incomplete register listing, routing intake to reuse, buy, or build, and putting all four routes on one board.
+The chapter takes one agent, a maintenance planner for a manufacturer with four plants, from a prototype to a production service, and then builds one governed way to deploy every agent after it. This folder holds the pieces: a worker that pauses a run at an approval and resumes it in another process, tool contracts enforced before every call, a release bundle, a release pipeline with an evaluation gate, six kill switches with a drill, and a register with a listing check, an intake, and a dashboard.
 
-The default path is deterministic and offline. It makes no model calls, needs no API key, sends no telemetry, and writes all generated evidence beneath the output directory you choose.
+The tests, the walkthrough notebook, and the examples need no API key. The SDK runner, the tools, the tool guardrails, the approval pause, the state store, the pipeline, and the register are all real. Only the model's replies are scripted, which also makes the output the same on every run. One example can also call a real model and needs `OPENAI_API_KEY` for that.
 
-## Start Here
+## Setup
 
-Use this order on a first pass:
-
-1. Inspect `template-repository/bundle.yaml` and compute its canonical release digest.
-2. Park a synthetic approval and prove that it cannot resume after the release moves.
-3. Call one allowed tool operation and refuse an undeclared write before it runs.
-4. Run the local pipeline and inspect its deterministic floor, gate, and provenance result.
-5. Compare monitor, comment, and block behavior without changing the gate script.
-6. Move and roll back a release pointer, then name the state rollback cannot undo.
-7. Drill the gateway, identity, contract, runtime, register, and data switches.
-8. Watch the fake register refuse an entry with missing evidence, then accept it.
-9. Route sample ideas through reuse, buy, and governed-build intake decisions.
-10. Generate the four-agent board and hashed deployment evidence pack.
-
-## One-Time Setup
-
-Python 3.11 or later is required. Python 3.12 is recommended.
+Python 3.11 or later.
 
 ```bash
-cd "chapter 10"
-python3.12 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Open the walkthrough:
+`openai-agents` is pinned to 0.24.0. The worker stores sessions and parked runs in a SQLite file through SQLAlchemy, so nothing else needs installing. SQLite allows one writer, so the store uses one connection at a time. Point the same code at a server database in production.
 
-```bash
-jupyter notebook Chapter_10_Shipping_the_Thing_Learning_Walkthrough.ipynb
-```
+## Run and verify
 
-## Run the Offline Release Review
+Run every command from this folder.
 
-Run the checked-in release through the local gate, listing exercise, kill-switch drill, and operational board:
+| Command | What it exercises | What you should see |
+| --- | --- | --- |
+| `python -m pytest -q` | The test suite | 60 tests passing |
+| `python -m examples.pause_resume --scripted` | A run parked at an approval and resumed by a second worker | One work order after approval, a repeated approval refused, a stale approval voided |
+| `python -m examples.contract_demo` | A tool contract refusing an operation, then the server refusing it | A policy denial, then a server refusal |
+| `python -m examples.bundle_show` | The release bundle, its digest, and its pointers | The bundle, one digest, and "all match" |
+| `python -m examples.pipeline_run` | Two attempts at one release, in each gate mode | A regression that only block mode stops, a secret that every mode stops, and a passing run |
+| `python -m chapter10.pipeline --repo template-repository --mode block` | The pipeline as a pipeline stage would run it | Four stages and exit code 0 |
+| `python -m examples.rollout_demo` | A canary at one plant, a rollback, and what the rollback leaves | Three things the pointer did not undo |
+| `python -m examples.switch_drill` | Each of the six switches pulled on a copy of staging | Six lines that say "stopped" |
+| `python -m examples.listing_demo` | Unregistered agents found, and a listing refused twice and then accepted | Three findings and three attempts |
+| `python -m examples.intake_demo` | Three proposals through intake | Reuse, buy, and one build with a starter project |
+| `python -m examples.buy_route` | A bought agent's gap sheet at two tiers | No blocking gaps at its own tier, two at the highest |
+| `python -m examples.board` | The dashboard, read from the register and its records | Four rows, a cost table, and the drift signal counts |
+| `python -m examples.pause_resume` | The pause and resume with a real model. Needs `OPENAI_API_KEY` | The same three cases, in the model's own words |
 
-```bash
-python -m chapter10 --output-dir evidence/latest
-```
+The `outputs/` folder holds what every command printed when the chapter was written, including one live run in `pause_resume_live.txt`. `tests/test_outputs.py` checks that each scripted example still prints exactly what is stored. A live model words its messages differently on every run.
 
-The command emits:
+`Chapter_10_Learning_Walkthrough.ipynb` runs the chapter's ideas in order. `python scripts/build_notebook.py` rebuilds and executes it. `python scripts/build_data.py` regenerates the evaluation results, the register, and the evidence records.
 
-- `pipeline-report.json`: deterministic-floor, contract, evaluation-gate, and provenance decisions
-- `bundle.yaml`: the exact release configuration reviewed
-- `listing-demo/`: the refused attempt, created evidence, and accepted register entry
-- `agent-board.json`: one row for each build, join, assemble, and buy route
-- `kill-switch-drill.json`: a timed staging activation of all six switches
-- `manifest.json`: SHA-256 hashes for every artifact in the evidence pack
+## Where things are
 
-Verify the manifest from Python:
+| Path | What it holds | Chapter section |
+| --- | --- | --- |
+| `chapter10/worker.py` | `run_turn` and `resume`, and the table of parked runs with its atomic claim | Pausing runs without holding workers open |
+| `chapter10/planner.py` | The agent being deployed and its tools. One tool needs a human approval | Pausing runs without holding workers open |
+| `chapter10/contracts.py`, `template-repository/contracts/` | Tool contracts and the guardrail that enforces them before a call | Enforcing tool contracts before every call |
+| `chapter10/platform.py` | A small stand-in for the gateway, the identity directory, the endpoints, the register, and the data catalog | Implementing six ways to stop an agent |
+| `chapter10/bundle.py`, `template-repository/bundle.yaml` | The release bundle, its digest, and the check that its pointers match their files | Versioning the complete agent bundle |
+| `chapter10/models.py` | Model settings and prices. The model names themselves live in the bundle | Pinning the model |
+| `chapter10/gate.py` | The result every suite reports, the paired decision rule, and the three gate modes | Enforcing the evaluation gate in CI/CD |
+| `chapter10/pipeline.py`, `template-repository/pipeline.yaml` | The release pipeline: secret scan, bundle pointers, contract rules, the gate, and the release record | Enforcing the evaluation gate in CI/CD |
+| `chapter10/release.py` | The canary, the rollback, and what a rollback leaves behind | Rolling out and rolling back safely |
+| `chapter10/switches.py` | The six switches and the drill | Implementing six ways to stop an agent |
+| `chapter10/register.py`, `data/register/` | Register entries, the listing check, and the search for unregistered agents | Checking evidence before listing agents |
+| `chapter10/intake.py` | The reuse, buy, or build recommendation | Screening proposals before development |
+| `chapter10/adapter.py` | The adapter that brings a team's own evaluation suite to the gate | Choosing an adoption route |
+| `chapter10/gaps.py` | The gap sheet for a bought agent | Choosing an adoption route |
+| `chapter10/board.py` | The dashboard | Real-world pattern |
+| `examples/scripted.py` | The scripted model replies used by the tests, the notebook, and `--scripted` | |
+| `template-repository/` | What an agent's own repository looks like on the governed path | Packaging an agent |
 
-```bash
-python -c 'from pathlib import Path; from chapter10.evidence import verify_manifest; print(verify_manifest(Path("evidence/latest")))'
-```
+## What is simplified
 
-## Run the Pipeline Locally
+Everything is invented: the manufacturer, the plants, the equipment, the agents, the evaluation results, the costs, and the evidence records. The numbers show what the artifacts look like. They are not measurements.
 
-The same command used by the template workflow runs without a git host:
+`chapter10/platform.py` is a stand-in. In production, the gateway, the identity directory, the endpoints, and the data catalog are separate services with their own interfaces. Here they are fields on one object, so that a drill can pull a switch and a probe can show what stopped. The drill reports whether each switch worked. A real drill also times it.
 
-```bash
-python -m chapter10 \
-  --pipeline-only \
-  --gate-mode block \
-  --output-dir artifacts/local
-```
+The digests in `template-repository/bundle.yaml` are shortened to twelve characters so that the file can be printed. Real digests are 64 characters. The prompt's hash is real and is checked by the pipeline.
 
-`template-repository/pipeline.yaml` shows the generic stage, while `template-repository/.github/workflows/release.yml` shows how a git host makes the named check required. The code deliberately keeps enforcement mode outside the gate algorithm, so an organization can move from `monitor` to `comment` to `block` by changing one value.
+The evaluation results in `template-repository/evals/` are files, not runs. The golden suite that would produce them is the subject of Chapter 7. The gate here reads results in one common form, applies the same paired rule as Chapter 7, and decides.
 
-The checked-in candidate clears its quality floor, passes every required trial, uses no cached answers, and sits above the baseline interval. Change `template-repository/evals/candidate.json` to explore a held release.
+The release record is a JSON file with the hash of the evaluation report. In production, the pipeline signs that record with its own identity, as it signs the image, so that nobody can write one by hand.
 
-## Watch a Listing Get Refused and Earned
+The template repository shows the layout: the bundle, the contracts, the prompt, the policy file, the pipeline stage, a workflow for a Git host, and a Dockerfile that shows what is copied into the image and what is not. The Dockerfile is not built by the tests.
 
-Run only the fake-register exercise:
-
-```bash
-python -m chapter10 --listing-demo --output-dir evidence/listing-practice
-```
-
-The first check refuses the high-tier maintenance planner because none of its five declared evidence files exists in the practice repository. The exercise then creates the tier record, uncached evaluation report, security review, oversight note, and bundle reference. The same entry passes on the second attempt. The refusal names the missing work instead of returning a generic governance error.
-
-## Try the Intake Funnel
-
-The included intake already describes the maintenance-planning idea:
-
-```bash
-python -m chapter10 --intake template-repository/intake.yaml
-```
-
-It recommends reusing the listed maintenance planner. Edit a copy to describe a commodity workflow with no internal-inspection requirement and the route becomes `buy`. Describe a company-specific workflow with no marketplace match and the response includes a governed scaffold: identity, budget, monitor-mode gate, and empty golden-set path.
-
-## Project Map
-
-- `Chapter_10_Shipping_the_Thing_Learning_Walkthrough.ipynb`: guided reader experience
-- `chapter10/models.py`: typed release, evaluation, register, intake, parked-run, and switch contracts
-- `chapter10/release.py`: bundle digest, server-owned approval parking, release pointer, and rollback limits
-- `chapter10/contracts.py`: file-backed tool contract and SDK-shaped pre-tool hook
-- `chapter10/gate.py`: deterministic secret floor, Wilson-interval comparison, pass-to-the-k check, and local pipeline
-- `chapter10/register.py`: file repository, tier requirements, listing check, and refusal-to-acceptance exercise
-- `chapter10/adapter.py`: legacy evaluation-suite translation for the join route
-- `chapter10/intake.py`: reuse, buy, or build decision and scaffold
-- `chapter10/switches.py`: six owned, backed-up, independently drillable kill switches
-- `chapter10/board.py`: shared operational board for all four routes
-- `chapter10/evidence.py`: release-review artifacts and hashed manifest
-- `template-repository/`: image boundary, immutable bundle, contracts, policy, eval reports, provenance, pipeline, and workflow
-- `data/register/`: evidence requirements, deliberately incomplete candidate, and four operational entries
-- `data/catalog/marketplace.yaml`: small internal marketplace searched by intake
-- `assets/`: the nine figures from the Chapter 10 draft
-- `tests/`: offline unit, integration, CLI, pipeline, listing, and evidence tests
-
-## Verify Everything
-
-Run the complete offline suite:
-
-```bash
-pytest -q
-```
-
-Check formatting and imports:
-
-```bash
-ruff check .
-ruff format --check .
-```
-
-Rebuild and execute the checked-in notebook:
-
-```bash
-python scripts/build_notebook.py
-jupyter nbconvert --to notebook --execute \
-  Chapter_10_Shipping_the_Thing_Learning_Walkthrough.ipynb \
-  --output /tmp/chapter10-executed.ipynb \
-  --ExecutePreprocessor.timeout=180
-```
-
-Run the CLI smoke test directly:
-
-```bash
-python -m chapter10 --output-dir /tmp/chapter10-evidence
-```
-
-## Deployment and Trust Boundaries
-
-- Every model, prompt, tool catalog, policy pack, sandbox, image, memory schema, and evaluation suite is named by an immutable release bundle.
-- The image and sandbox use digests. The example package lock uses exact versions; production builds should add hashes from the approved package mirror.
-- No secret belongs in the image, prompt, context file, register, or generated evidence. Workload identity is the only credential mode accepted by the checked-in tool contract.
-- Parked run state is server-owned. A client cannot submit approvals by sending serialized state, and a run parked under an old bundle restarts instead of resuming.
-- A model change, fallback change, quantization change, or serving-stack change is a release and must earn a fresh evaluation report.
-- Release certification refuses cached answers and required cases that do not pass every trial.
-- A rollback moves a pointer. It cannot erase newer memory, reverse completed effects, or safely resume an approval parked under another release.
-- Every kill switch has an owner and a different backup. Tenant targeting lets Plant D stop without taking Plants A, B, and C down with it.
-- The register and gate are files and code the organization owns. Bought agents appear on the same board, with allocated cost and unobservable drift fields kept explicit.
-
-The local store, pipeline, signature record, register, and board are teaching implementations. Production deployments should connect the same contracts to the organization’s durable workflow engine, identity directory, model gateway, artifact registry, git-host rulesets, telemetry plane, data certification service, and incident system.
+The model names in `template-repository/bundle.yaml` are the ones the provider published when the chapter was finalized, and the prices in `chapter10/models.py` are that provider's standard rates on the date in the file. Change the names in the bundle, and nowhere else, when the lineup moves.

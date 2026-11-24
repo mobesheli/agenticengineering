@@ -1,0 +1,7 @@
+{
+ "bundle": "purchasing-advisor@2026.11",
+ "suite": "acceptance@3",
+ "verdict": "pass",
+ "eval_report_sha256": "9da1d01613e13be527891ee6542807a34a6c36b07c425ccf4a2a99d7f8af4b9e",
+ "produced_by": "release-pipeline"
+}

@@ -1,0 +1,7 @@
+{
+ "bundle": "parts-quote@0.9",
+ "suite": "quotes@13",
+ "verdict": "pass",
+ "eval_report_sha256": "4510beeb7b8a81e69ea7e47806efdcfad4a2b0c8ffaef18dcdc64073ba58968d",
+ "produced_by": "release-pipeline"
+}
