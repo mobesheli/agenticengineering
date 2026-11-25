@@ -1,0 +1,14 @@
+the quarter of the budget review, as a monthly average
+  every step on the frontier model, nothing cached
+  step   model            input tokens  cached  reasoning    spend  share
+  read   gpt-6.2-sol            588 M      0%     16.3 M    1,440    71%
+  plan   gpt-6.2-sol             64 M      0%     15.9 M      340    17%
+  draft  gpt-6.2-sol             68 M      0%      3.1 M      260    13%
+
+one quarter later, as a monthly average
+  cached prefix, a model for each step, repeats refused, complex orders off
+  step   model            input tokens  cached  reasoning    spend  share
+  plan   gpt-6.2-sol             42 M     71%      9.9 M      159    52%
+  read   gpt-6.1-terra          330 M     85%      3.9 M      143    47%
+  draft  gpt-6-luna              48 M     78%      0.0 M        5     2%
+

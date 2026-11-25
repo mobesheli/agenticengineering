@@ -1,0 +1,4 @@
+# The provider's invoice for the month in data/months/before.yaml.
+month: the quarter of the budget review, as a monthly average
+token_charges_usd: 2071.30
+tolerance: 0.03

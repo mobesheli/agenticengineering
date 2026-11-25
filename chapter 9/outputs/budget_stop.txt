@@ -1,0 +1,20 @@
+run budget $0.20, 8 model calls, 8 tool calls
+  step   model or tool          input  cached  output  reasoning     cost
+  plan   gpt-6.2-sol            8,000       0   2,400      1,800  $0.0400
+  tool   read_repair_history                                      $0.0100
+  tool   read_sensor_summary                                      $0.0100
+  read   gpt-6.2-sol           14,000       0     600        300  $0.0340
+  tool   check_parts                                              $0.0200
+  read   gpt-6.2-sol           15,000       0     500        250  $0.0350
+  tool   check_parts          refused: repeat                     $0.0000
+  read   gpt-6.2-sol           15,000       0     500        250  $0.0350
+  tool   check_parts          refused: repeat                     $0.0000
+  model $0.1440  tools $0.0400  turns 5  repeated calls 2
+stopped: run budget exhausted: spent $0.1840 of $0.20, next action needs $0.0400
+  outcome stopped, model calls left 4
+
+a child asks for $0.50 from a parent that has $0.10 left
+the child is given $0.10
+the child spends $0.06: parent has $0.04 left
+
+not on the card: model 'gpt-7-preview' is not on price card 2026-11-24

@@ -1,0 +1,43 @@
+# Synthetic month of runs, written as groups so that a person can read it.
+# chapter9/month.py expands each group into one ledger record for each run.
+label: a candidate change, measured on the same month of work
+config: reading tool results moved to the mid-tier model
+severities:
+  routine:
+    review_minutes: 2.0
+    repeat_share: 0.05
+    turns:
+    - [6, 0.8]
+    - [9, 0.15]
+    - [17, 0.05]
+    steps:
+      plan: {model: gpt-6.2-sol, input: 8000, output: 2400, reasoning: 1800, cached: 0, written: 0}
+      read: {model: gpt-6.1-terra, input: 52000, output: 2400, reasoning: 1500, cached: 0, written: 0}
+      draft: {model: gpt-6.2-sol, input: 10000, output: 1200, reasoning: 300, cached: 0, written: 0}
+  moderate:
+    review_minutes: 3.5
+    repeat_share: 0.1
+    turns:
+    - [8, 0.7]
+    - [12, 0.22]
+    - [24, 0.08]
+    steps:
+      plan: {model: gpt-6.2-sol, input: 12000, output: 4000, reasoning: 3000, cached: 0, written: 0}
+      read: {model: gpt-6.1-terra, input: 116000, output: 5600, reasoning: 3400, cached: 0, written: 0}
+      draft: {model: gpt-6.2-sol, input: 12000, output: 2400, reasoning: 600, cached: 0, written: 0}
+  complex:
+    review_minutes: 5.0
+    repeat_share: 0.2
+    turns:
+    - [11, 0.6]
+    - [18, 0.28]
+    - [31, 0.12]
+    steps:
+      plan: {model: gpt-6.2-sol, input: 16000, output: 6000, reasoning: 4500, cached: 0, written: 0}
+      read: {model: gpt-6.1-terra, input: 200000, output: 8000, reasoning: 5000, cached: 0, written: 0}
+      draft: {model: gpt-6.2-sol, input: 14000, output: 4000, reasoning: 1000, cached: 0, written: 0}
+plants:
+  all plants:
+    routine: [3000, 2400]
+    moderate: [2000, 1200]
+    complex: [1000, 300]

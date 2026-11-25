@@ -1,0 +1,32 @@
+work order for press-07: main drive bearing wear
+plant plant-2, severity routine, for planner:okafor
+agent 40.6, prompts maintenance@40
+
+every step on the frontier model, nothing cached
+  step   model or tool          input  cached  output  reasoning     cost
+  plan   gpt-6.2-sol            8,000       0   2,400      1,800  $0.0400
+  tool   read_repair_history                                      $0.0100
+  tool   read_sensor_summary                                      $0.0100
+  read   gpt-6.2-sol           14,000       0     600        300  $0.0340
+  tool   check_parts                                              $0.0200
+  read   gpt-6.2-sol           15,000       0     500        250  $0.0350
+  tool   check_parts          repeat of the call above            $0.0200
+  read   gpt-6.2-sol           16,000       0     500          0  $0.0370
+  tool   search_manual                                            $0.0200
+  read   gpt-6.2-sol           19,000       0     800        500  $0.0460
+  draft  gpt-6.2-sol           10,000       0   1,200        300  $0.0320
+  model $0.2240  tools $0.0800  turns 6  repeated calls 1
+  outcome approved as WO-2R0412, reviewed in 2 minutes
+
+the same work with a cached prefix and a model for each step
+  step   model or tool          input  cached  output  reasoning     cost
+  plan   gpt-6.2-sol            8,000   6,000   2,400      1,800  $0.0286
+  tool   read_repair_history                                      $0.0100
+  tool   read_sensor_summary                                      $0.0100
+  read   gpt-6.1-terra         14,000  10,000     600          0  $0.0080
+  tool   check_parts                                              $0.0200
+  read   gpt-6.1-terra         16,000  14,000     500          0  $0.0052
+  tool   search_manual                                            $0.0200
+  read   gpt-6.1-terra         19,000  16,000     800        300  $0.0078
+  draft  gpt-6-luna            10,000   8,000   1,200          0  $0.0009
+  model $0.0505  tools $0.0600  turns 5  repeated calls 0

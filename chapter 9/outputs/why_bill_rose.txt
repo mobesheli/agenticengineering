@@ -1,0 +1,23 @@
+quarter on quarter, monthly averages
+  runs               x2.00
+  tokens per run     x3.00
+  price per token    x0.50
+  token bill         x3.00   $680 to $2,040
+
+ledger $2,040.00 against invoice $2,071.30: gap 1.5%, within the 3% tolerance
+
+the quarter of the budget review, as a monthly average
+  turns per run, median and 95th percentile  8 and 18
+  runs with a repeated call that executed    9.2%
+  runs with a repeated call that was refused 0.0%
+  tool calls that failed                     0.5%
+  input tokens read from the cache           0%
+  tokens per run                             130,000
+
+one quarter later, as a monthly average
+  turns per run, median and 95th percentile  5 and 10
+  runs with a repeated call that executed    0.0%
+  runs with a repeated call that was refused 5.1%
+  tool calls that failed                     0.5%
+  input tokens read from the cache           83%
+  tokens per run                             101,333

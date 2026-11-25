@@ -1,0 +1,10 @@
+turn 8 on gpt-6.1-terra, price card 2026-11-24
+reads 35,000 tokens: instructions 1,500, tool definitions 12,000,
+  history 20,000, new material 1,500
+writes 2,000 tokens, of which 1,200 are reasoning
+
+                                   input  cached   write  reason  answer   total
+nothing cached                    0.0350  0.0000  0.0000  0.0060  0.0040  0.0450
+tools deferred, nothing cached    0.0250  0.0000  0.0000  0.0060  0.0040  0.0350
+prefix cached                     0.0015  0.0016  0.0025  0.0060  0.0040  0.0156
+prefix changed, cache rewritten   0.0015  0.0000  0.0419  0.0060  0.0040  0.0534

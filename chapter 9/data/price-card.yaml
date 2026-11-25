@@ -1,0 +1,25 @@
+# The price card. Version it with the code. Every cost in this chapter comes
+# from this file, so when a price changes, the change is a reviewed commit.
+version: "2026-11-24"
+currency: USD
+models:   # US dollars for each million tokens, standard tier
+  gpt-6.2-sol:
+    {input: 2.00, cached_input: 0.10, cache_write: 2.50, output: 10.00}
+  gpt-6.1-terra:
+    {input: 1.00, cached_input: 0.05, cache_write: 1.25, output: 5.00}
+  gpt-6-luna:
+    {input: 0.10, cached_input: 0.01, cache_write: 0.125, output: 0.50}
+tools:    # US dollars for each call
+  read_sensor_summary: 0.01
+  read_repair_history: 0.01
+  search_manual: 0.02
+  check_parts: 0.02
+overheads:   # US dollars for each run, with the arithmetic behind each one
+  checks:
+    usd: 0.05
+    basis: one model-based check at $0.01, and a judge on 1 run in 10 at $0.40
+  trace_storage:
+    usd: 0.01
+    basis: about thirty spans with payloads, at the trace store's storage rate
+review:
+  planner_usd_per_minute: 0.98

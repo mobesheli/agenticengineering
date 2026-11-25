@@ -1,0 +1,42 @@
+# Synthetic month of runs, written as groups so that a person can read it.
+# chapter9/month.py expands each group into one ledger record for each run.
+label: one quarter later, as a monthly average
+config: cached prefix, a model for each step, repeats refused, complex orders off
+severities:
+  routine:
+    review_minutes: 2.0
+    repeat_share: 0.0
+    refused_share: 0.04
+    turns:
+    - [5, 0.88]
+    - [7, 0.1]
+    - [10, 0.02]
+    steps:
+      plan: {model: gpt-6.2-sol, input: 8000, output: 2400, reasoning: 1800, cached: 6000, written: 0}
+      read: {model: gpt-6.1-terra, input: 52000, output: 2400, reasoning: 600, cached: 44000, written: 2000}
+      draft: {model: gpt-6-luna, input: 10000, output: 1200, reasoning: 0, cached: 8000, written: 0}
+  moderate:
+    review_minutes: 3.5
+    repeat_share: 0.0
+    refused_share: 0.07
+    turns:
+    - [7, 0.8]
+    - [10, 0.16]
+    - [12, 0.04]
+    steps:
+      plan: {model: gpt-6.2-sol, input: 12000, output: 4000, reasoning: 3000, cached: 8000, written: 0}
+      read: {model: gpt-6.1-terra, input: 116000, output: 5600, reasoning: 1400, cached: 100000, written: 4000}
+      draft: {model: gpt-6-luna, input: 12000, output: 2400, reasoning: 0, cached: 9000, written: 0}
+plants:
+  plant-1:
+    routine: [600, 498]
+    moderate: [375, 296]
+  plant-2:
+    routine: [900, 774]
+    moderate: [375, 303]
+  plant-3:
+    routine: [800, 684]
+    moderate: [375, 301]
+  plant-4:
+    routine: [700, 594]
+    moderate: [375, 300]

@@ -1,0 +1,9 @@
+# The human baseline: what an approved work order cost before the agent.
+# Measured by the plants for thirteen weeks before the agent was switched on,
+# as planner minutes for each approved order at the loaded rate on the price
+# card. Severity is the maintenance system's own classification of the fault.
+measured: thirteen weeks before the agent, 17,940 work orders
+usd_per_approved_order:
+  routine: 2.80
+  moderate: 4.60
+  complex: 7.60

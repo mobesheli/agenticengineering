@@ -1,0 +1,11 @@
+reply: completed, sent with {'x-correlation-id': 'WO-2R0412'}
+  span             border.nordbolt
+  case_id          WO-2R0412
+  counterparty     nordbolt
+  remote_task_id   task-8841
+  reported_version 2.3.1
+  status           completed
+  attempts         2
+  latency_ms       under a second
+  quoted_cost_usd  0.04
+  receipt_id       nb-rcpt-55120

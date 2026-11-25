@@ -1,0 +1,5 @@
+# The quarter before the budget review, as a monthly average, from the
+# provider's invoices and the plants' work order counts.
+runs: 3000
+tokens_per_run: 43333
+usd_per_million_tokens: 5.2308

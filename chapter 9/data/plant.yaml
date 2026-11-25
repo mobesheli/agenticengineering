@@ -1,0 +1,16 @@
+# Synthetic plant data, shaped like what a maintenance system holds.
+machines:
+  press-07:
+    plant: plant-2
+    sensor_summary: >-
+      Main drive bearing vibration 7.1 mm/s RMS, up from 2.8 over 21 days.
+      Bearing temperature 81 C, up 14 C. Motor current normal.
+    history:
+      - "2026-03-12 main drive bearing replaced (BRG-6204), 6 hours"
+      - "2026-09-02 lubrication service, no findings"
+parts:
+  BRG-6204: {description: deep groove ball bearing, stock: 4, lead_days: 0}
+manual:
+  "press-07 main bearing": >-
+    Replace bearing BRG-6204 with the press locked out. Two technicians,
+    about six hours. Check shaft runout before fitting the new bearing.

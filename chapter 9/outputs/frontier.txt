@@ -1,0 +1,7 @@
+configuration                model  attempt  approved  per order  baseline
+before, 6,000 attempts        0.34     3.40       71%       4.79      4.20
+  every step on the frontier model, nothing cached
+candidate, 6,000 attempts     0.22     3.28       65%       5.05      4.20
+  reading tool results moved to the mid-tier model
+after, 4,500 attempts         0.07     2.64       83%       3.17      3.40
+  cached prefix, a model for each step, repeats refused, complex orders off

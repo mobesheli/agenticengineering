@@ -1,0 +1,17 @@
+the quarter of the budget review, as a monthly average: 6,000 attempts
+
+  model tokens                $  0.34
+  tools and retrieval         $  0.06
+  checks and sampled judge    $  0.05
+  trace storage               $  0.01
+  human review                $  2.94
+  direct cost per attempt     $  3.40
+  approved by a planner           71%   (4,260 of 6,000)
+  cost per approved order     $  4.79
+  human baseline, same work   $  4.20
+  agent against baseline         +14%
+
+by severity          attempts  approved   per order  baseline
+  complex               1,000      35%      16.18      7.60  above baseline
+  moderate              2,000      68%       5.81      4.60  above baseline
+  routine               3,000      85%       2.68      2.80  below baseline
