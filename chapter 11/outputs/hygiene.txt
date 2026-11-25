@@ -1,0 +1,13 @@
+before: asked about the feed pump, the agent reads m01
+  Feed pump P3 is a KS-65, serviced every 120 days, 40 Nm on the housing.
+  expired      2
+  superseded   2
+  merged       1
+  quarantined  1
+  flagged      0
+  unconfirmed  0
+recall      70% before, 100% after
+forgetting  25% before, 100% after
+after: asked about the feed pump, the agent reads m02
+  Feed pump P3 was replaced with a KS-80: 90 days, 55 Nm.
+waiting for a person: m09 (no source on record)

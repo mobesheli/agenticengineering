@@ -1,0 +1,12 @@
+agent: parts-availability
+owner: procurement-systems
+sponsor: {role: procurement director, attested_day: 300, next_due_day: 390}
+contract:
+  version: 3
+  schema: contracts/parts-availability-v3.json
+  previous: {version: 2, compatibility_mode: true, served_until_day: 345}
+consumers:
+  - agent: maintenance-planner
+    contract_test: tests/consumers/maintenance_planner.py
+  - agent: spares-forecast
+    contract_test: tests/consumers/spares_forecast.py

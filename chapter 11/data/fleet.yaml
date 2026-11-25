@@ -1,0 +1,30 @@
+# Fifteen entries: the four from Chapter 10's dashboard and the eleven the
+# discovery sweep found on day 240. `found` says how each came to be here.
+register:
+  - {agent: maintenance-planner, owner: platform-team, sponsor: plant operations director, tier: high, rung: 2, ceiling: 3, runs_on: cloud-a, found: register, identity_scoped: true, card: true, retire_when: "a successor beats it on golden@41 at lower cost"}
+  - {agent: document-assistant, owner: quality-systems, sponsor: quality director, tier: medium, rung: 2, ceiling: 3, runs_on: cloud-a, found: register, identity_scoped: true, card: true, retire_when: "the document system ships its own search"}
+  - {agent: parts-quote, owner: sales-engineering, sponsor: sales director, tier: medium, rung: 1, ceiling: 2, runs_on: cloud-a, found: register, identity_scoped: true, card: true, retire_when: "quotes move to the new pricing system"}
+  - {agent: purchasing-advisor, owner: vendor, sponsor: procurement director, tier: medium, rung: 0, ceiling: 1, runs_on: "the vendor's platform", found: register, identity_scoped: true, card: true, retire_when: "contract end"}
+  - {agent: parts-availability, owner: procurement-systems, sponsor: procurement director, tier: medium, rung: 2, ceiling: 3, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "the planning system exposes stock directly"}
+  - {agent: consumables-buyer, owner: procurement-systems, sponsor: procurement director, tier: high, rung: 4, ceiling: 4, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "mandate not renewed"}
+  - {agent: spares-forecast, owner: procurement-systems, sponsor: null, tier: low, rung: 0, ceiling: 1, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "forecast accuracy below the planner's own"}
+  - {agent: alert-sorter, owner: plant-1-engineering, sponsor: plant 1 manager, tier: low, rung: 1, ceiling: 2, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "the maintenance planner sorts alerts as well"}
+  - {agent: shift-report, owner: plant-3-engineering, sponsor: null, tier: low, rung: 0, ceiling: 1, runs_on: cloud-b, found: sweep, identity_scoped: true, card: true, retire_when: "shift handover moves to the planning system"}
+  - {agent: safety-bulletin, owner: health-and-safety, sponsor: safety manager, tier: high, rung: 0, ceiling: 0, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "never drafts without a named reviewer"}
+  - {agent: calibration-reminder, owner: quality-systems, sponsor: null, tier: low, rung: 1, ceiling: 2, runs_on: cloud-a, found: sweep, identity_scoped: true, card: true, retire_when: "calibration system adds reminders"}
+  - {agent: energy-report, owner: plant-2-engineering, sponsor: null, tier: low, rung: 0, ceiling: null, runs_on: an engineer's laptop, found: sweep, identity_scoped: false, card: false, retire_when: null}
+  - {agent: invoice-matcher, owner: finance-systems, sponsor: null, tier: medium, rung: 0, ceiling: null, runs_on: cloud-a, found: sweep, identity_scoped: false, card: false, retire_when: null}
+  - {agent: quality-notes, owner: nobody, sponsor: null, tier: low, rung: 0, ceiling: null, runs_on: cloud-a, found: sweep, identity_scoped: false, card: false, retire_when: null}
+  - {agent: onboarding-helper, owner: nobody, sponsor: null, tier: low, rung: 0, ceiling: null, runs_on: cloud-b, found: sweep, identity_scoped: false, card: true, retire_when: null}
+vendors:
+  cloud-a: [maintenance-planner, document-assistant, parts-quote, parts-availability, consumables-buyer, spares-forecast, alert-sorter, safety-bulletin, calibration-reminder, invoice-matcher, quality-notes]
+  cloud-b: [onboarding-helper]
+contract:
+  agent: parts-availability
+  v2: [part_number, in_stock, lead_time_days]
+  v3: [part_number, in_stock, lead_time.days, lead_time.confidence]
+  registered_consumers:
+    maintenance-planner: [part_number, in_stock, lead_time_days]
+    spares-forecast: [part_number, in_stock]
+  unregistered_callers:
+    shift-report: [part_number, lead_time_days]

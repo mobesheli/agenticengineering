@@ -1,0 +1,17 @@
+day 140: planners approved 96% of drafts, and caught 8 of 26 planted errors
+  maintenance-planner: rung 1 to rung 2 (approve by exception)
+  gap: planted_check_catch_rate: 0.31 is below the required 0.9
+
+day 175: caught 28 of 30 planted errors, wrongly rejected 2 of 50 clean drafts
+  maintenance-planner: rung 1 to rung 2 (approve by exception)
+  no gaps: goes to sponsor and security to sign
+
+a case nobody should bring
+  maintenance-planner: to rung 4 (bounded spending)
+  gap: rung 4 is above this agent's ceiling of 3
+  credit-decision: to rung 2, with perfect evidence
+  gap: rung 2 is above this agent's ceiling of 1
+
+day 97, morning shift at plant 2: the drop rule fired
+  consecutive_denials: 3 (limit 3)
+  maintenance-planner: rung 1 to rung 0 (draft only), no signature needed

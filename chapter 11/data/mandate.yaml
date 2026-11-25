@@ -1,0 +1,17 @@
+mandate:
+  agent: consumables-buyer
+  signed_by: finance controller
+  instrument: virtual card consumables-01
+  suppliers: [NordBolt, Halden Seals, Reka Lubricants]
+  cap_per_order: 400
+  cap_per_day: 1000
+  expires_day: 270
+orders:
+  - {id: PO-1, day: 201, supplier: NordBolt, usd: 180}
+  - {id: PO-2, day: 201, supplier: NordBolt, usd: 520}
+  - {id: PO-3, day: 201, supplier: Quickfix Direct, usd: 90}
+  - {id: PO-4, day: 201, supplier: Halden Seals, usd: 350}
+  - {id: PO-5, day: 201, supplier: Reka Lubricants, usd: 320}
+  - {id: PO-6, day: 201, supplier: Reka Lubricants, usd: 240}
+after_revocation:
+  - {id: PO-7, day: 202, supplier: NordBolt, usd: 60}

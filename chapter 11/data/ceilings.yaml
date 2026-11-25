@@ -1,0 +1,8 @@
+# The six agents of Table 11.2: the rung each is on and its ceiling.
+agents:
+  - {agent: IT helpdesk, note: resets passwords, rung: 3, ceiling: 3}
+  - {agent: Procurement, note: catalog consumables, rung: 4, ceiling: 4}
+  - {agent: Maintenance planner, note: safety work always approved, rung: 2, ceiling: 3}
+  - {agent: Credit decision, note: a bank's lending, rung: 1, ceiling: 1}
+  - {agent: Candidate screening, note: hiring, rung: 0, ceiling: 0}
+  - {agent: Medication reconciliation, note: a hospital, rung: 0, ceiling: 1}

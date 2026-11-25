@@ -1,0 +1,80 @@
+today: 180
+last_run: 150
+ttl_days: {note: 30, summary: 365, fact: 365}
+assets:
+  pump-P3-feed: {model: KS-80, service_days: 90, torque_nm: 55, changed_day: 152}
+  press-07: {model: HP-400, service_days: 180, torque_nm: 210, changed_day: 12}
+  compressor-C2: {model: AC-22, service_days: 60, torque_nm: 35, changed_day: 40}
+  conveyor-B4: {model: CV-9, service_days: 30, torque_nm: 18, changed_day: 166}
+  chiller-P1: {model: CH-3, service_days: 120, torque_nm: 48, changed_day: 8}
+memories:
+  - {id: m01, subject: pump-P3-feed, kind: summary, day: 24, source_id: session-0031,
+     text: "Feed pump P3 is a KS-65, serviced every 120 days, 40 Nm on the housing.",
+     claims: {model: KS-65, service_days: 120, torque_nm: 40}}
+  - {id: m02, subject: pump-P3-feed, kind: fact, day: 153, source_id: planner-0412,
+     text: "Feed pump P3 was replaced with a KS-80: 90 days, 55 Nm.",
+     claims: {model: KS-80, service_days: 90, torque_nm: 55}}
+  - {id: m03, subject: press-07, kind: fact, day: 30, source_id: session-0044,
+     text: "Press 07 is an HP-400 on a 180 day service, 210 Nm.",
+     claims: {model: HP-400, service_days: 180, torque_nm: 210}}
+  - {id: m04, subject: compressor-C2, kind: fact, day: 61, source_id: session-0090,
+     text: "Compressor C2 gets a service every 60 days.",
+     claims: {service_days: 60}}
+  - {id: m05, subject: compressor-C2, kind: fact, day: 88, source_id: session-0131,
+     text: "C2 compressor: 60 day service interval.",
+     claims: {service_days: 60}}
+  - {id: m06, subject: conveyor-B4, kind: summary, day: 70, source_id: session-0101,
+     text: "Conveyor B4 is serviced every 45 days.",
+     claims: {service_days: 45}}
+  - {id: m07, subject: conveyor-B4, kind: fact, day: 167, source_id: planner-0460,
+     text: "Conveyor B4 moved to a 30 day service after the belt change.",
+     claims: {service_days: 30}}
+  - {id: m08, subject: chiller-P1, kind: fact, day: 15, source_id: session-0012,
+     text: "Chiller P1 is a CH-3, 120 day service, 48 Nm.",
+     claims: {model: CH-3, service_days: 120, torque_nm: 48}}
+  - {id: m09, subject: chiller-P1, kind: fact, day: 95, source_id: null,
+     text: "Chiller P1 can run 200 days between services.",
+     claims: {service_days: 200}}
+  - {id: m10, subject: plant-2-shift, kind: note, day: 120, source_id: session-0170,
+     text: "Plant 2 night shift is short one planner this week.",
+     claims: {night_planners: 1}}
+  - {id: m11, subject: plant-3-shift, kind: note, day: 141, source_id: session-0199,
+     text: "Plant 3 runs a reduced weekend shift until the audit.",
+     claims: {weekend_shift: reduced}}
+  - {id: m12, subject: planner-preferences, kind: fact, day: 77, source_id: session-0110,
+     text: "Planners at plant 1 want parts listed before steps.",
+     claims: {order: parts first}}
+  - {id: m13, subject: press-07, kind: fact, day: 5, source_id: session-0003,
+     status: superseded, text: "Press 07 housing bolts take 180 Nm.",
+     claims: {torque_nm: 180}}
+  - {id: m14, subject: gearbox-G1, kind: fact, day: 52, source_id: session-0071,
+     text: "Gearbox G1 takes ISO 220 oil.", claims: {oil: ISO 220}}
+  - {id: m15, subject: fan-F2, kind: fact, day: 66, source_id: session-0093,
+     text: "Fan F2 belts are size B-62.", claims: {belt: B-62}}
+  - {id: m16, subject: fan-F2, kind: fact, day: 9, source_id: session-0006,
+     status: superseded, text: "Fan F2 belts are size B-60.", claims: {belt: B-60}}
+  - {id: m17, subject: boiler-B1, kind: fact, day: 81, source_id: session-0118,
+     text: "Boiler B1 inspection needs two people.", claims: {crew: 2}}
+  - {id: m18, subject: robot-R5, kind: fact, day: 102, source_id: session-0150,
+     text: "Robot R5 is greased at each planned stop.", claims: {grease: each stop}}
+probes:
+  recall:
+    - {subject: gearbox-G1, expect: {oil: ISO 220}}
+    - {subject: fan-F2, expect: {belt: B-62}}
+    - {subject: boiler-B1, expect: {crew: 2}}
+    - {subject: robot-R5, expect: {grease: each stop}}
+    - {subject: pump-P3-feed, expect: {model: KS-80, torque_nm: 55}}
+    - {subject: press-07, expect: {torque_nm: 210}}
+    - {subject: compressor-C2, expect: {service_days: 60}}
+    - {subject: conveyor-B4, expect: {service_days: 30}}
+    - {subject: chiller-P1, expect: {service_days: 120}}
+    - {subject: planner-preferences, expect: {order: parts first}}
+  forgetting:
+    - {subject: press-07, gone: {torque_nm: 180}}
+    - {subject: fan-F2, gone: {belt: B-60}}
+    - {subject: pump-P3-feed, gone: {model: KS-65}}
+    - {subject: pump-P3-feed, gone: {torque_nm: 40}}
+    - {subject: conveyor-B4, gone: {service_days: 45}}
+    - {subject: chiller-P1, gone: {service_days: 200}}
+    - {subject: plant-2-shift, gone: {night_planners: 1}}
+    - {subject: plant-3-shift, gone: {weekend_shift: reduced}}

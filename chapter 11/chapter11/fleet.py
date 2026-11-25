@@ -1,79 +1,47 @@
-"""Reconcile accountability with identity and exercise consumer-owned contracts."""
+"""The fleet: what a listing needs, what two registries disagree on, and
+whether a contract change breaks the agents that call it."""
 
-from .models import AgentEntry
+from __future__ import annotations
+
+NEEDS = {
+    "sponsor": "no named sponsor",
+    "identity_scoped": "no scoped identity of its own",
+    "card": "no agent card",
+    "ceiling": "no ceiling",
+    "retire_when": "no condition for retiring it",
+}
 
 
-def reconcile(
-    entries: list[AgentEntry], identities: list[dict], *, day: int
-) -> list[dict]:
-    register = {entry.agent: entry for entry in entries}
-    if len(register) != len(entries):
-        raise ValueError("duplicate register entry")
+def listing_gaps(entry: dict) -> list[str]:
+    return [
+        why for name, why in NEEDS.items() if entry.get(name) in (None, False)
+    ]
+
+
+def reconcile(register: list[dict], vendors: dict[str, list[str]]) -> list[str]:
+    """Compare the company's register with each vendor's registry, both ways."""
+    ours = {entry["agent"]: entry for entry in register}
     findings = []
-    observed = set()
-    for identity in identities:
-        agent = identity["agent"]
-        observed.add(agent)
-        entry = register.get(agent)
-        reasons = []
-        if entry is None:
-            reasons.append("unregistered identity")
-        else:
-            if not entry.owner or not entry.sponsored(day):
-                reasons.append("missing owner or current sponsor attestation")
-            if (
-                entry.status in ("retired", "deprecated", "suspended")
-                and identity["active"]
-            ):
-                reasons.append("live identity for inactive agent")
-        if identity["direct_provider_access"]:
-            reasons.append("provider access bypasses the gateway")
-        if reasons:
+    for vendor, names in vendors.items():
+        for name in names:
+            if name not in ours:
+                findings.append(f"{name}: in {vendor}, not in our register")
+            elif not ours[name].get("sponsor"):
+                findings.append(f"{name}: in {vendor}, and nobody sponsors it")
+    for name, entry in ours.items():
+        home = entry["runs_on"]
+        if home not in vendors:
+            findings.append(f"{name}: on {home}, which no registry covers")
+        elif name not in vendors[home]:
             findings.append(
-                {"agent": agent, "registry": identity["registry"], "gaps": reasons}
-            )
-    for agent, entry in register.items():
-        if agent not in observed and entry.status == "live":
-            findings.append(
-                {
-                    "agent": agent,
-                    "registry": "not observed",
-                    "gaps": [
-                        "locate identity in another registry; do not erase the accountability record"
-                    ],
-                }
+                f"{name}: we say {home}, and {home} does not list it"
             )
     return findings
 
 
-def contract_gaps(
-    contract: dict, response: dict, *, call_version: int, day: int
-) -> list[str]:
-    accepted = {contract["version"]}
-    previous = contract["previous"]
-    if previous["compatibility_mode"] and day < previous["sunset_day"]:
-        accepted.add(previous["version"])
-    if call_version not in accepted:
-        return ["contract version is unsupported or its sunset has passed"]
-    gaps = []
-    for consumer in contract["consumers"]:
-        for field, kind in consumer["requires"].items():
-            value = response.get(field)
-            valid = (
-                isinstance(value, str)
-                if kind == "string"
-                else type(value) is int and value >= 0
-                if kind == "nonnegative_integer"
-                else False
-            )
-            if not valid:
-                gaps.append(f"{consumer['agent']}: {field} must be {kind}")
-    return gaps
-
-
-def pager(entry: AgentEntry, incident: str) -> str:
-    if incident == "infrastructure":
-        return "platform-rotation"
-    if incident == "behavior":
-        return entry.owner
-    raise ValueError("incident must be infrastructure or behavior")
+def contract_breaks(fields: list[str], consumers: dict[str, list[str]]) -> dict:
+    """For each consumer, the fields it reads that the new version drops."""
+    return {
+        name: [field for field in reads if field not in fields]
+        for name, reads in consumers.items()
+    }

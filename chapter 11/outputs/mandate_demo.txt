@@ -1,0 +1,20 @@
+consumables-buyer: up to $400 an order and $1000 a day, 3 suppliers
+  on virtual card consumables-01, expires day 270
+  signed by the finance controller
+  PO-1  $180  NordBolt
+        placed
+  PO-2  $520  NordBolt
+        refused: $520 is over the order cap
+  PO-3  $90   Quickfix Direct
+        refused: supplier is not on the mandate
+  PO-4  $350  Halden Seals
+        placed
+  PO-5  $320  Reka Lubricants
+        placed
+  PO-6  $240  Reka Lubricants
+        refused: the day's cap would be exceeded
+
+mandate revoked
+  PO-7  refused: mandate revoked
+  still placed and not undone: PO-1, PO-4, PO-5 ($850)
+  each needs a person: cancel with the supplier, or let it complete

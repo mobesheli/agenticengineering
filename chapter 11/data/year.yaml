@@ -1,0 +1,21 @@
+agent: maintenance-planner
+ceiling: 3
+rungs:            # day the rung changed, and the rung from that day
+  - [0, 1]
+  - [97, 0]
+  - [99, 1]
+  - [175, 2]
+  - [322, 3]
+drift: {days_with_a_trip: 22, confirmed: 19}
+cost_per_approved_order: {launch: 3.17, year_end: 2.87}
+events:
+  - {n: 1, day: 2, what: upstream model change caught, check: model}
+  - {n: 2, day: 31, what: successor model through the gate, check: model}
+  - {n: 3, day: 58, what: failover drill, check: model}
+  - {n: 4, day: 97, what: automatic drop to rung 0, check: tools}
+  - {n: 5, day: 175, what: promoted to rung 2, check: tools}
+  - {n: 6, day: 180, what: first memory hygiene pass, check: memory}
+  - {n: 7, day: 240, what: fleet sweep finds eleven more, check: fleet}
+  - {n: 8, day: 300, what: first self-proposed fix merged, check: controls}
+  - {n: 9, day: 322, what: promoted to rung 3, check: tools}
+  - {n: 10, day: 365, what: new sponsor signs, check: accountability}

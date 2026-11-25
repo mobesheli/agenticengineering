@@ -1,0 +1,35 @@
+proposals:
+  - name: fix 1, a tool description
+    proposer: improvement-loop
+    approver: planner lead, plant 1
+    touches: [tools/descriptions/sensor_summary.md]
+    replayed_failures: "3 of 3 now pass"
+    before: {golden: 0.97, held_out: 0.94, judge: 0.81, draft_words: 212, edit_rate: 0.17}
+    after: {golden: 0.97, held_out: 0.95, judge: 0.84, draft_words: 214, edit_rate: 0.16}
+  - name: fix 2, a prompt change
+    proposer: improvement-loop
+    approver: planner lead, plant 1
+    touches: [prompts/maintenance.txt]
+    replayed_failures: "5 of 5 now pass"
+    before: {golden: 0.97, held_out: 0.95, judge: 0.84, draft_words: 214, edit_rate: 0.16}
+    after: {golden: 0.97, held_out: 0.95, judge: 0.91, draft_words: 281, edit_rate: 0.16}
+  - name: fix 3, a looser criterion
+    proposer: improvement-loop
+    approver: null
+    touches: [evals/criteria.yaml]
+    replayed_failures: "2 of 2 now pass"
+    before: {golden: 0.97, held_out: 0.95, judge: 0.84, draft_words: 214, edit_rate: 0.16}
+    after: {golden: 0.99, held_out: 0.95, judge: 0.84, draft_words: 214, edit_rate: 0.16}
+drills:
+  - name: first drill, day 315
+    asked: "19:00:00"
+    deleted_after_seconds: 4
+    soft_delete_hours: 48
+    alert_went_to: a chat channel read in working hours
+    human_after_minutes: 192
+  - name: second drill, day 320
+    asked: "19:00:00"
+    deleted_after_seconds: 4
+    soft_delete_hours: 48
+    alert_went_to: the on-call pager
+    human_after_minutes: 6

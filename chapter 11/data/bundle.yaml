@@ -1,0 +1,20 @@
+# The approved release of the maintenance planner, as Chapter 10 left it, with
+# one block added: what the provider reported on the day the gate passed. Half
+# of these settings were never set by the team. The provider chose them.
+bundle: maintenance-planner@41.3
+tier: high
+model:
+  primary: {id: gpt-6.1-terra, effort: low}
+  fallback: {id: gpt-6-luna, effort: low, golden: evals/fallback.json}
+memory_schema: {version: 4, reads: [3, 4], written_by: gpt-6.1-terra}
+eval_suite: golden@41
+observed_at_approval:
+  model: gpt-6.1-terra
+  reasoning.effort: low
+  text.verbosity: medium
+  service_tier: default
+  truncation: disabled
+  temperature: 1.0
+  top_p: 0.98
+  parallel_tool_calls: true
+  max_output_tokens: null

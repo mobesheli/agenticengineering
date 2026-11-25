@@ -1,0 +1,21 @@
+today: 341
+agent: alert-sorter
+successor: maintenance-planner
+entry:
+  bundle: alert-sorter@7.2
+  sponsor: plant 1 manager
+  consumers: [plant-1-dashboard]
+  keep_until: "seven years after retirement"
+  highest_rung: 1
+  ceiling: 2
+  reason: the maintenance planner sorts the same alerts better at lower cost
+calls:
+  - {caller: plant-1-dashboard, agent: alert-sorter, day: 330, ok: true}
+  - {caller: shift-report, agent: alert-sorter, day: 301, ok: true}
+  - {caller: energy-report, agent: alert-sorter, day: 190, ok: true}
+  - {caller: plant-1-dashboard, agent: maintenance-planner, day: 340, ok: true}
+  - {caller: shift-report, agent: maintenance-planner, day: 340, ok: true}
+tokens:
+  - {id: tok-sorter-1, revocable: true}
+  - {id: tok-sorter-2, revocable: true}
+  - {id: legacy-gw-0098, revocable: false}

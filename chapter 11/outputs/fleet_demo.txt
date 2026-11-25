@@ -1,0 +1,20 @@
+on the register: 15 agents, 11 found by the sweep
+  energy-report      cannot be listed: 5 gaps
+  invoice-matcher    cannot be listed: 5 gaps
+  quality-notes      cannot be listed: 5 gaps
+  onboarding-helper  cannot be listed: 4 gaps
+
+nightly reconciliation with two vendor registries
+  spares-forecast: in cloud-a, and nobody sponsors it
+  calibration-reminder: in cloud-a, and nobody sponsors it
+  invoice-matcher: in cloud-a, and nobody sponsors it
+  quality-notes: in cloud-a, and nobody sponsors it
+  onboarding-helper: in cloud-b, and nobody sponsors it
+  purchasing-advisor: on the vendor's platform, which no registry covers
+  shift-report: we say cloud-b, and cloud-b does not list it
+  energy-report: on an engineer's laptop, which no registry covers
+
+parts-availability moves from contract v2 to v3
+  maintenance-planner  consumer test: BREAKS, it reads lead_time_days
+  spares-forecast      consumer test: passes
+  shift-report         not registered, so no test: reads lead_time_days

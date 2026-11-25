@@ -1,56 +1,51 @@
-"""Five drift decisions, with effective configuration checked before metrics."""
+"""The drift check: five signals in, one decision out."""
 
+from __future__ import annotations
+
+from dataclasses import dataclass
 from enum import Enum
-
-from .models import SIGNALS, Reading, RunConfiguration
 
 
 class Decision(str, Enum):
     OK = "ok"
     HOLD = "hold"
-    RERUN = "rerun"
-    PROPOSE = "propose"
-    BUDGET = "budget_event"
+    RERUN = "rerun the golden suite"
+    PROPOSE = "propose a candidate"
+    BUDGET = "budget review"
 
 
-def configuration_changes(
-    pinned: RunConfiguration, effective: RunConfiguration
-) -> list[str]:
-    return [
-        key
-        for key, value in pinned.model_dump().items()
-        if effective.model_dump()[key] != value
-    ]
+@dataclass(frozen=True)
+class Reading:
+    signal: str
+    value: float
+    baseline: float
+    band: float
+
+    @property
+    def shift(self) -> float:
+        return self.value - self.baseline
+
+    @property
+    def moved(self) -> bool:
+        return abs(self.shift) > self.band
 
 
-def decide(readings: list[Reading], config_matches_bundle: bool) -> Decision:
-    """Missing or duplicate signals hold; a zero baseline uses an absolute band."""
-    if not config_matches_bundle:
-        return Decision.HOLD
-    if len(readings) != len(SIGNALS) or {r.signal for r in readings} != set(SIGNALS):
-        return Decision.HOLD
-    moved = {r.signal: r.value - r.baseline for r in readings if r.moved}
+@dataclass(frozen=True)
+class Verdict:
+    decision: Decision
+    candidate: bool
+    why: str
+
+
+def decide(readings: list[Reading], changed: dict[str, tuple]) -> Verdict:
+    moved = {r.signal: r.shift for r in readings if r.moved}
+    if changed:
+        what = ", ".join(sorted(changed))
+        return Verdict(Decision.HOLD, True, f"not the approved bundle: {what}")
     if not moved:
-        return Decision.OK
-    if "cost_speed" in moved:
-        return Decision.BUDGET
+        return Verdict(Decision.OK, False, "every signal inside its band")
+    if "cost and speed" in moved:
+        return Verdict(Decision.BUDGET, False, "cost or speed outside its band")
     if set(moved) == {"outcome"} and moved["outcome"] > 0:
-        return Decision.PROPOSE
-    return Decision.RERUN
-
-
-def fallback_drill(primary: str, secondary: dict, suite: str) -> dict:
-    """Switch a simulated route only when its uncached evidence clears the floor."""
-    eligible = (
-        secondary["suite"] == suite
-        and secondary["model"] != primary
-        and not secondary["cached"]
-        and 0 <= secondary["floor"] <= secondary["pass_rate"] <= 1
-    )
-    return {
-        "primary_disabled": True,
-        "route": secondary["model"] if eligible else None,
-        "status": "degraded" if eligible else "paused",
-        "quality": secondary["pass_rate"] if eligible else None,
-        "planners_notified": True,
-    }
+        return Verdict(Decision.PROPOSE, True, "better, and nobody knows why")
+    return Verdict(Decision.RERUN, False, "moved: " + ", ".join(sorted(moved)))

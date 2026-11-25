@@ -1,0 +1,41 @@
+day 2: nothing was released
+  model           DIFFERENT
+    text.verbosity: approved medium, running high
+  input           0.07  baseline 0.06  band 0.05  in band
+  knowledge       0.02  baseline 0.02  band 0.03  in band
+  outcome         0.86  baseline 0.83  band 0.02  MOVED
+  cost and speed  3.36  baseline 3.17  band 0.15  MOVED
+  decision: hold
+  why: not the approved bundle: text.verbosity
+  opens a candidate release: yes
+
+day 31: retirement notice received
+  model           as approved
+  input           0.06  baseline 0.06  band 0.05  in band
+  knowledge       0.03  baseline 0.02  band 0.03  in band
+  outcome         0.84  baseline 0.83  band 0.02  in band
+  cost and speed  3.21  baseline 3.17  band 0.15  in band
+  decision: ok
+  why: every signal inside its band
+  opens a candidate release: no
+
+day 97: three drafts rejected in a row at plant 2
+  model           as approved
+  input           0.08  baseline 0.06  band 0.05  in band
+  knowledge       0.03  baseline 0.02  band 0.03  in band
+  outcome         0.79  baseline 0.83  band 0.02  MOVED
+  cost and speed  3.24  baseline 3.17  band 0.15  in band
+  decision: rerun the golden suite
+  why: moved: outcome
+  opens a candidate release: no
+
+day 118: a quiet week
+  model           as approved
+  input           0.06  baseline 0.06  band 0.05  in band
+  knowledge       0.02  baseline 0.02  band 0.03  in band
+  outcome         0.86  baseline 0.83  band 0.02  MOVED
+  cost and speed  3.12  baseline 3.17  band 0.15  in band
+  decision: propose a candidate
+  why: better, and nobody knows why
+  opens a candidate release: yes
+

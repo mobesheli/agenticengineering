@@ -1,0 +1,23 @@
+maintenance-planner, day 365
+  rung 3 of a ceiling of 3 (audited autonomy)
+  cost per approved order $3.17 at launch, $2.87 now (-9.5%)
+  drift signals tripped on 22 days, 19 confirmed
+
+  rung by day
+    day   0 to  97  rung 1  approve every action
+    day  97 to  99  rung 0  draft only
+    day  99 to 175  rung 1  approve every action
+    day 175 to 322  rung 2  approve by exception
+    day 322 to 365  rung 3  audited autonomy
+
+  the year in ten events
+     1  day   2  upstream model change caught
+     2  day  31  successor model through the gate
+     3  day  58  failover drill
+     4  day  97  automatic drop to rung 0
+     5  day 175  promoted to rung 2
+     6  day 180  first memory hygiene pass
+     7  day 240  fleet sweep finds eleven more
+     8  day 300  first self-proposed fix merged
+     9  day 322  promoted to rung 3
+    10  day 365  new sponsor signs

@@ -1,0 +1,13 @@
+first attempt refused: credentials still live: ['legacy-gw-0098']
+  status on the register: deprecated
+  that token came from the old gateway, and is revoked there by hand
+second attempt completed
+  final bundle      alert-sorter@7.2
+  successor         maintenance-planner
+  callers moved     plant-1-dashboard, shift-report
+  not on the list   shift-report
+  tokens revoked    3, none live
+  archive           bundle, golden_suite, eval_history, traces, decisions
+  kept until        seven years after retirement
+  signed by         the plant 1 manager
+  status            retired

@@ -1,0 +1,23 @@
+# Bands are in the unit of the signal, for the agent's tier (high).
+bands:
+  input: {unit: share of work unlike the golden suite, baseline: 0.06, band: 0.05}
+  knowledge: {unit: share of sampled memories unconfirmed, baseline: 0.02, band: 0.03}
+  outcome: {unit: share approved as drafted, baseline: 0.83, band: 0.02}
+  cost and speed: {unit: dollars per approved order, baseline: 3.17, band: 0.15}
+days:
+  2:
+    note: nothing was released
+    effective: {text.verbosity: high}
+    values: {input: 0.07, knowledge: 0.02, outcome: 0.86, cost and speed: 3.36}
+  31:
+    note: retirement notice received
+    effective: {}
+    values: {input: 0.06, knowledge: 0.03, outcome: 0.84, cost and speed: 3.21}
+  97:
+    note: three drafts rejected in a row at plant 2
+    effective: {}
+    values: {input: 0.08, knowledge: 0.03, outcome: 0.79, cost and speed: 3.24}
+  118:
+    note: a quiet week
+    effective: {}
+    values: {input: 0.06, knowledge: 0.02, outcome: 0.86, cost and speed: 3.12}

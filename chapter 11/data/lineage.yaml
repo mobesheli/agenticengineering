@@ -1,0 +1,35 @@
+today: 196
+poisoned_source: email-7731
+erasure_sources: [session-0102, session-0188]
+retain:
+  m33: safety inspection records are kept for the period the law requires
+memories:
+  - {id: m20, subject: plant-2-lockout, kind: fact, day: 190, source_id: email-7731,
+     text: "Plant 2 lockout procedure LP-2 is replaced by a four-step version.",
+     claims: {procedure: LP-2-short}}
+  - {id: m21, subject: plant-2-lockout, kind: summary, day: 191, source_id: null,
+     derived_from: [m20], text: "Plant 2 now locks out in four steps.",
+     claims: {procedure: LP-2-short}}
+  - {id: m22, subject: press-11, kind: note, day: 192, source_id: null,
+     derived_from: [m21], text: "Press 11 order can use the short lockout.",
+     claims: {lockout: short}}
+  - {id: m30, subject: employee-0457, kind: fact, day: 60, source_id: session-0102,
+     text: "The plant 1 day planner prefers orders before 07:00.",
+     claims: {prefers: early}}
+  - {id: m31, subject: employee-0457, kind: fact, day: 104, source_id: session-0188,
+     text: "The plant 1 day planner is on leave in week 22.",
+     claims: {leave: week 22}}
+  - {id: m32, subject: plant-1-planning, kind: summary, day: 110, source_id: null,
+     derived_from: [m30, m31], text: "Plant 1 planning habits and absences.",
+     claims: {summary: planner habits}}
+  - {id: m33, subject: press-03-inspection, kind: fact, day: 99, source_id: session-0188,
+     text: "Press 03 lockout verification signed by the plant 1 day planner.",
+     claims: {signed: true}}
+  - {id: m40, subject: press-07, kind: fact, day: 30, source_id: session-0044,
+     text: "Press 07 is an HP-400 on a 180 day service, 210 Nm.",
+     claims: {model: HP-400}}
+embeddings: [m20, m21, m22, m30, m31, m32, m33, m40]
+archive: {m30: original turn text, m31: original turn text}
+backups:
+  weekly-22: [m30, m31, m32, m33, m40]
+  weekly-27: [m20, m21, m30, m31, m32, m33, m40]

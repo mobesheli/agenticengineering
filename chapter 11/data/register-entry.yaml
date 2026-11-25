@@ -1,0 +1,12 @@
+agent: maintenance-planner
+owner: platform-team
+sponsor: {role: plant operations director, attested_day: 365, next_due_day: 455}
+tier: high
+bundle: maintenance-planner@42.1
+autonomy:
+  rung: 3
+  ceiling: 3
+  ceiling_set_by: [sponsor, security officer, safety manager]
+  always_approved_by_a_person: [lockout, safety-critical]
+  rules: governance/ladder.yaml
+retire_when: a successor beats it on the golden suite at lower cost

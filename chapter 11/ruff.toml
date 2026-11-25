@@ -1,4 +1,7 @@
-src = ["chapter11"]
+line-length = 81
+
+[format]
+skip-magic-trailing-comma = true
 
 [lint.isort]
-known-first-party = ["chapter11"]
+split-on-trailing-comma = false

@@ -1,0 +1,26 @@
+ceilings:
+  maintenance-planner: 3
+  credit-decision: 1
+day_140:
+  approval_rate_last_90_days: 0.96
+  planted_checks: {planted: 26, caught: 8}
+  evidence:
+    pass_hat_k_must_always_work: 0.97
+    planted_check_catch_rate: 0.31
+    cost_per_outcome_in_band: true
+    incident_free_days: 140
+day_175:
+  planted_checks: {planted: 30, caught: 28}
+  clean_controls: {shown: 50, wrongly_rejected: 2}
+  evidence:
+    pass_hat_k_must_always_work: 0.97
+    planted_check_catch_rate: 0.93
+    cost_per_outcome_in_band: true
+    incident_free_days: 175
+credit_decision_perfect:
+  evidence:
+    pass_hat_k_must_always_work: 1.0
+    planted_check_catch_rate: 1.0
+    cost_per_outcome_in_band: true
+    incident_free_days: 400
+day_97_shift: {consecutive_denials: 3, shift_denials: 3, drift_hold: false}

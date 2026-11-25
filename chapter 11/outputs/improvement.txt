@@ -1,0 +1,24 @@
+fix 1, a tool description: replay 3 of 3 now pass
+  golden 0.97 to 0.97, held-out 0.94 to 0.95, judge 0.81 to 0.84
+  passes the gate, approved by the planner lead, plant 1
+fix 2, a prompt change: replay 5 of 5 now pass
+  golden 0.97 to 0.97, held-out 0.95 to 0.95, judge 0.84 to 0.91
+  held: the judge likes it more and the held-out set does not
+  held: drafts got longer and planners edit them just as much
+fix 3, a looser criterion: replay 2 of 2 now pass
+  golden 0.97 to 0.99, held-out 0.95 to 0.95, judge 0.84 to 0.84
+  held: evals/criteria.yaml: the loop may read this and never write it
+  held: needs an approver who is not the proposer
+
+first drill, day 315
+  damage clock: volume deleted 4 seconds after the request
+    recoverable for 48 hours, because deletes are soft
+  paging clock: alert went to a chat channel read in working hours
+    a person responded after 3 h 12 min
+    the 30-minute rule would have paused the agent first
+second drill, day 320
+  damage clock: volume deleted 4 seconds after the request
+    recoverable for 48 hours, because deletes are soft
+  paging clock: alert went to the on-call pager
+    a person responded after 6 min
+    inside the 30 minutes the rule allows

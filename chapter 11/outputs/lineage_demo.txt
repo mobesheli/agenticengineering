@@ -1,0 +1,16 @@
+source email-7731 (contractor, unverified) produced 3 memories
+  m20  fact     email-7731   quarantined
+  m21  summary  from m20     quarantined
+  m22  note     from m21     quarantined
+  what the agent can retrieve about plant 2 lockout now: None
+
+erasure request: sources session-0102, session-0188
+  copies found: m30, m31, m33, m32
+  deleted from the store and the index: m30, m31, m32
+  deleted from the archive of originals: m30, m31
+  kept and restricted: m33
+    basis: safety inspection records are kept for the period the law requires
+  backup weekly-22 still holds m30, m31, m32: marked
+  backup weekly-27 still holds m30, m31, m32: marked
+restoring weekly-22 later: m30, m31, m32 are not brought back
+  the retained record is still hidden from retrieval: True
